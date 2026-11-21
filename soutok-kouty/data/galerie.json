@@ -1,0 +1,36 @@
+{
+  "fotky": [
+    {
+      "src": "images/exterier-silnice.webp",
+      "popis": "Dům u cesty pod lesem (vizualizace)"
+    },
+    {
+      "src": "images/exterier-potok.webp",
+      "popis": "Cesta podél vody (vizualizace)"
+    },
+    {
+      "src": "images/studio-01.webp",
+      "popis": "Vzorový apartmán – skutečné foto"
+    },
+    {
+      "src": "images/loft-02.webp",
+      "popis": "Spací loft (vizualizace)"
+    },
+    {
+      "src": "images/bistro-02.webp",
+      "popis": "Bistro (vizualizace)"
+    },
+    {
+      "src": "images/exterier-zahradka.webp",
+      "popis": "Posezení venku (vizualizace)"
+    },
+    {
+      "src": "images/wellness-sauna.webp",
+      "popis": "Sauna (vizualizace)"
+    },
+    {
+      "src": "images/lyzarna.webp",
+      "popis": "Lyžárna a kolárna (vizualizace)"
+    }
+  ]
+}

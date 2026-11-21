@@ -1,0 +1,39 @@
+{
+  "lide": [
+    {
+      "jmeno": "Petr Morong ml.",
+      "role": "Zakladatel & strategie",
+      "bio": "Stojí za vizí a rozvojem portfolia. Řídí investiční strategii a nastavuje koncepci resortů po ekonomické i provozní stránce."
+    },
+    {
+      "jmeno": "Markéta Dvořáková",
+      "role": "Prodej & zákaznická péče",
+      "bio": "Zajišťuje prodej a komunikaci s majiteli. Provází investory od výběru jednotky až po její uvedení do provozu."
+    },
+    {
+      "jmeno": "Helena Morongová",
+      "role": "Provoz & správa na místě",
+      "bio": "Žije přímo v Jeseníkách a stará se o každodenní chod resortů – předání apartmánů, úklid i komunikaci s hosty."
+    },
+    {
+      "jmeno": "Andrea Kuttlerová",
+      "role": "Provoz & hotelové standardy",
+      "bio": "Přináší zkušenosti z hotelu Kolštejn. Dbá na kvalitu služeb a standardy pohostinství."
+    },
+    {
+      "jmeno": "Pavel Souček",
+      "role": "Provoz & guest experience",
+      "bio": "Zkušenosti z hotelové sítě Orea. Zaměřuje se na zážitek hosta a efektivitu provozu."
+    },
+    {
+      "jmeno": "Tomáš Křen",
+      "role": "Revenue & marketing",
+      "bio": "Řídí cenovou strategii, dynamické nacenění a marketing s ohledem na sezónnost."
+    },
+    {
+      "jmeno": "Petr Morong st.",
+      "role": "Technická správa & stavby",
+      "bio": "Odpovídá za technickou správu budov, rekonstrukce a dohled nad řemeslníky."
+    }
+  ]
+}

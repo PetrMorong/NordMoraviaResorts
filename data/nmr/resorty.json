@@ -1,0 +1,64 @@
+{
+  "resorty": [
+    {
+      "id": "cerveny-dvur",
+      "nazev": "Resort Červený dvůr",
+      "typ": "Wellness resort",
+      "misto": "Rapotín",
+      "barva": "#5B2E1C",
+      "popis": "Historický areál ze 17. století s nově zrekonstruovanými apartmány až pro 8 osob. Wellness se saunou a vířivkou, nová restaurace s českou kuchyní, svatby a firemní akce.",
+      "stitky": [
+        "Apartmány až pro 8",
+        "Wellness",
+        "Restaurace",
+        "Svatby"
+      ],
+      "cena_od": "od 2 490 Kč / noc",
+      "foto": "https://res.cloudinary.com/morireality/image/upload/f_auto,q_auto,c_fill,g_auto,w_1400,h_1050/Rapotin/nadvori_qmoqtm",
+      "foto2": "https://res.cloudinary.com/morireality/image/upload/f_auto,q_auto,c_fill,g_auto,w_900,h_1100/Rapotin/DSC07020_1_xym9hm",
+      "web": "https://www.resortcervenydvur.cz",
+      "rezervace": "https://www.resortcervenydvur.cz",
+      "stav": "otevreno"
+    },
+    {
+      "id": "vila-republika",
+      "nazev": "Vila Republika",
+      "typ": "Wellness apartmány",
+      "misto": "Velké Losiny",
+      "barva": "#BF5756",
+      "popis": "Citlivě zrekonstruovaná prvorepubliková vila pod Hrubým Jeseníkem, pár kroků od termálních lázní. Každý apartmán navrhl jiný architekt, privátní wellness je jen pro vás.",
+      "stitky": [
+        "Designové apartmány",
+        "Privátní wellness",
+        "Self check-in",
+        "Psi vítáni"
+      ],
+      "cena_od": "od 2 190 Kč / noc",
+      "foto": "https://res.cloudinary.com/morireality/image/upload/f_auto,q_auto,c_fill,g_auto,w_1400,h_1050/vilaRepublikaFoto/LL406610_yfobxv",
+      "foto2": "https://res.cloudinary.com/morireality/image/upload/f_auto,q_auto,c_fill,g_auto,w_900,h_1100/vilaRepublikaFoto/zahradniDomek/LL408086-HDR_nq6fin",
+      "web": "https://www.vila-republika.cz",
+      "rezervace": "https://www.vila-republika.cz",
+      "stav": "otevreno"
+    },
+    {
+      "id": "soutok-kouty",
+      "nazev": "Wellness Hotel Soutok Kouty",
+      "typ": "Wellness hotel",
+      "misto": "Kouty nad Desnou",
+      "barva": "#141117",
+      "popis": "23 apartmánů 800 m od lanovky, tam kde se potkávají hory, voda a les. Privátní wellness, bistro se snídaněmi a lyžárna přímo v domě.",
+      "stitky": [
+        "23 apartmánů",
+        "800 m od lanovky",
+        "Wellness",
+        "Bistro"
+      ],
+      "cena_od": "otevíráme léto 2028",
+      "foto": "https://res.cloudinary.com/morireality/image/upload/f_auto,q_auto,c_fill,g_auto,w_1400,h_1050/Kouty/01-min_uxjr1h",
+      "foto2": "https://res.cloudinary.com/morireality/image/upload/f_auto,q_auto,c_fill,g_auto,w_900,h_1100/Kouty/01_KOUTY_pwndsy",
+      "web": "soutok-kouty/",
+      "rezervace": "soutok-kouty/rezervace.html",
+      "stav": "pripravujeme"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<script>if(/\/soutok-kouty$/.test(location.pathname))location.replace(location.pathname+"/"+location.search+location.hash)</script>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rezervace – Wellness Hotel Soutok Kouty</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="images/symbol-light.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="hdr always" id="hdr">
+  <div class="wrap">
+    <a class="logo" href="index.html" aria-label="Soutok Kouty – úvod"><img src="images/logo-light.svg" alt="Soutok Kouty"></a>
+    <nav id="nav"><a href="index.html#apartmany">Apartmány</a><a href="index.html#wellness">Wellness</a><a href="index.html#faq">Časté dotazy</a></nav>
+    <div class="tools">
+      <details class="net">
+        <summary><b>NORD MORAVIA</b> resorty ▾</summary>
+        <div class="menu">
+          <a href="https://www.resortcervenydvur.cz"><i style="background:#5B2E1C"></i><span>Resort Červený dvůr<small>Rapotín</small></span></a>
+          <a href="https://www.vila-republika.cz"><i style="background:#BF5756"></i><span>Vila Republika<small>Velké Losiny</small></span></a>
+          <a href="index.html"><i style="background:#141117"></i><span>Wellness Hotel Soutok Kouty<small>Kouty nad Desnou</small></span></a>
+          <a class="all" href="/#resorty">Hledat ve všech resortech →</a>
+        </div>
+      </details>
+      <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">≡</button>
+    </div>
+  </div>
+</header>
+
+<main id="app" aria-live="polite"></main>
+
+<!-- Netlify Forms: skrytá kopie formuláře, aby ho Netlify při deployi našel -->
+<form name="rezervace" data-netlify="true" netlify-honeypot="bot" hidden>
+  <input name="bot"><input name="apartman"><input name="plan"><input name="od"><input name="do"><input name="hoste"><input name="doplnky"><input name="cena">
+  <input name="jmeno"><input name="prijmeni"><input name="email"><input name="telefon"><input name="prijezd"><input name="platba"><input name="typ"><input name="ico"><textarea name="poznamka"></textarea>
+</form>
+
+<footer class="foot"><div class="wrap"><div class="bottom" style="margin:0;border:0;padding:0"><span>© Wellness Hotel Soutok Kouty · součást Nord Moravia Resorts</span><span>Údaje chráníme dle GDPR</span></div></div></footer>
+
+<script src="assets/common.js"></script>
+<script src="assets/booking.js"></script>
+</body>
+</html>

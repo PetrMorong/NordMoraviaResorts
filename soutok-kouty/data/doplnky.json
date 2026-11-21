@@ -1,0 +1,39 @@
+{
+  "doplnky": [
+    {
+      "id": "wellness",
+      "nazev": "Privátní wellness · 90 min",
+      "popis": "Sauna, vířivka a ochlazovací bazének jen pro vás. Čas vyberete po rezervaci.",
+      "cena": 1990,
+      "jednotka": "pobyt"
+    },
+    {
+      "id": "vecere",
+      "nazev": "Večeře v bistru",
+      "popis": "Tři chody z regionálních surovin, v sezóně.",
+      "cena": 590,
+      "jednotka": "osoba"
+    },
+    {
+      "id": "pes",
+      "nazev": "Pobyt se psem",
+      "popis": "Pelíšek a miska připravíme. Max. 1 pes.",
+      "cena": 300,
+      "jednotka": "noc"
+    },
+    {
+      "id": "checkout",
+      "nazev": "Pozdní check-out do 14:00",
+      "popis": "Podle obsazenosti, potvrdíme den předem.",
+      "cena": 490,
+      "jednotka": "pobyt"
+    },
+    {
+      "id": "skipas",
+      "nazev": "Skipas Kouty",
+      "popis": "Připravíme na recepci, bez fronty. Cena dle ceníku areálu.",
+      "cena": 0,
+      "jednotka": "pobyt"
+    }
+  ]
+}

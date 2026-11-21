@@ -1,0 +1,31 @@
+{
+  "hero": {
+    "nadpis1": "Tři místa v Jeseníkách.",
+    "nadpis2": "Jeden klid.",
+    "perex": "Historický dvůr v Rapotíně, prvorepubliková vila u lázní ve Velkých Losinách a nový wellness hotel v Koutech. Vyberte si místo, my se postaráme o zbytek."
+  },
+  "cisla": [
+    {
+      "cislo": "2020",
+      "popis": "začali jsme v Jeseníkách jako malý tým"
+    },
+    {
+      "cislo": "4,8★",
+      "popis": "průměrné hodnocení hostů napříč resorty"
+    },
+    {
+      "cislo": "3",
+      "popis": "resorty, každý s vlastním charakterem"
+    }
+  ],
+  "o_nas": {
+    "nadpis": "Věříme, že nejlepší dovolená je ta doma.",
+    "text": "Tři resorty v Jeseníkách spojuje jedna filozofie – místa, kde se čas zastaví. Historická architektura i moderní design, příroda a péče o hosta na prvním místě. Rezervace, recepce i správa apartmánů běží pod jednou střechou."
+  },
+  "kontakt": {
+    "email": "petr@nordmoraviaresorts.cz",
+    "telefon": "+420 601 502 889",
+    "firma": "Mori Reality s.r.o.",
+    "ico": "14426021"
+  }
+}

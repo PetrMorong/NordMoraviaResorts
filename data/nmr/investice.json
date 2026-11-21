@@ -1,0 +1,22 @@
+{
+  "nadpis": "Investujte do Jeseníků s námi.",
+  "text": "Nabízíme přímou investici do našich developerských projektů s fixním výnosem. Transparentní podmínky, lokální tým a reálné nemovitosti.",
+  "vynos": "10 %",
+  "vynos_popis": "fixní roční výnos p.a.",
+  "body": [
+    {
+      "nadpis": "Fixní výnos",
+      "text": "10 % p.a. na vložený kapitál, výplata dle smluvních podmínek."
+    },
+    {
+      "nadpis": "Reálné projekty",
+      "text": "Investice jdou přímo do konkrétních nemovitostních projektů v Jeseníkách – ne do fondů."
+    },
+    {
+      "nadpis": "Lokální tým",
+      "text": "Znáte lidi, kteří za projekty stojí. Transparentní reporting a přímá komunikace."
+    }
+  ],
+  "upozorneni": "Investice podléhá smluvním podmínkám. Není veřejnou nabídkou cenných papírů.",
+  "apartmany_url": "https://soutok-kouty.cz"
+}

@@ -1,0 +1,54 @@
+{
+  "mista": [
+    {
+      "nazev": "Ski areál Kouty",
+      "vzdalenost": "800 m",
+      "popis": "Lanovka, sjezdovky pro všechny a večerní lyžování.",
+      "sezona": "zima"
+    },
+    {
+      "nazev": "Běžkařské stopy na hřebenech",
+      "vzdalenost": "15 min autem",
+      "popis": "Upravené trasy Hrubým Jeseníkem.",
+      "sezona": "zima"
+    },
+    {
+      "nazev": "Bikepark Kouty",
+      "vzdalenost": "800 m",
+      "popis": "Tratě s lanovkou nahoru, půjčovna kol v areálu.",
+      "sezona": "leto"
+    },
+    {
+      "nazev": "Přečerpávací elektrárna Dlouhé stráně",
+      "vzdalenost": "10 km",
+      "popis": "Horní nádrž, prohlídky a výhled na Praděd.",
+      "sezona": "leto"
+    },
+    {
+      "nazev": "Lázně a zámek Velké Losiny",
+      "vzdalenost": "15 km",
+      "popis": "Termální lázně, renesanční zámek a ruční papírna.",
+      "sezona": "celorocne"
+    },
+    {
+      "nazev": "Praděd",
+      "vzdalenost": "25 km",
+      "popis": "Nejvyšší hora Moravy, túry i rozhledna.",
+      "sezona": "celorocne"
+    }
+  ],
+  "doprava": [
+    {
+      "odkud": "Vlak a autobus",
+      "kolik": "zastávka přímo naproti"
+    },
+    {
+      "odkud": "Ostrava · Olomouc",
+      "kolik": "cca 80 km"
+    },
+    {
+      "odkud": "Praha · Brno",
+      "kolik": "cca 2,5 h autem"
+    }
+  ]
+}

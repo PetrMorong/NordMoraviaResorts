@@ -1,0 +1,28 @@
+{
+  "otazky": [
+    {
+      "otazka": "Kdy je check-in a check-out?",
+      "odpoved": "Příjezd od 15:00, odjezd do 10:00. Recepce nemá stálou službu – den před příjezdem vám pošleme SMS s kódem ke dveřím apartmánu."
+    },
+    {
+      "otazka": "Je parkování v ceně?",
+      "odpoved": "Ano, parkování u domu je pro hosty zdarma."
+    },
+    {
+      "otazka": "Můžu přijet se psem?",
+      "odpoved": "Psi jsou vítáni v apartmánech s předzahrádkou, za 300 Kč / noc. Přidáte je jako doplněk v rezervaci."
+    },
+    {
+      "otazka": "Jak funguje wellness?",
+      "odpoved": "Wellness je privátní – rezervujete si 90 minut jen pro sebe a dveře otevřete kódem. Čas vyberete po rezervaci pobytu."
+    },
+    {
+      "otazka": "Jaké jsou storno podmínky?",
+      "odpoved": "U flexibilní ceny zrušíte zdarma do 7 dní před příjezdem. Nevratná cena je o 10 % levnější, ale nelze ji zrušit ani změnit."
+    },
+    {
+      "otazka": "Jsou na pokojích kuchyňky?",
+      "odpoved": "Každý apartmán má kuchyňský kout s varnou deskou, lednicí a nádobím. Snídaně podáváme v bistru."
+    }
+  ]
+}

@@ -1,0 +1,196 @@
+# Decap CMS – Nord Moravia Resorts (zatím web Soutok Kouty; další resorty přibudou jako další kolekce)
+# Přihlášení: /admin (Netlify Identity + Git Gateway, viz README)
+backend:
+  name: git-gateway
+  branch: main
+locale: cs
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "nmr"
+    label: "Nord Moravia – úvodní stránka"
+    files:
+      - name: "nastaveni"
+        label: "Texty a kontakt"
+        file: "data/nmr/nastaveni.json"
+        fields:
+          - { label: "Hero", name: "hero", widget: "object", fields: [{ label: "Nadpis 1. řádek", name: "nadpis1", widget: "string" }, { label: "Nadpis 2. řádek (kurzíva)", name: "nadpis2", widget: "string" }, { label: "Perex", name: "perex", widget: "text" }] }
+          - { label: "Čísla", name: "cisla", widget: "list", fields: [{ label: "Číslo", name: "cislo", widget: "string" }, { label: "Popis", name: "popis", widget: "string" }] }
+          - { label: "O nás", name: "o_nas", widget: "object", fields: [{ label: "Nadpis", name: "nadpis", widget: "string" }, { label: "Text", name: "text", widget: "text" }] }
+          - { label: "Kontakt", name: "kontakt", widget: "object", fields: [{ label: "E-mail", name: "email", widget: "string" }, { label: "Telefon", name: "telefon", widget: "string" }, { label: "Firma", name: "firma", widget: "string" }, { label: "IČO", name: "ico", widget: "string" }] }
+      - name: "resorty"
+        label: "Resorty"
+        file: "data/nmr/resorty.json"
+        fields:
+          - label: "Resorty"
+            name: "resorty"
+            widget: "list"
+            summary: "{{fields.nazev}}"
+            fields:
+              - { label: "ID (část adresy)", name: "id", widget: "string" }
+              - { label: "Název", name: "nazev", widget: "string" }
+              - { label: "Typ", name: "typ", widget: "string" }
+              - { label: "Místo", name: "misto", widget: "string" }
+              - { label: "Barva resortu (HEX)", name: "barva", widget: "string" }
+              - { label: "Popis", name: "popis", widget: "text" }
+              - { label: "Štítky", name: "stitky", widget: "list", field: { label: "Štítek", name: "stitek", widget: "string" } }
+              - { label: "Cena od (text)", name: "cena_od", widget: "string" }
+              - { label: "Hlavní fotka", name: "foto", widget: "image" }
+              - { label: "Druhá fotka", name: "foto2", widget: "image" }
+              - { label: "Web resortu", name: "web", widget: "string" }
+              - { label: "Odkaz na rezervaci", name: "rezervace", widget: "string" }
+              - { label: "Stav", name: "stav", widget: "select", options: [{label: "Otevřeno", value: "otevreno"}, {label: "Připravujeme", value: "pripravujeme"}] }
+      - name: "tym"
+        label: "Tým"
+        file: "data/nmr/tym.json"
+        fields:
+          - { label: "Lidé", name: "lide", widget: "list", summary: "{{fields.jmeno}}", fields: [{ label: "Jméno", name: "jmeno", widget: "string" }, { label: "Role", name: "role", widget: "string" }, { label: "Popis", name: "bio", widget: "text" }] }
+      - name: "investice"
+        label: "Investice"
+        file: "data/nmr/investice.json"
+        fields:
+          - { label: "Nadpis", name: "nadpis", widget: "string" }
+          - { label: "Text", name: "text", widget: "text" }
+          - { label: "Výnos (velké číslo)", name: "vynos", widget: "string" }
+          - { label: "Popis výnosu", name: "vynos_popis", widget: "string" }
+          - { label: "Body", name: "body", widget: "list", fields: [{ label: "Nadpis", name: "nadpis", widget: "string" }, { label: "Text", name: "text", widget: "text" }] }
+          - { label: "Upozornění", name: "upozorneni", widget: "string" }
+          - { label: "Odkaz na prodej apartmánů", name: "apartmany_url", widget: "string" }
+
+  - name: "web"
+    label: "Soutok Kouty – texty a nastavení"
+    files:
+      - name: "nastaveni"
+        label: "Nastavení a úvod"
+        file: "soutok-kouty/data/nastaveni.json"
+        fields:
+          - { label: "Režim", name: "rezim", widget: "select", options: [{label: "Nezávazná poptávka (bez platby)", value: "poptavka"}, {label: "Ostrá rezervace (Previo)", value: "rezervace"}, {label: "Jen předregistrace", value: "predregistrace"}] }
+          - { label: "Oznámení v hero (prázdné = skrýt)", name: "oznameni", widget: "string", required: false }
+          - { label: "První termín k rezervaci", name: "prvni_termin", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+          - label: "Hero"
+            name: "hero"
+            widget: "object"
+            fields:
+              - { label: "Nadpis – 1. řádek", name: "radek1", widget: "string" }
+              - { label: "Nadpis – 2. řádek (kurzíva)", name: "radek2", widget: "string" }
+              - { label: "Perex", name: "perex", widget: "text" }
+              - { label: "Fotka", name: "foto", widget: "image" }
+          - label: "Úvod"
+            name: "uvod"
+            widget: "object"
+            fields:
+              - { label: "Nadpis", name: "nadpis", widget: "string" }
+              - { label: "Text", name: "text", widget: "text" }
+              - { label: "Fakta (3 čísla)", name: "fakta", widget: "list", fields: [{ label: "Číslo", name: "cislo", widget: "string" }, { label: "Popis", name: "popis", widget: "string" }] }
+          - label: "Kontakt"
+            name: "kontakt"
+            widget: "object"
+            fields:
+              - { label: "Telefon", name: "telefon", widget: "string" }
+              - { label: "E-mail", name: "email", widget: "string" }
+              - { label: "Adresa", name: "adresa", widget: "string" }
+              - { label: "Odkaz na mapu", name: "mapa_url", widget: "string" }
+          - { label: "Místní poplatek (Kč / osoba / noc)", name: "mistni_poplatek", widget: "number" }
+          - { label: "Check-in", name: "check_in", widget: "string" }
+          - { label: "Check-out", name: "check_out", widget: "string" }
+          - { label: "Previo – ID hotelu", name: "previo_hotel_id", widget: "string", required: false, hint: "Vyplní se při napojení na Previo" }
+
+      - name: "wellness"
+        label: "Wellness"
+        file: "soutok-kouty/data/wellness.json"
+        fields:
+          - { label: "Nadpis", name: "nadpis", widget: "string" }
+          - { label: "Text", name: "text", widget: "text" }
+          - { label: "Cena (text)", name: "cena", widget: "string" }
+          - { label: "Položky", name: "polozky", widget: "list", fields: [{ label: "Název", name: "nazev", widget: "string" }, { label: "Popis", name: "popis", widget: "string" }] }
+          - { label: "Fotky (3)", name: "fotky", widget: "list", field: { label: "Fotka", name: "foto", widget: "image" } }
+
+      - name: "bistro"
+        label: "Bistro"
+        file: "soutok-kouty/data/bistro.json"
+        fields:
+          - { label: "Nadpis (část za čárkou bude kurzívou)", name: "nadpis", widget: "string" }
+          - { label: "Text", name: "text", widget: "text" }
+          - { label: "Otevírací doba", name: "oteviraci_doba", widget: "list", fields: [{ label: "Co", name: "co", widget: "string" }, { label: "Kdy", name: "kdy", widget: "string" }] }
+          - { label: "Fotky (3)", name: "fotky", widget: "list", field: { label: "Fotka", name: "foto", widget: "image" } }
+
+      - name: "okoli"
+        label: "Okolí a doprava"
+        file: "soutok-kouty/data/okoli.json"
+        fields:
+          - label: "Místa"
+            name: "mista"
+            widget: "list"
+            fields:
+              - { label: "Název", name: "nazev", widget: "string" }
+              - { label: "Vzdálenost", name: "vzdalenost", widget: "string" }
+              - { label: "Popis", name: "popis", widget: "string" }
+              - { label: "Sezóna", name: "sezona", widget: "select", options: [{label: "Zima", value: "zima"}, {label: "Léto", value: "leto"}, {label: "Celoročně", value: "celorocne"}] }
+          - { label: "Doprava", name: "doprava", widget: "list", fields: [{ label: "Odkud", name: "odkud", widget: "string" }, { label: "Kolik", name: "kolik", widget: "string" }] }
+
+      - name: "faq"
+        label: "Časté dotazy"
+        file: "soutok-kouty/data/faq.json"
+        fields:
+          - { label: "Otázky", name: "otazky", widget: "list", fields: [{ label: "Otázka", name: "otazka", widget: "string" }, { label: "Odpověď", name: "odpoved", widget: "text" }] }
+
+      - name: "galerie"
+        label: "Galerie"
+        file: "soutok-kouty/data/galerie.json"
+        fields:
+          - { label: "Fotky", name: "fotky", widget: "list", fields: [{ label: "Fotka", name: "src", widget: "image" }, { label: "Popisek", name: "popis", widget: "string" }] }
+
+  - name: "ubytovani"
+    label: "Soutok Kouty – ubytování a ceny"
+    files:
+      - name: "apartmany"
+        label: "Typy apartmánů"
+        file: "soutok-kouty/data/apartmany.json"
+        fields:
+          - label: "Typy"
+            name: "typy"
+            widget: "list"
+            summary: "{{fields.nazev}} – od {{fields.cena_noc}} Kč"
+            fields:
+              - { label: "ID (bez mezer)", name: "id", widget: "string" }
+              - { label: "Název", name: "nazev", widget: "string" }
+              - { label: "Krátký popis", name: "perex", widget: "text" }
+              - { label: "Plocha (text)", name: "plocha", widget: "string" }
+              - { label: "Max. osob", name: "osoby", widget: "number" }
+              - { label: "Lůžka", name: "luzka", widget: "string" }
+              - { label: "Počet apartmánů tohoto typu", name: "pocet", widget: "number" }
+              - { label: "Cena od (Kč / noc, plán Flexibilní)", name: "cena_noc", widget: "number" }
+              - { label: "Typ fotek", name: "foto_typ", widget: "select", options: ["Skutečné foto", "Vizualizace"] }
+              - { label: "Fotky", name: "fotky", widget: "list", field: { label: "Fotka", name: "foto", widget: "image" } }
+              - { label: "Vybavení", name: "vybaveni", widget: "list", field: { label: "Položka", name: "polozka", widget: "string" } }
+              - { label: "Previo – ID typu pokoje", name: "previo_id", widget: "string", required: false }
+
+      - name: "plany"
+        label: "Cenové plány"
+        file: "soutok-kouty/data/cenove-plany.json"
+        fields:
+          - label: "Plány"
+            name: "plany"
+            widget: "list"
+            fields:
+              - { label: "ID", name: "id", widget: "string" }
+              - { label: "Název", name: "nazev", widget: "string" }
+              - { label: "Popis", name: "popis", widget: "string" }
+              - { label: "Storno podmínky", name: "storno", widget: "string" }
+              - { label: "Koeficient ceny (1 = základ, 0.9 = −10 %)", name: "koeficient", widget: "number", value_type: "float", step: 0.01 }
+              - { label: "Doporučeno (ukázat cenu z portálů)", name: "doporuceno", widget: "boolean", default: false }
+
+      - name: "doplnky"
+        label: "Doplňky k pobytu"
+        file: "soutok-kouty/data/doplnky.json"
+        fields:
+          - label: "Doplňky"
+            name: "doplnky"
+            widget: "list"
+            fields:
+              - { label: "ID", name: "id", widget: "string" }
+              - { label: "Název", name: "nazev", widget: "string" }
+              - { label: "Popis", name: "popis", widget: "string" }
+              - { label: "Cena (Kč, 0 = dle ceníku)", name: "cena", widget: "number" }
+              - { label: "Účtuje se za", name: "jednotka", widget: "select", options: ["pobyt", "noc", "osoba"] }

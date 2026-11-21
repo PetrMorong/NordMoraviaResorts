@@ -1,0 +1,39 @@
+{
+  "rezim": "poptavka",
+  "oznameni": "Otevíráme v létě 2028 · nezávazné poptávky prvních termínů už teď",
+  "prvni_termin": "2028-07-01",
+  "hero": {
+    "radek1": "Hory. Wellness.",
+    "radek2": "Váš klid.",
+    "perex": "23 apartmánů tam, kde se potkávají hory, voda a les. 800 metrů od lanovky, sauna a vířivka v domě, snídaně v našem bistru.",
+    "foto": "images/hero-exterier.webp"
+  },
+  "uvod": {
+    "nadpis": "Soutok živlů pod Hrubým Jeseníkem",
+    "text": "Wellness Hotel Soutok Kouty stojí tam, kde se potkávají živly – hory nad hlavou, voda pod okny a les všude kolem. Původní dům jsme přestavěli na 23 apartmánů se dřevem, výhledem do přírody a vším, co po dni na svahu nebo na kole potřebujete.",
+    "fakta": [
+      {
+        "cislo": "23",
+        "popis": "apartmánů pro 2–6 hostů"
+      },
+      {
+        "cislo": "800 m",
+        "popis": "k lanovce Ski areálu Kouty"
+      },
+      {
+        "cislo": "0 m",
+        "popis": "vlak a autobus přímo naproti"
+      }
+    ]
+  },
+  "kontakt": {
+    "telefon": "+420 000 000 000",
+    "email": "info@resortcervenydvur.cz",
+    "adresa": "Rejhotice 131, 788 11 Loučná nad Desnou",
+    "mapa_url": "https://mapy.cz/s/soutok-kouty"
+  },
+  "mistni_poplatek": 50,
+  "check_in": "od 15:00",
+  "check_out": "do 10:00",
+  "previo_hotel_id": ""
+}

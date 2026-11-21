@@ -1,0 +1,23 @@
+{
+  "nadpis": "Snídaně u potoka, večeře po svahu",
+  "text": "Bistro v přízemí je srdce domu. Ráno snídaně z regionálních surovin, v sezóně večeře a přes léto posezení venku u vody.",
+  "oteviraci_doba": [
+    {
+      "co": "Snídaně",
+      "kdy": "denně 7:30–10:00"
+    },
+    {
+      "co": "Večeře",
+      "kdy": "v sezóně Čt–So 18:00–21:00"
+    },
+    {
+      "co": "Káva a drinky",
+      "kdy": "denně do 21:00"
+    }
+  ],
+  "fotky": [
+    "images/bistro-01.webp",
+    "images/bistro-02.webp",
+    "images/bistro-03.webp"
+  ]
+}

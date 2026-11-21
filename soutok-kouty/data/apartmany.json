@@ -1,0 +1,131 @@
+{
+  "typy": [
+    {
+      "id": "studio",
+      "nazev": "Studio",
+      "perex": "Útulný apartmán pro dva v 1. patře. Dubové obložení, kuchyňský kout, horská malba nad postelí. Fotky jsou ze skutečného vzorového apartmánu.",
+      "plocha": "16–23 m²",
+      "osoby": 2,
+      "luzka": "manželská postel 180 cm",
+      "pocet": 5,
+      "cena_noc": 1990,
+      "foto_typ": "Skutečné foto",
+      "fotky": [
+        "images/studio-01.webp",
+        "images/studio-05.webp",
+        "images/studio-03.webp",
+        "images/studio-02.webp",
+        "images/studio-04.webp",
+        "images/studio-06.webp"
+      ],
+      "vybaveni": [
+        "Kuchyňský kout",
+        "Koupelna se sprchou",
+        "Smart TV",
+        "Pracovní stůl",
+        "Chytrý zámek"
+      ],
+      "previo_id": ""
+    },
+    {
+      "id": "studio-terasa",
+      "nazev": "Studio s terasou",
+      "perex": "Vlastní terasa nad potokem a výhled do lesa. Ranní káva s šuměním Desné.",
+      "plocha": "16–27 m² + terasa 7–13 m²",
+      "osoby": 3,
+      "luzka": "manželská postel + přistýlka",
+      "pocet": 6,
+      "cena_noc": 2390,
+      "foto_typ": "Vizualizace",
+      "fotky": [
+        "images/terasa-01.webp",
+        "images/terasa-02.webp",
+        "images/terasa-03.webp",
+        "images/terasa-04.webp"
+      ],
+      "vybaveni": [
+        "Terasa s posezením",
+        "Výhled do přírody",
+        "Kuchyňský kout",
+        "Koupelna se sprchou",
+        "Smart TV"
+      ],
+      "previo_id": ""
+    },
+    {
+      "id": "zahradka",
+      "nazev": "Apartmán s předzahrádkou",
+      "perex": "Přízemní apartmán s vlastní zahrádkou a grilem. Ideální pro rodiny s dětmi a pro pobyt se psem.",
+      "plocha": "26–35 m² + zahrádka cca 29 m²",
+      "osoby": 4,
+      "luzka": "manželská postel + rozkládací pohovka",
+      "pocet": 3,
+      "cena_noc": 2690,
+      "foto_typ": "Vizualizace",
+      "fotky": [
+        "images/zahradka-01.webp",
+        "images/zahradka-02.webp",
+        "images/zahradka-03.webp",
+        "images/zahradka-04.webp"
+      ],
+      "vybaveni": [
+        "Soukromá zahrádka",
+        "Gril",
+        "Bezbariérový přístup",
+        "Kuchyňský kout",
+        "Psi vítáni"
+      ],
+      "previo_id": ""
+    },
+    {
+      "id": "loft",
+      "nazev": "Podkrovní s loftem",
+      "perex": "Spaní v galerii pod šikmou střechou a velké okno do hor. Nejvíc „chata“ z celého domu.",
+      "plocha": "25–42 m² včetně loftu",
+      "osoby": 4,
+      "luzka": "postel v loftu + rozkládací pohovka",
+      "pocet": 8,
+      "cena_noc": 2890,
+      "foto_typ": "Vizualizace",
+      "fotky": [
+        "images/loft-01.webp",
+        "images/loft-02.webp",
+        "images/loft-03.webp",
+        "images/loft-04.webp"
+      ],
+      "vybaveni": [
+        "Spací loft",
+        "Prosklený vikýř",
+        "Kuchyňský kout",
+        "Koupelna se sprchou",
+        "Smart TV"
+      ],
+      "previo_id": ""
+    },
+    {
+      "id": "loft-suite",
+      "nazev": "Loft Suite",
+      "perex": "Největší apartmán domu – 61 m², loft přes celou šířku a obývák s jídelním stolem pro šest.",
+      "plocha": "61 m² včetně loftu 23 m²",
+      "osoby": 6,
+      "luzka": "2 postele v loftu + rozkládací pohovka",
+      "pocet": 1,
+      "cena_noc": 3990,
+      "foto_typ": "Vizualizace",
+      "fotky": [
+        "images/suite-01.webp",
+        "images/suite-02.webp",
+        "images/suite-03.webp",
+        "images/suite-04.webp"
+      ],
+      "vybaveni": [
+        "Loft 23 m²",
+        "Jídelní stůl pro 6",
+        "Plně vybavená kuchyň",
+        "Koupelna se sprchou",
+        "Smart TV"
+      ],
+      "previo_id": ""
+    }
+  ]
+}
