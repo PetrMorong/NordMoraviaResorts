@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<script>if(/\/cerveny-dvur$/.test(location.pathname))location.replace(location.pathname+"/"+location.search+location.hash)</script>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rezervace – Resort Červený dvůr Rapotín</title>
+<meta name="description" content="Rezervujte si apartmán v Resortu Červený dvůr napřímo – bez poplatků, snídaně v ceně.">
+<meta property="og:title" content="Rezervace – Resort Červený dvůr Rapotín">
+<meta property="og:image" content="https://res.cloudinary.com/morireality/image/upload/f_jpg,q_auto,c_fill,w_1200,h_630/Rapotin/web/exterier-vecer">
+<link rel="icon" href="images/symbol-dark.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://res.cloudinary.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/cd.css">
+<script src="https://booking.previo.cz/iframe/"></script>
+</head>
+<body class="page-book">
+<header class="hdr always" id="hdr">
+  <div class="wrap">
+    <a class="logo" href="index.html" aria-label="Resort Červený dvůr – úvod"><img src="images/logo-light.svg" alt="Červený dvůr" width="151" height="44"></a>
+    <nav id="nav"><a href="index.html#apartmany">Ubytování</a><a href="restaurace.html">Restaurace</a><a href="wellness.html">Wellness</a><a href="akce.html">Svatby a akce</a><a href="index.html#galerie">Galerie</a></nav>
+    <div class="tools">
+      <details class="net">
+        <summary aria-label="Další resorty Nord Moravia">Resorty ▾</summary>
+        <div class="menu">
+          <a href="index.html"><i style="background:#5B2E1C"></i><span>Resort Červený dvůr<small>Rapotín · jste tady</small></span></a>
+          <a href="../vila-republika/"><i style="background:#BF5756"></i><span>Vila Republika<small>Velké Losiny</small></span></a>
+          <a href="../soutok-kouty/"><i style="background:#141117"></i><span>Wellness Hotel Soutok Kouty<small>Kouty nad Desnou · od 2028</small></span></a>
+          <a class="all" href="/">Celá síť Nord Moravia Resorts →</a>
+        </div>
+      </details>
+      <a class="btn red" href="rezervace.html">Rezervovat</a>
+      <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">≡</button>
+    </div>
+  </div>
+</header>
+<main>
+  <section class="book-head">
+    <div class="wrap">
+      <p class="kicker light">Rezervace napřímo</p>
+      <h1>Vyberte termín <em>a apartmán</em></h1>
+      <form class="bbar inline" id="dates">
+        <label>Příjezd<input type="date" name="od" id="b-od" required></label>
+        <label>Odjezd<input type="date" name="do" id="b-do" required></label>
+        <button type="submit" class="btn red">Zobrazit volné apartmány</button>
+      </form>
+      <ul class="perks"><li>Bez poplatků za rezervaci</li><li>Snídaně v ceně</li><li>Okamžité potvrzení</li></ul>
+    </div>
+  </section>
+  <section class="book-frame">
+    <div class="wrap">
+      <div class="frame"><iframe id="previo-booking-iframe" name="previo-booking-iframe" title="Rezervační systém Previo" scrolling="no" frameborder="0" width="100%" height="1600" allowtransparency="true"></iframe></div>
+      <p class="note">Rezervaci zpracovává systém Previo. Wellness a masáže si rezervujete <a id="reservio" target="_blank" rel="noopener">zde</a>, stůl v restauraci <a href="restaurace.html">zde</a>.</p>
+    </div>
+  </section>
+</main>
+<section class="cta" id="kontakt">
+  <div class="wrap two">
+    <div class="rv">
+      <p class="kicker light">Kontakt</p>
+      <h2 class="title">Těšíme se <em>na vás</em></h2>
+      <p class="lead light">Recepce vyřizuje ubytování, wellness i restauraci. Pro svatby a firemní akce pište na e-mail pro akce.</p>
+      <div class="btns"><a class="btn red arrow" href="rezervace.html">Rezervovat pobyt</a><a class="btn light" id="k-tel">Zavolat</a></div>
+    </div>
+    <dl class="contact rv" id="contact"></dl>
+  </div>
+</section>
+<footer class="ftr">
+  <div class="wrap">
+    <img src="images/logo-light.svg" alt="Červený dvůr" width="123" height="36">
+    <p>Resort Červený dvůr · součást <a href="/">Nord Moravia Resorts</a></p>
+    <nav><a href="index.html#historie">Historie</a><a href="#kontakt">Kontakt</a><a id="ftr-fb" target="_blank" rel="noopener">Facebook</a><a id="ftr-ig" target="_blank" rel="noopener">Instagram</a><a href="/admin/">Správa obsahu</a></nav>
+  </div>
+</footer>
+<script src="assets/cd.js"></script>
+<script>
+(async () => {
+  const N = await CD.load('nastaveni');
+  const q = new URLSearchParams(location.search), od = document.getElementById('b-od'), dd = document.getElementById('b-do');
+  if (q.get('od')) od.value = q.get('od'); if (q.get('do')) dd.value = q.get('do');
+  const had = q.get('od') && q.get('do'); CD.dates(od, dd);
+  const base = `https://booking.previo.cz/?hotId=${encodeURIComponent(N.previo_hotel_id)}&lang=cs&guestFilter=1&hideCurrencies=EUR`;
+  const frame = document.getElementById('previo-booking-iframe');
+  const go = d => { frame.src = base + (d ? `&arrival=${od.value}&departure=${dd.value}` : ''); };
+  go(had);
+  document.getElementById('dates').addEventListener('submit', e => { e.preventDefault(); history.replaceState(null, '', `?od=${od.value}&do=${dd.value}`); go(true); frame.scrollIntoView({behavior: 'smooth'}); });
+  document.getElementById('reservio').href = N.reservio_url;
+  CD.footer(N); CD.header();
+})();
+</script>
+</body>
+</html>

@@ -281,3 +281,4 @@ h2.title{font-family:var(--disp);font-weight:500;font-size:clamp(36px,4.4vw,58px
  .framed::before,.framed::after{display:none}}
 @media(max-width:600px){.bbar input,.bbar select{font-size:16px}.bbar label{padding:14px 16px}.facts,.transit{grid-template-columns:1fr}.facts div{padding:18px 0 0}.well-items,.ticks,.specs,.form,.pays{grid-template-columns:1fr}
  .rate{grid-template-columns:1fr auto}.rate .pick{grid-column:1/-1}.extra{grid-template-columns:1fr auto}.extra .tog{grid-column:1/-1}.hero .copy{padding-bottom:40px}.bbar{margin-top:0}.net summary b{display:none}}
+.net,.net summary,.tools .btn,.logo{flex:none}

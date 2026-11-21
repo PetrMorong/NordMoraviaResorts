@@ -1,8 +1,15 @@
-# Decap CMS – Nord Moravia Resorts (zatím web Soutok Kouty; další resorty přibudou jako další kolekce)
-# Přihlášení: /admin (Netlify Identity + Git Gateway, viz README)
+# Decap CMS – Nord Moravia Resorts (NMR + Soutok Kouty; další resorty přibudou jako další kolekce)
+# Přihlášení: /admin přes Decap Turbo (https://turbo.decapcms.org) – uživatele a role spravuješ v Turbo dashboardu.
+# Větev, do které CMS zapisuje, se nastavuje u webu v Turbo dashboardu.
+# Role se navazují na NÁZVY kolekcí níže (name:): nmr, nmr_tym, nmr_investice, soutok_web, soutok_apartmany, ...
 backend:
-  name: git-gateway
-  branch: main
+  name: turbo-github
+  turbo_site_id: DOPLNIT-SITE-ID   # zkopíruj z Turbo dashboardu po vytvoření webu
+
+# Záloha – původní přihlášení přes Netlify Identity (zastaralé, nepoužívat):
+# backend:
+#   name: git-gateway
+#   branch: main
 locale: cs
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
@@ -46,6 +53,11 @@ collections:
         file: "data/nmr/tym.json"
         fields:
           - { label: "Lidé", name: "lide", widget: "list", summary: "{{fields.jmeno}}", fields: [{ label: "Jméno", name: "jmeno", widget: "string" }, { label: "Role", name: "role", widget: "string" }, { label: "Popis", name: "bio", widget: "text" }] }
+
+  # Oddělená kolekce, aby šla v rolích zamknout (právní formulace výnosu)
+  - name: "investice"
+    label: "Nord Moravia – investice"
+    files:
       - name: "investice"
         label: "Investice"
         file: "data/nmr/investice.json"
@@ -194,3 +206,181 @@ collections:
               - { label: "Popis", name: "popis", widget: "string" }
               - { label: "Cena (Kč, 0 = dle ceníku)", name: "cena", widget: "number" }
               - { label: "Účtuje se za", name: "jednotka", widget: "select", options: ["pobyt", "noc", "osoba"] }
+
+  # ── Vila Republika (/vila-republika/) ─────────────────────────────
+  # Fotky: Cloudinary ID (např. vilaRepublikaFoto/byt5/LL406469-HDR-min_ks7xwb) nebo nahraný obrázek.
+  - name: "vr_web"
+    label: "Vila Republika – texty a nastavení"
+    files:
+      - name: "nastaveni"
+        label: "Nastavení, úvod, kontakt, poukazy"
+        file: "vila-republika/data/nastaveni.json"
+        fields:
+          - { label: "Hero – fotka", name: "hero_foto", widget: "image", hint: "Cloudinary ID nebo nahraný obrázek" }
+          - { label: "Hero – nadpis", name: "hero_nadpis", widget: "string", hint: "*text* = zvýraznění barvou" }
+          - { label: "Hero – perex", name: "hero_perex", widget: "text" }
+          - { label: "Fakta pod hero", name: "fakta", widget: "list", fields: [{ label: "Číslo", name: "cislo", widget: "string" }, { label: "Text", name: "text", widget: "string" }] }
+          - { label: "Úvod – nadpis", name: "intro_nadpis", widget: "string" }
+          - { label: "Úvod – text", name: "intro_text", widget: "text" }
+          - { label: "Úvod – fotka", name: "intro_foto", widget: "image" }
+          - { label: "Previo hotel ID", name: "previo_hotel_id", widget: "string" }
+          - { label: "Odkaz na rezervaci wellness (Reservio)", name: "reservio_url", widget: "string" }
+          - { label: "Check-in", name: "check_in", widget: "string" }
+          - { label: "Check-out", name: "check_out", widget: "string" }
+          - label: "Kontakt"
+            name: "kontakt"
+            widget: "object"
+            fields:
+              - { label: "E-mail", name: "email", widget: "string" }
+              - { label: "Telefon", name: "telefon", widget: "string", required: false }
+              - { label: "Adresa", name: "adresa", widget: "string" }
+              - { label: "Odkaz na mapu", name: "mapa", widget: "string" }
+              - { label: "Provozovatel", name: "provozovatel", widget: "string" }
+              - { label: "Facebook", name: "facebook", widget: "string" }
+              - { label: "Instagram", name: "instagram", widget: "string" }
+          - { label: "Recenze", name: "recenze", widget: "list", fields: [{ label: "Text", name: "text", widget: "text" }, { label: "Autor", name: "autor", widget: "string" }] }
+          - label: "Dárkové poukazy"
+            name: "poukazy"
+            widget: "object"
+            fields:
+              - { label: "Nadpis", name: "nadpis", widget: "string" }
+              - { label: "Text", name: "text", widget: "text" }
+              - { label: "Hodnoty", name: "hodnoty", widget: "list", field: { label: "Hodnota", name: "hodnota", widget: "string" } }
+      - name: "sluzby"
+        label: "Wellness, společenská místnost, vybavení"
+        file: "vila-republika/data/sluzby.json"
+        fields:
+          - label: "Wellness"
+            name: "wellness"
+            widget: "object"
+            fields:
+              - { label: "Nadpis", name: "nadpis", widget: "string" }
+              - { label: "Text", name: "text", widget: "text" }
+              - { label: "Cena pro veřejnost", name: "cena", widget: "string" }
+              - { label: "Vybavení", name: "vybaveni", widget: "list", field: { label: "Položka", name: "polozka", widget: "string" } }
+              - { label: "Fotky (2)", name: "fotky", widget: "list", field: { label: "Fotka", name: "foto", widget: "image" } }
+          - label: "Společenská místnost"
+            name: "spolecenska"
+            widget: "object"
+            fields:
+              - { label: "Nadpis", name: "nadpis", widget: "string" }
+              - { label: "Text", name: "text", widget: "text" }
+              - { label: "Fotky (2)", name: "fotky", widget: "list", field: { label: "Fotka", name: "foto", widget: "image" } }
+          - { label: "Další vybavení", name: "dalsi", widget: "list", fields: [{ label: "Název", name: "nazev", widget: "string" }, { label: "Text", name: "text", widget: "string" }] }
+      - name: "okoli"
+        label: "Okolí"
+        file: "vila-republika/data/okoli.json"
+        fields:
+          - { label: "Text", name: "text", widget: "text" }
+          - { label: "Fotka", name: "foto", widget: "image" }
+          - { label: "Místa", name: "mista", widget: "list", fields: [{ label: "Název", name: "nazev", widget: "string" }, { label: "Text", name: "text", widget: "string" }, { label: "Vzdálenost", name: "vzdalenost", widget: "string" }] }
+
+  - name: "vr_apartmany"
+    label: "Vila Republika – apartmány"
+    files:
+      - name: "apartmany"
+        label: "Apartmány"
+        file: "vila-republika/data/apartmany.json"
+        fields:
+          - label: "Apartmány"
+            name: "apartmany"
+            widget: "list"
+            summary: "{{fields.nazev}}"
+            fields:
+              - { label: "ID", name: "id", widget: "string" }
+              - { label: "Zobrazit na webu", name: "aktivni", widget: "boolean", hint: "Vypnout, pokud apartmán nejde rezervovat v Previu" }
+              - { label: "Název", name: "nazev", widget: "string" }
+              - { label: "Podtitul", name: "podtitul", widget: "string" }
+              - { label: "Počet osob", name: "osoby", widget: "string" }
+              - { label: "Plocha / ložnice", name: "plocha", widget: "string", required: false }
+              - { label: "Lůžka", name: "luzka", widget: "string", required: false }
+              - { label: "Popis", name: "popis", widget: "text" }
+              - { label: "Fotky", name: "fotky", widget: "list", field: { label: "Fotka", name: "foto", widget: "image" } }
+          - { label: "Vybavení všech apartmánů", name: "vybaveni", widget: "list", field: { label: "Položka", name: "polozka", widget: "string" } }
+
+  # ── Resort Červený dvůr (/cerveny-dvur/) ──────────────────────────
+  - name: "cd_web"
+    label: "Červený dvůr – resort"
+    files:
+      - name: "nastaveni"
+        label: "Úvod, kontakt, historie"
+        file: "cerveny-dvur/data/nastaveni.json"
+        fields:
+          - { label: "Hero – fotka (záložní)", name: "hero_foto", widget: "image", hint: "Cloudinary ID nebo nahraný obrázek" }
+          - { label: "Hero – prolínající se fotky", name: "hero_fotky", widget: "list", field: { label: "Fotka", name: "foto", widget: "image" } }
+          - { label: "Zábava v areálu", name: "zabava", widget: "object", fields: [{ label: "Nadpis", name: "nadpis", widget: "string" }, { label: "Text", name: "text", widget: "text" }, { label: "Položky", name: "polozky", widget: "list", field: { label: "Položka", name: "polozka", widget: "string" } }, { label: "Fotka (záložní)", name: "foto", widget: "image" }, { label: "Fotky (3)", name: "fotky", widget: "list", field: { label: "Fotka", name: "foto", widget: "image" } }] }
+          - { label: "Galerie", name: "galerie", widget: "list", summary: "{{fields.popis}}", hint: "Ideálně 14 fotek – mřížka se pak zaplní celá", fields: [{ label: "Fotka", name: "foto", widget: "image" }, { label: "Popisek", name: "popis", widget: "string" }] }
+          - { label: "Hero – nadpis", name: "hero_nadpis", widget: "string", hint: "*text* = zvýraznění" }
+          - { label: "Hero – perex", name: "hero_perex", widget: "text" }
+          - { label: "Pruh nahoře", name: "pruh", widget: "object", fields: [{ label: "Text (prázdné = skrýt)", name: "text", widget: "string", required: false }, { label: "Odkaz", name: "odkaz", widget: "string" }] }
+          - { label: "Fakta pod hero", name: "fakta", widget: "list", fields: [{ label: "Číslo", name: "cislo", widget: "string" }, { label: "Text", name: "text", widget: "string" }] }
+          - { label: "Úvod – nadpis", name: "intro_nadpis", widget: "string" }
+          - { label: "Úvod – text", name: "intro_text", widget: "text" }
+          - { label: "Úvod – fotka", name: "intro_foto", widget: "image" }
+          - { label: "Previo hotel ID", name: "previo_hotel_id", widget: "string" }
+          - { label: "Reservio (wellness a masáže)", name: "reservio_url", widget: "string" }
+          - { label: "Google hodnocení", name: "google_hodnoceni", widget: "object", fields: [{ label: "Známka", name: "znamka", widget: "string" }, { label: "Počet recenzí", name: "pocet", widget: "string" }, { label: "Odkaz", name: "odkaz", widget: "string" }] }
+          - label: "Kontakt"
+            name: "kontakt"
+            widget: "object"
+            fields:
+              - { label: "E-mail", name: "email", widget: "string" }
+              - { label: "E-mail svatby a akce", name: "email_akce", widget: "string" }
+              - { label: "Telefon", name: "telefon", widget: "string" }
+              - { label: "Adresa", name: "adresa", widget: "string" }
+              - { label: "Odkaz na mapu", name: "mapa", widget: "string" }
+              - { label: "Provozovatel", name: "provozovatel", widget: "string" }
+              - { label: "Facebook", name: "facebook", widget: "string" }
+              - { label: "Instagram", name: "instagram", widget: "string" }
+          - { label: "Recenze", name: "recenze", widget: "list", fields: [{ label: "Text", name: "text", widget: "text" }, { label: "Autor", name: "autor", widget: "string" }] }
+          - { label: "Historie", name: "historie", widget: "object", fields: [{ label: "Nadpis", name: "nadpis", widget: "string" }, { label: "Text", name: "text", widget: "text" }, { label: "Fotka", name: "foto", widget: "image" }] }
+      - name: "apartmany"
+        label: "Apartmány"
+        file: "cerveny-dvur/data/apartmany.json"
+        fields:
+          - { label: "Apartmány", name: "apartmany", widget: "list", summary: "{{fields.nazev}}", fields: [{ label: "Název", name: "nazev", widget: "string" }, { label: "Osoby", name: "osoby", widget: "string" }, { label: "Plocha", name: "plocha", widget: "string" }, { label: "Popis", name: "popis", widget: "text" }, { label: "Fotka", name: "foto", widget: "image" }] }
+          - { label: "Vybavení", name: "vybaveni", widget: "list", field: { label: "Položka", name: "polozka", widget: "string" } }
+      - name: "akce"
+        label: "Svatby a firemní akce"
+        file: "cerveny-dvur/data/akce.json"
+        fields:
+          - { label: "Svatby", name: "svatby", widget: "object", fields: [{ label: "Nadpis", name: "nadpis", widget: "string" }, { label: "Text", name: "text", widget: "text" }, { label: "Body", name: "body", widget: "list", field: { label: "Bod", name: "bod", widget: "string" } }, { label: "Fotky (3)", name: "fotky", widget: "list", field: { label: "Fotka", name: "foto", widget: "image" } }] }
+          - { label: "Firmy", name: "firmy", widget: "object", fields: [{ label: "Nadpis", name: "nadpis", widget: "string" }, { label: "Text", name: "text", widget: "text" }, { label: "Parametry", name: "parametry", widget: "list", fields: [{ label: "Položka", name: "k", widget: "string" }, { label: "Hodnota", name: "v", widget: "string" }] }, { label: "Fotka", name: "foto", widget: "image" }] }
+      - name: "wellness"
+        label: "Wellness a masáže"
+        file: "cerveny-dvur/data/wellness.json"
+        fields:
+          - { label: "Hero – fotka", name: "hero_foto", widget: "image" }
+          - { label: "Nadpis", name: "nadpis", widget: "string", hint: "*text* = zvýraznění" }
+          - { label: "Perex", name: "perex", widget: "text" }
+          - { label: "Cena (pod tlačítky)", name: "cena", widget: "string" }
+          - { label: "Vybavení", name: "vybaveni", widget: "list", summary: "{{fields.nazev}}", fields: [{ label: "Název", name: "nazev", widget: "string" }, { label: "Fotka", name: "foto", widget: "image" }] }
+          - { label: "Jak to funguje (kroky)", name: "kroky", widget: "list", summary: "{{fields.nadpis}}", fields: [{ label: "Nadpis", name: "nadpis", widget: "string" }, { label: "Text", name: "text", widget: "text" }] }
+          - { label: "Masáže – ceník", name: "masaze", widget: "list", summary: "{{fields.nazev}} – {{fields.cena}}", fields: [{ label: "Název", name: "nazev", widget: "string" }, { label: "Cena", name: "cena", widget: "string" }, { label: "Popis", name: "text", widget: "text" }] }
+          - { label: "Časté dotazy", name: "faq", widget: "list", summary: "{{fields.q}}", fields: [{ label: "Otázka", name: "q", widget: "string" }, { label: "Odpověď", name: "a", widget: "text" }] }
+
+  - name: "cd_restaurace"
+    label: "Červený dvůr – restaurace"
+    files:
+      - name: "restaurace"
+        label: "Restaurace"
+        file: "cerveny-dvur/data/restaurace.json"
+        fields:
+          - { label: "Hero – fotka", name: "hero_foto", widget: "image" }
+          - { label: "Hero – je to vizualizace", name: "hero_vizualizace", widget: "boolean", required: false, default: false, hint: "Zobrazí štítek Vizualizace. Po nahrání skutečné fotky vypnout." }
+          - { label: "Hero – nadpis", name: "hero_nadpis", widget: "string" }
+          - { label: "Hero – perex", name: "hero_perex", widget: "text" }
+          - { label: "Odkaz na digitální menu", name: "menu_url", widget: "string" }
+          - { label: "Odkaz na rezervaci stolu", name: "rezervace_url", widget: "string" }
+          - { label: "Odkaz na rozvoz", name: "rozvoz_url", widget: "string" }
+          - { label: "Důvody přijít (3)", name: "duvody", widget: "list", fields: [{ label: "Nadpis", name: "nadpis", widget: "string" }, { label: "Text", name: "text", widget: "string" }] }
+          - { label: "Kuchyně", name: "kuchyne", widget: "object", fields: [{ label: "Nadpis", name: "nadpis", widget: "string" }, { label: "Text", name: "text", widget: "text" }, { label: "Fotky (3, jen skutečné)", name: "fotky", widget: "list", field: { label: "Fotka", name: "foto", widget: "image" } }] }
+          - { label: "Tým", name: "tym", widget: "list", summary: "{{fields.jmeno}} – {{fields.role}}", fields: [{ label: "Jméno", name: "jmeno", widget: "string" }, { label: "Role", name: "role", widget: "string" }, { label: "Text", name: "text", widget: "text" }, { label: "Fotka", name: "foto", widget: "image", required: false }, { label: "Zobrazit", name: "zobrazit", widget: "boolean" }] }
+          - { label: "Akce", name: "akce", widget: "list", summary: "{{fields.datum}} {{fields.nazev}}", hint: "Po datu 'konec' se akce sama skryje", fields: [{ label: "Název", name: "nazev", widget: "string" }, { label: "Datum (text)", name: "datum", widget: "string" }, { label: "Čas", name: "cas", widget: "string", required: false }, { label: "Konec (skrýt po)", name: "konec", widget: "datetime", format: "YYYY-MM-DD", date_format: "D. M. YYYY", time_format: false }, { label: "Text", name: "text", widget: "text" }, { label: "Tlačítko rezervace", name: "rezervace", widget: "boolean" }] }
+          - { label: "Prostory", name: "prostory", widget: "list", fields: [{ label: "Název", name: "nazev", widget: "string" }, { label: "Text", name: "text", widget: "string" }, { label: "Fotka", name: "foto", widget: "image" }, { label: "Je to vizualizace (zobrazí štítek)", name: "vizualizace", widget: "boolean", required: false }] }
+          - { label: "Praktické informace", name: "prakticke", widget: "list", field: { label: "Položka", name: "polozka", widget: "string" } }
+          - { label: "Otevírací doba", name: "oteviraci_doba", widget: "list", fields: [{ label: "Dny", name: "dny", widget: "string" }, { label: "Čas", name: "cas", widget: "string" }] }
+          - { label: "Dárkové poukazy", name: "poukazy", widget: "object", fields: [{ label: "Nadpis", name: "nadpis", widget: "string" }, { label: "Text", name: "text", widget: "text" }] }
+          - { label: "Fotky jídel (galerie)", name: "jidla", widget: "object", fields: [{ label: "Nadpis", name: "nadpis", widget: "string" }, { label: "Fotky", name: "fotky", widget: "list", summary: "{{fields.popis}}", hint: "První fotka je velká. Ideálně 9 fotek (1 velká + 8 malých).", fields: [{ label: "Fotka", name: "foto", widget: "image" }, { label: "Název jídla", name: "popis", widget: "string" }, { label: "Krátký popis", name: "text", widget: "string", required: false, hint: "např. hlavní suroviny" }] }] }
+          - { label: "Google profil restaurace", name: "google", widget: "object", hint: "Vlastní Google Business restaurace, ne resortu", fields: [{ label: "Známka", name: "znamka", widget: "string", required: false, hint: "např. 4,8 (prázdné = zobrazí se jen odkaz)" }, { label: "Počet recenzí", name: "pocet", widget: "string", required: false }, { label: "Odkaz", name: "odkaz", widget: "string" }] }
+          - { label: "Pro firmy", name: "firmy", widget: "object", fields: [{ label: "Nadpis", name: "nadpis", widget: "string" }, { label: "Text", name: "text", widget: "text" }, { label: "Fotka", name: "foto", widget: "image" }] }

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rezervace – Vila Republika, Velké Losiny</title>
+<meta name="description" content="Rezervujte si apartmán ve Vile Republika napřímo – nejlepší cena, bez poplatků.">
+<link rel="icon" href="images/symbol.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/vr.css">
+<!-- Previo: automatická výška iframe -->
+<script src="https://booking.previo.cz/iframe/"></script>
+</head>
+<body class="page-book">
+
+<header class="hdr always" id="hdr">
+  <div class="wrap">
+    <a class="logo" href="index.html" aria-label="Vila Republika – úvod"><img src="images/logo-light.svg" alt="Vila Republika" width="120" height="42"></a>
+    <nav id="nav"><a href="index.html#apartmany">Apartmány</a><a href="index.html#wellness">Wellness</a><a href="index.html#kontakt">Kontakt</a></nav>
+    <div class="tools">
+      <details class="net">
+        <summary><b>NORD MORAVIA</b> resorty ▾</summary>
+        <div class="menu">
+          <a href="../cerveny-dvur/"><i style="background:#5B2E1C"></i><span>Resort Červený dvůr<small>Rapotín</small></span></a>
+          <a href="index.html"><i style="background:#BF5756"></i><span>Vila Republika<small>Velké Losiny · jste tady</small></span></a>
+          <a href="../soutok-kouty/"><i style="background:#141117"></i><span>Wellness Hotel Soutok Kouty<small>Kouty nad Desnou · od 2028</small></span></a>
+          <a class="all" href="/">Celá síť Nord Moravia Resorts →</a>
+        </div>
+      </details>
+      <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">≡</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="book-head">
+    <div class="wrap">
+      <p class="kicker light">Rezervace napřímo</p>
+      <h1>Vyberte termín <em>a apartmán</em></h1>
+      <form class="bbar inline" id="dates">
+        <label>Příjezd<input type="date" name="od" id="b-od" required></label>
+        <label>Odjezd<input type="date" name="do" id="b-do" required></label>
+        <button type="submit" class="btn red">Zobrazit volné apartmány</button>
+      </form>
+      <ul class="perks"><li>Nejlepší cena napřímo</li><li>Potvrzení ihned e-mailem</li><li>Self check-in kódem</li></ul>
+    </div>
+  </section>
+
+  <section class="book-frame">
+    <div class="wrap">
+      <div class="frame">
+        <iframe id="previo-booking-iframe" name="previo-booking-iframe" title="Rezervační systém Previo" scrolling="no" frameborder="0" width="100%" height="1600" allowtransparency="true"></iframe>
+      </div>
+      <p class="note">Rezervaci zpracovává systém Previo. Nejde vám to? Napište nám na <a id="mail"></a>.
+        Privátní wellness pro veřejnost si rezervujete <a id="reservio" target="_blank" rel="noopener">zde</a>.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="ftr">
+  <div class="wrap">
+    <img src="images/logo-light.svg" alt="Vila Republika" width="104" height="36">
+    <p>Vila Republika · součást <a href="/">Nord Moravia Resorts</a></p>
+    <nav><a href="index.html">Úvod</a></nav>
+  </div>
+</footer>
+
+<script src="assets/vr.js"></script>
+<script>
+(async () => {
+  const N = await VR.load('nastaveni');
+  const q = new URLSearchParams(location.search), od = document.getElementById('b-od'), dd = document.getElementById('b-do');
+  if (q.get('od')) od.value = q.get('od');
+  if (q.get('do')) dd.value = q.get('do');
+  const had = q.get('od') && q.get('do');
+  VR.dates(od, dd);
+  const base = `https://booking.previo.cz/?hotId=${encodeURIComponent(N.previo_hotel_id)}&lang=cs&theme=dark&hideTabs=review-pricelist-map&guestFilter=1&hideCurrencies=EUR`;
+  const frame = document.getElementById('previo-booking-iframe');
+  // s datem skočí Previo rovnou na výběr apartmánu (krok 2)
+  const go = withDates => { frame.src = base + (withDates ? `&arrival=${od.value}&departure=${dd.value}` : ''); };
+  go(had);
+  document.getElementById('dates').addEventListener('submit', e => {
+    e.preventDefault(); history.replaceState(null, '', `?od=${od.value}&do=${dd.value}`); go(true);
+    frame.scrollIntoView({behavior: 'smooth', block: 'start'});
+  });
+  const m = document.getElementById('mail'); m.href = 'mailto:' + N.kontakt.email; m.textContent = N.kontakt.email;
+  document.getElementById('reservio').href = N.reservio_url;
+  VR.header();
+})();
+</script>
+</body>
+</html>

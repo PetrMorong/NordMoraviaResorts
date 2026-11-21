@@ -1,0 +1,53 @@
+{
+  "wellness": {
+    "nadpis": "Privátní wellness *jen pro vás*",
+    "text": "Celé wellness si zarezervujete jen pro sebe – nikdo cizí, žádné spěchání. Když ho nevyužívají ubytovaní hosté, je otevřené i veřejnosti, každý den včetně víkendů.",
+    "cena": "od 1 590 Kč / 90 min",
+    "vybaveni": [
+      "Finská a bio sauna",
+      "Whirlpool vana",
+      "Ochlazovací bazének",
+      "Ochlazovací vědro",
+      "Odpočinkový kout",
+      "Šatní skříňky"
+    ],
+    "fotky": [
+      "vilaRepublikaFoto/wellness/DSC01861_jluirn",
+      "vilaRepublikaFoto/wellness/DSC01847_rhtjyr"
+    ]
+  },
+  "spolecenska": {
+    "nadpis": "Společenská místnost *pro 20 hostů*",
+    "text": "V přízemí vily je odhlučněná společenská místnost s 20 místy k sezení, vinotékou, společenskými hrami a širokoúhlou TV na filmy i zápasy. Bavit se tu můžete i do pozdních nočních hodin.",
+    "fotky": [
+      "vilaRepublikaFoto/SpolecenskaMistnost/DSC01918-HDR_ltphob",
+      "vilaRepublikaFoto/SpolecenskaMistnost/DSC01924-HDR_zldqdu"
+    ]
+  },
+  "dalsi": [
+    {
+      "nazev": "Psi vítáni",
+      "text": "Pejsek může s vámi."
+    },
+    {
+      "nazev": "Lyžárna a kolárna",
+      "text": "Místo pro lyže i kola."
+    },
+    {
+      "nazev": "Elektrokola",
+      "text": "Na výlety po okolí."
+    },
+    {
+      "nazev": "Posezení ve sklepě",
+      "text": "Pro oslavy a delší večery."
+    },
+    {
+      "nazev": "Parkování",
+      "text": "Parkovací místo u vily."
+    },
+    {
+      "nazev": "Chytrá domácnost",
+      "text": "Self check-in kódem."
+    }
+  ]
+}

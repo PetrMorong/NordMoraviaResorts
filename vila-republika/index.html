@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<script>if(/\/vila-republika$/.test(location.pathname))location.replace(location.pathname+"/"+location.search+location.hash)</script>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vila Republika – wellness apartmány ve Velkých Losinách</title>
+<meta name="description" content="Wellness apartmány Vila Republika ve Velkých Losinách. Prvorepubliková vila pod Hrubým Jeseníkem, privátní wellness, termální lázně na dosah. Rezervace napřímo.">
+<meta property="og:title" content="Vila Republika – wellness apartmány, Velké Losiny">
+<meta property="og:image" content="https://res.cloudinary.com/morireality/image/upload/f_jpg,q_auto,c_fill,w_1200,h_630/vilaRepublikaFoto/LL406610_yfobxv">
+<link rel="icon" href="images/symbol.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://res.cloudinary.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/vr.css">
+</head>
+<body>
+
+<header class="hdr" id="hdr">
+  <div class="wrap">
+    <a class="logo" href="index.html" aria-label="Vila Republika – úvod"><img src="images/logo-light.svg" alt="Vila Republika" width="120" height="42"></a>
+    <nav id="nav">
+      <a href="#apartmany">Apartmány</a><a href="#wellness">Wellness</a><a href="#vila">Vila</a><a href="#okoli">Okolí</a><a href="#poukazy">Poukazy</a><a href="#kontakt">Kontakt</a>
+    </nav>
+    <div class="tools">
+      <details class="net">
+        <summary><b>NORD MORAVIA</b> resorty ▾</summary>
+        <div class="menu">
+          <a href="../cerveny-dvur/"><i style="background:#5B2E1C"></i><span>Resort Červený dvůr<small>Rapotín</small></span></a>
+          <a href="index.html"><i style="background:#BF5756"></i><span>Vila Republika<small>Velké Losiny · jste tady</small></span></a>
+          <a href="../soutok-kouty/"><i style="background:#141117"></i><span>Wellness Hotel Soutok Kouty<small>Kouty nad Desnou · od 2028</small></span></a>
+          <a class="all" href="/">Celá síť Nord Moravia Resorts →</a>
+        </div>
+      </details>
+      <a class="btn red" href="rezervace.html">Rezervovat</a>
+      <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">≡</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="bg" id="hero-bg"></div>
+    <div class="wrap copy">
+      <p class="eyebrow">Wellness apartmány · Velké Losiny</p>
+      <h1 id="hero-title">Prvorepubliková vila <em>pod Hrubým Jeseníkem</em></h1>
+      <p class="perex" id="hero-perex"></p>
+    </div>
+    <div class="wrap">
+      <form class="bbar" id="quick" action="rezervace.html">
+        <label>Příjezd<input type="date" name="od" id="q-od" required></label>
+        <label>Odjezd<input type="date" name="do" id="q-do" required></label>
+        <button type="submit" class="btn red">Ověřit volné apartmány →</button>
+        <p class="bbar-note">Nejlepší cena napřímo · bez poplatků za rezervaci</p>
+      </form>
+    </div>
+  </section>
+
+  <section class="facts-band"><div class="wrap facts" id="facts"></div></section>
+
+  <section class="intro" id="vila">
+    <div class="wrap two">
+      <div class="rv">
+        <p class="kicker">Vila Republika</p>
+        <h2 class="title" id="intro-title"></h2>
+        <p class="lead" id="intro-text"></p>
+        <ul class="ticks" id="vybaveni"></ul>
+      </div>
+      <figure class="arch rv" id="intro-foto"></figure>
+    </div>
+  </section>
+
+  <section class="apts" id="apartmany">
+    <div class="wrap">
+      <div class="head rv">
+        <div><p class="kicker">Apartmány</p><h2 class="title">Každý apartmán <em>s vlastním příběhem</em></h2></div>
+        <p class="lead">Moderní interiéry s prvorepublikovými prvky – repasované dveře, původní parkety, dřevěná obložení. Aktuální ceny a volné termíny uvidíte v rezervaci.</p>
+      </div>
+      <div class="apt-grid" id="apt-grid"></div>
+    </div>
+  </section>
+
+  <section class="well" id="wellness">
+    <div class="wrap two">
+      <div class="pics rv" id="well-pics"></div>
+      <div class="rv">
+        <p class="kicker light">Wellness</p>
+        <h2 class="title" id="well-title"></h2>
+        <p class="lead light" id="well-text"></p>
+        <ul class="chips" id="well-items"></ul>
+        <div class="well-price"><span>Pro veřejnost</span><b id="well-price"></b></div>
+        <a class="btn red arrow" id="well-cta" target="_blank" rel="noopener">Rezervovat wellness</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="social">
+    <div class="wrap two">
+      <div class="rv">
+        <p class="kicker">Společné prostory</p>
+        <h2 class="title" id="spol-title"></h2>
+        <p class="lead" id="spol-text"></p>
+      </div>
+      <div class="pics rv" id="spol-pics"></div>
+    </div>
+    <div class="wrap"><div class="extras rv" id="extras"></div></div>
+  </section>
+
+  <section class="loc" id="okoli">
+    <div class="wrap">
+      <div class="head rv">
+        <div><p class="kicker">Okolí</p><h2 class="title">Staletá lázeňská historie <em>a hory za humny</em></h2></div>
+        <p class="lead" id="okoli-text"></p>
+      </div>
+      <div class="loc-grid">
+        <figure class="arch wide rv" id="okoli-foto"></figure>
+        <ol class="places rv" id="places"></ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="quote" id="recenze"><div class="wrap rv" id="quote"></div></section>
+
+  <section class="voucher" id="poukazy">
+    <div class="wrap two">
+      <div class="rv">
+        <p class="kicker">Dárkové poukazy</p>
+        <h2 class="title" id="pk-title"></h2>
+        <p class="lead" id="pk-text"></p>
+      </div>
+      <div class="rv">
+        <div class="values" id="pk-values" role="radiogroup" aria-label="Hodnota poukazu"></div>
+        <a class="btn arrow" id="pk-cta">Objednat poukaz e-mailem</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" id="kontakt">
+    <div class="wrap two">
+      <div class="rv">
+        <p class="kicker light">Kontakt</p>
+        <h2 class="title">Těšíme se <em>na vás</em></h2>
+        <p class="lead light">Apartmány pro jednotlivce, páry i velké rodiny – nebo celou vilu na oslavu či dovolenou s přáteli.</p>
+        <a class="btn red arrow" href="rezervace.html" style="margin-top:26px">Rezervovat pobyt</a>
+      </div>
+      <dl class="contact rv" id="contact"></dl>
+    </div>
+  </section>
+</main>
+
+<footer class="ftr">
+  <div class="wrap">
+    <img src="images/logo-light.svg" alt="Vila Republika" width="104" height="36">
+    <p id="ftr-text">Vila Republika · součást <a href="/">Nord Moravia Resorts</a></p>
+    <nav><a id="ftr-fb" target="_blank" rel="noopener">Facebook</a><a id="ftr-ig" target="_blank" rel="noopener">Instagram</a><a href="/admin/">Správa obsahu</a></nav>
+  </div>
+</footer>
+
+<dialog class="lb" id="lb" aria-label="Fotogalerie">
+  <button class="x" id="lb-x" aria-label="Zavřít">×</button>
+  <button class="nav prev" id="lb-prev" aria-label="Předchozí">‹</button>
+  <img id="lb-img" alt="">
+  <button class="nav next" id="lb-next" aria-label="Další">›</button>
+  <p id="lb-cap"></p>
+</dialog>
+
+<script src="assets/vr.js"></script>
+<script src="assets/home.js"></script>
+</body>
+</html>

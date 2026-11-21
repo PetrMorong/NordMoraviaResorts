@@ -1,0 +1,53 @@
+{
+  "apartmany": [
+    {
+      "nazev": "Apartmán pro dva",
+      "osoby": "2",
+      "plocha": "38 m²",
+      "popis": "Pro páry. Velká manželská postel, kuchyňský kout a klidná atmosféra zámeckého interiéru.",
+      "foto": "Rapotin/web/apt-pro-dva"
+    },
+    {
+      "nazev": "Apartmán Komfort",
+      "osoby": "2–4",
+      "plocha": "40 m²",
+      "popis": "Pro páry nebo rodiny s dětmi. Manželská postel, rozkládací pohovka a plně vybavená kuchyň.",
+      "foto": "Rapotin/web/apt-komfort"
+    },
+    {
+      "nazev": "Apartmán Suite",
+      "osoby": "až 4",
+      "plocha": "ložnice + obývací pokoj",
+      "popis": "Pro hosty, kteří chtějí víc prostoru a soukromí. Samostatná ložnice a obývací pokoj s rozkládací pohovkou.",
+      "foto": "Rapotin/web/apt-suite"
+    },
+    {
+      "nazev": "Rodinný apartmán komfort",
+      "osoby": "až 6",
+      "plocha": "96 m²",
+      "popis": "Dvě manželské postele a rozkládací pohovka – víc prostoru pro celou rodinu.",
+      "foto": "Rapotin/web/apt-rodinny-komfort"
+    },
+    {
+      "nazev": "Rodinný apartmán superior 2+1",
+      "osoby": "až 8",
+      "plocha": "85 m²",
+      "popis": "Tři manželské postele a rozkládací pohovka pro rodiny nebo partu přátel.",
+      "foto": "Rapotin/web/apt-superior-2kk"
+    },
+    {
+      "nazev": "Rodinný apartmán superior",
+      "osoby": "až 8",
+      "plocha": "107 m² · 2 ložnice",
+      "popis": "Dvě ložnice, obývací pokoj a koupelna s vanou. Komfort a soukromí pro všechny.",
+      "foto": "Rapotin/web/apt-superior"
+    }
+  ],
+  "vybaveni": [
+    "Plně vybavená kuchyň",
+    "Vlastní koupelna",
+    "Snídaně v ceně",
+    "Parkování v areálu",
+    "Wi-Fi v celém areálu"
+  ]
+}

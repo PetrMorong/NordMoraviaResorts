@@ -6,7 +6,7 @@
       "typ": "Wellness resort",
       "misto": "Rapotín",
       "barva": "#5B2E1C",
-      "popis": "Historický areál ze 17. století s nově zrekonstruovanými apartmány až pro 8 osob. Wellness se saunou a vířivkou, nová restaurace s českou kuchyní, svatby a firemní akce.",
+      "popis": "Historický areál v Rapotíně s apartmány až pro 8 hostů. Privátní wellness, nová Restaurace Červený dvůr s poledním menu od 169 Kč, svatby a firemní akce.",
       "stitky": [
         "Apartmány až pro 8",
         "Wellness",
@@ -14,10 +14,10 @@
         "Svatby"
       ],
       "cena_od": "od 2 490 Kč / noc",
-      "foto": "https://res.cloudinary.com/morireality/image/upload/f_auto,q_auto,c_fill,g_auto,w_1400,h_1050/Rapotin/nadvori_qmoqtm",
+      "foto": "https://res.cloudinary.com/morireality/image/upload/f_auto,q_auto,c_fill,g_auto,w_1400,h_1050/Rapotin/web/exterier-vecer",
       "foto2": "https://res.cloudinary.com/morireality/image/upload/f_auto,q_auto,c_fill,g_auto,w_900,h_1100/Rapotin/DSC07020_1_xym9hm",
-      "web": "https://www.resortcervenydvur.cz",
-      "rezervace": "https://www.resortcervenydvur.cz",
+      "web": "cerveny-dvur/",
+      "rezervace": "cerveny-dvur/rezervace.html",
       "stav": "otevreno"
     },
     {
@@ -26,9 +26,9 @@
       "typ": "Wellness apartmány",
       "misto": "Velké Losiny",
       "barva": "#BF5756",
-      "popis": "Citlivě zrekonstruovaná prvorepubliková vila pod Hrubým Jeseníkem, pár kroků od termálních lázní. Každý apartmán navrhl jiný architekt, privátní wellness je jen pro vás.",
+      "popis": "Citlivě zrekonstruovaná prvorepubliková vila pod Hrubým Jeseníkem, pár kroků od termálních lázní. Šest apartmánů, každý s vlastním příběhem, a privátní wellness jen pro vás.",
       "stitky": [
-        "Designové apartmány",
+        "6 apartmánů",
         "Privátní wellness",
         "Self check-in",
         "Psi vítáni"
@@ -36,8 +36,8 @@
       "cena_od": "od 2 190 Kč / noc",
       "foto": "https://res.cloudinary.com/morireality/image/upload/f_auto,q_auto,c_fill,g_auto,w_1400,h_1050/vilaRepublikaFoto/LL406610_yfobxv",
       "foto2": "https://res.cloudinary.com/morireality/image/upload/f_auto,q_auto,c_fill,g_auto,w_900,h_1100/vilaRepublikaFoto/zahradniDomek/LL408086-HDR_nq6fin",
-      "web": "https://www.vila-republika.cz",
-      "rezervace": "https://www.vila-republika.cz",
+      "web": "vila-republika/",
+      "rezervace": "vila-republika/rezervace.html",
       "stav": "otevreno"
     },
     {

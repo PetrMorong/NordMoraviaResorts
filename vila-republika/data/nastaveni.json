@@ -1,0 +1,57 @@
+{
+  "nazev": "Vila Republika",
+  "hero_foto": "vilaRepublikaFoto/LL406610_yfobxv",
+  "hero_nadpis": "Prvorepubliková vila *pod Hrubým Jeseníkem*",
+  "hero_perex": "Wellness apartmány v lázeňských Velkých Losinách. Každý apartmán jiný, privátní wellness jen pro vás, termální lázně za rohem.",
+  "fakta": [
+    {
+      "cislo": "6",
+      "text": "apartmánů pro 2–9 hostů"
+    },
+    {
+      "cislo": "90 min",
+      "text": "privátní wellness jen pro vás"
+    },
+    {
+      "cislo": "pár kroků",
+      "text": "do termálních lázní"
+    },
+    {
+      "cislo": "celá vila",
+      "text": "i pro oslavy a skupiny"
+    }
+  ],
+  "intro_nadpis": "Vila z 30. let, která *dýchá lázeňskou historií*",
+  "intro_text": "Apartmánový dům Vila Republika leží pod svahy Hrubého Jeseníku v lázeňské obci Velké Losiny. Původní stavbu z 30. let minulého století jsme citlivě zrekonstruovali a krásné prvorepublikové prvky zachovali – repasované dveře, původní parkety, dřevěná obložení. Moderní, komfortní ubytování je ideální pro letní i zimní dovolenou: na dosah máte termální lázně, lázeňský park i čistou přírodu CHKO Jeseníky.",
+  "intro_foto": "vilaRepublikaFoto/LL406618-min_n3ne6i",
+  "previo_hotel_id": "758539",
+  "reservio_url": "https://vila-republika.reservio.com/booking/business/service?businessId=89b43bc7-3262-4446-89fc-eda62a80fa7c",
+  "check_in": "od 15:00",
+  "check_out": "do 10:00",
+  "kontakt": {
+    "email": "info@vila-republika.cz",
+    "telefon": "",
+    "adresa": "Osvobození 354, 788 15 Velké Losiny",
+    "mapa": "https://maps.google.com/?q=Osvobozen%C3%AD+354,+Velk%C3%A9+Losiny",
+    "provozovatel": "Mori Reality s.r.o., IČ 14426021",
+    "facebook": "https://www.facebook.com/vilarepublika",
+    "instagram": "https://www.instagram.com/vilarepublika"
+  },
+  "recenze": [
+    {
+      "text": "Děkujeme za úžasný víkendový pobyt, krásné pokoje, čistotu, skvělé wellness. Budeme rádi vzpomínat a určitě si pobyt někdy zopakujeme.",
+      "autor": "Radka Dvořáková"
+    }
+  ],
+  "poukazy": {
+    "nadpis": "Dárkový poukaz *na pobyt i wellness*",
+    "text": "Poukazy v hodnotě 1 000 až 10 000 Kč s platností 12 měsíců. Využijete je na jakékoliv služby nebo pobytový balíček – termín si obdarovaný vybere, až se mu to bude hodit.",
+    "hodnoty": [
+      "1 000 Kč",
+      "2 000 Kč",
+      "3 000 Kč",
+      "5 000 Kč",
+      "10 000 Kč"
+    ]
+  }
+}

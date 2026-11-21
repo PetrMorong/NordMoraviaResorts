@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<script>if(/\/cerveny-dvur$/.test(location.pathname))location.replace(location.pathname+"/"+location.search+location.hash)</script>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Svatby a firemní akce – Resort Červený dvůr Rapotín</title>
+<meta name="description" content="Svatby v historickém areálu v Jeseníkách: obřad v zahradě, zámecký sál pro 60 hostů, ubytování pro 50 svatebčanů. Firemní akce, školení a teambuilding.">
+<meta property="og:title" content="Svatby a firemní akce – Resort Červený dvůr Rapotín">
+<meta property="og:image" content="https://res.cloudinary.com/morireality/image/upload/f_jpg,q_auto,c_fill,w_1200,h_630/Rapotin/web/exterier-vecer">
+<link rel="icon" href="images/symbol-dark.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://res.cloudinary.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/cd.css">
+</head>
+<body>
+<header class="hdr" id="hdr">
+  <div class="wrap">
+    <a class="logo" href="index.html" aria-label="Resort Červený dvůr – úvod"><img src="images/logo-light.svg" alt="Červený dvůr" width="151" height="44"></a>
+    <nav id="nav"><a href="index.html#apartmany">Ubytování</a><a href="restaurace.html">Restaurace</a><a href="wellness.html">Wellness</a><a href="akce.html" aria-current="page">Svatby a akce</a><a href="index.html#galerie">Galerie</a></nav>
+    <div class="tools">
+      <details class="net">
+        <summary aria-label="Další resorty Nord Moravia">Resorty ▾</summary>
+        <div class="menu">
+          <a href="index.html"><i style="background:#5B2E1C"></i><span>Resort Červený dvůr<small>Rapotín · jste tady</small></span></a>
+          <a href="../vila-republika/"><i style="background:#BF5756"></i><span>Vila Republika<small>Velké Losiny</small></span></a>
+          <a href="../soutok-kouty/"><i style="background:#141117"></i><span>Wellness Hotel Soutok Kouty<small>Kouty nad Desnou · od 2028</small></span></a>
+          <a class="all" href="/">Celá síť Nord Moravia Resorts →</a>
+        </div>
+      </details>
+      <a class="btn red" href="rezervace.html">Rezervovat</a>
+      <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">≡</button>
+    </div>
+  </div>
+</header>
+<main>
+  <section class="sub-hero">
+    <div class="bg" id="hero-bg"></div>
+    <div class="wrap">
+      <p class="eyebrow">Svatby · oslavy · firemní akce</p>
+      <h1>Váš den <em>v Červeném dvoře</em></h1>
+      <div class="mini-nav"><a href="#svatby">Svatby</a><a href="#firmy">Firemní akce</a><a href="#kontakt">Nezávazná prohlídka</a></div>
+    </div>
+  </section>
+  <section id="svatby">
+    <div class="wrap two">
+      <div class="rv"><p class="kicker">Svatby</p><h2 class="title" id="s-title"></h2><p class="lead" id="s-text"></p><ul class="ticks" id="s-body"></ul>
+        <div class="btns"><a class="btn red arrow" id="s-mail">Ověřit termín svatby</a></div></div>
+      <div class="trio rv" id="s-pics"></div>
+    </div>
+  </section>
+  <section class="apts" id="firmy">
+    <div class="wrap two">
+      <figure class="arch rv" id="f-foto" style="aspect-ratio:4/3"></figure>
+      <div class="rv"><p class="kicker">Firmy</p><h2 class="title" id="f-title"></h2><p class="lead" id="f-text"></p><dl class="params" id="f-params"></dl>
+        <div class="btns"><a class="btn arrow" id="f-mail">Poptat firemní akci</a></div></div>
+    </div>
+  </section>
+</main>
+<section class="cta" id="kontakt">
+  <div class="wrap two">
+    <div class="rv">
+      <p class="kicker light">Kontakt</p>
+      <h2 class="title">Těšíme se <em>na vás</em></h2>
+      <p class="lead light">Recepce vyřizuje ubytování, wellness i restauraci. Pro svatby a firemní akce pište na e-mail pro akce.</p>
+      <div class="btns"><a class="btn red arrow" href="rezervace.html">Rezervovat pobyt</a><a class="btn light" id="k-tel">Zavolat</a></div>
+    </div>
+    <dl class="contact rv" id="contact"></dl>
+  </div>
+</section>
+<footer class="ftr">
+  <div class="wrap">
+    <img src="images/logo-light.svg" alt="Červený dvůr" width="123" height="36">
+    <p>Resort Červený dvůr · součást <a href="/">Nord Moravia Resorts</a></p>
+    <nav><a href="index.html#historie">Historie</a><a href="#kontakt">Kontakt</a><a id="ftr-fb" target="_blank" rel="noopener">Facebook</a><a id="ftr-ig" target="_blank" rel="noopener">Instagram</a><a href="/admin/">Správa obsahu</a></nav>
+  </div>
+</footer>
+<script src="assets/cd.js"></script>
+<script src="assets/akce.js"></script>
+</body>
+</html>
