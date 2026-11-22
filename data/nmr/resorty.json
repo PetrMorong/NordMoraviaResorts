@@ -14,7 +14,7 @@
         "Svatby"
       ],
       "cena_od": "od 2 490 Kč / noc",
-      "foto": "https://res.cloudinary.com/morireality/image/upload/f_auto,q_auto,c_fill,g_auto,w_1400,h_1050/Rapotin/web/exterier-vecer",
+      "foto": "images/cd-nadvori.webp",
       "foto2": "https://res.cloudinary.com/morireality/image/upload/f_auto,q_auto,c_fill,g_auto,w_900,h_1100/Rapotin/DSC07020_1_xym9hm",
       "web": "cerveny-dvur/",
       "rezervace": "cerveny-dvur/rezervace.html",
@@ -54,11 +54,12 @@
         "Bistro"
       ],
       "cena_od": "otevíráme léto 2028",
-      "foto": "https://res.cloudinary.com/morireality/image/upload/f_auto,q_auto,c_fill,g_auto,w_1400,h_1050/Kouty/01-min_uxjr1h",
+      "foto": "soutok-kouty/images/hero-exterier.webp",
       "foto2": "https://res.cloudinary.com/morireality/image/upload/f_auto,q_auto,c_fill,g_auto,w_900,h_1100/Kouty/01_KOUTY_pwndsy",
       "web": "soutok-kouty/",
       "rezervace": "soutok-kouty/rezervace.html",
-      "stav": "pripravujeme"
+      "stav": "pripravujeme",
+      "foto_pozice": "20% 50%"
     }
   ]
 }

@@ -13,7 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/cd.css">
 </head>
-<body class="has-strip">
+<body class="has-strip" data-nmr-resort="cerveny-dvur" data-nmr-cta="rezervace.html">
 <header class="hdr" id="hdr">
   <div class="wrap">
     <a class="logo" href="index.html" aria-label="Resort Červený dvůr – úvod"><img src="images/logo-light.svg" alt="Červený dvůr" width="151" height="44"></a>
@@ -47,12 +47,14 @@
         <label>Příjezd<input type="date" name="od" id="q-od" required></label>
         <label>Odjezd<input type="date" name="do" id="q-do" required></label>
         <button type="submit" class="btn red">Ověřit volné apartmány →</button>
-        <p class="bbar-note">Rezervace napřímo bez poplatků · snídaně v ceně</p>
+        <p class="bbar-note">Napřímo o 5 % levněji než na portálech · sleva na wellness · snídaně v ceně</p>
       </form>
     </div>
   </section>
 
   <section class="facts-band"><div class="wrap facts" id="facts"></div></section>
+
+  <section data-nmr-vyhody hidden></section>
 
   <section class="intro">
     <div class="wrap two">
@@ -168,5 +170,6 @@
 </footer>
 <script src="assets/cd.js"></script>
 <script src="assets/home.js"></script>
+<script src="../assets/nmr-common.js" defer></script>
 </body>
 </html>

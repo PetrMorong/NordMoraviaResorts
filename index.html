@@ -9,15 +9,107 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Cormorant+Garamond:ital,wght@0,500;1,400;1,500&family=Fraunces:ital,wght@1,500&family=Raleway:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/nmr.css">
+<script type="application/ld+json">
+[
+ {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Nord Moravia Resorts",
+  "url": "https://nordmoraviaresorts.cz/",
+  "email": "info@resortcervenydvur.cz",
+  "telephone": "+420601388985",
+  "subOrganization": [
+   {
+    "@type": "Resort",
+    "name": "Resort Červený dvůr",
+    "url": "https://nordmoraviaresorts.cz/cerveny-dvur/",
+    "address": {
+     "@type": "PostalAddress",
+     "streetAddress": "Výzkumníků 267",
+     "postalCode": "788 13",
+     "addressLocality": "Rapotín",
+     "addressCountry": "CZ"
+    }
+   },
+   {
+    "@type": "LodgingBusiness",
+    "name": "Vila Republika",
+    "url": "https://nordmoraviaresorts.cz/vila-republika/",
+    "address": {
+     "@type": "PostalAddress",
+     "addressLocality": "Velké Losiny",
+     "addressCountry": "CZ"
+    }
+   },
+   {
+    "@type": "Hotel",
+    "name": "Wellness Hotel Soutok Kouty",
+    "url": "https://nordmoraviaresorts.cz/soutok-kouty/",
+    "address": {
+     "@type": "PostalAddress",
+     "addressLocality": "Kouty nad Desnou",
+     "addressCountry": "CZ"
+    }
+   }
+  ]
+ },
+ {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+   {
+    "@type": "Question",
+    "name": "Jaké resorty patří do Nord Moravia Resorts?",
+    "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "Resort Červený dvůr v Rapotíně (apartmány, privátní wellness, restaurace, svatby a akce), Vila Republika ve Velkých Losinách (šest wellness apartmánů u termálních lázní) a Wellness Hotel Soutok Kouty v Koutech nad Desnou, který otevíráme v létě 2028."
+    }
+   },
+   {
+    "@type": "Question",
+    "name": "Proč rezervovat napřímo a ne přes Booking?",
+    "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "Při přímé rezervaci na našem webu máte pobyt o 5 % levněji než na Bookingu a dalších portálech, zvýhodněnou cenu privátního wellness a žádné rezervační poplatky. Se změnami vám pomůže přímo naše recepce."
+    }
+   },
+   {
+    "@type": "Question",
+    "name": "Jak daleko jsou resorty od sebe?",
+    "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "Rapotín a Velké Losiny dělí zhruba 15 minut autem, do Koutů nad Desnou je to do 20 minut. Když je jeden resort plný, recepce vám nabídne volný termín v jiném."
+    }
+   },
+   {
+    "@type": "Question",
+    "name": "Mají resorty wellness?",
+    "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "Ano. Ve všech resortech je privátní wellness se saunou a vířivkou, které si rezervujete jen pro sebe a své blízké."
+    }
+   },
+   {
+    "@type": "Question",
+    "name": "Kdo vyřizuje rezervace a dotazy?",
+    "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "Jedna recepce v Rapotíně pro všechny resorty – telefonicky, e-mailem i přes rezervační formulář na webu. Vila Republika má navíc samoobslužný check-in."
+    }
+   }
+  ]
+ }
+]
+</script>
 </head>
-<body>
+<body data-nmr-resort="nmr" data-nmr-cta="#hledat" data-nmr-cta-label="Najít volno" data-nmr-cta-title="3 resorty v Jeseníkách">
 <header class="hdr" id="hdr">
   <div class="wrap">
     <a class="logo" href="./" aria-label="Nord Moravia Resorts – úvod">
       <svg viewBox="0 0 90 104" fill="none" aria-hidden="true"><path d="M14,90 L14,14 L76,90 L76,14" stroke="#B8922E" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>
       <span><b>NORD MORAVIA</b><small>Resorts &amp; Wellness</small></span>
     </a>
-    <nav id="nav"><a href="#resorty">Resorty</a><a href="#proc">Proč u nás</a><a href="#tym">Tým</a><a href="#majitele">Pro majitele</a><a href="#investice">Investice</a><a href="#kontakt">Kontakt</a></nav>
+    <nav id="nav"><a href="#resorty">Resorty</a><a href="#vyhody">Proč napřímo</a><a href="#faq">Časté dotazy</a><a href="#majitele">Pro majitele</a><a href="#kontakt">Kontakt</a><a class="nav-cta" href="#hledat">Najít volno</a></nav>
     <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">≡</button>
   </div>
 </header>
@@ -30,7 +122,7 @@
         <p id="perex"></p>
       </div>
       <div class="windows" id="windows"></div>
-      <div class="bb">
+      <div class="bb" id="hledat">
         <form id="bb">
           <label>Kde<select id="kde"></select></label>
           <label>Příjezd<input type="date" id="od" required></label>
@@ -39,6 +131,7 @@
           <button type="submit">Zobrazit volno →<small>nejlepší cena napřímo</small></button>
         </form>
         <p class="hint" id="hint" role="status"></p>
+        <p class="trust" id="trust"></p>
       </div>
     </div>
   </section>
@@ -52,15 +145,51 @@
     </div>
   </section>
 
+  <section class="vyhody" id="vyhody" data-nmr-vyhody hidden></section>
+
   <section class="why" id="proc">
     <div class="wrap">
-      <div class="rv"><p class="kicker">Proč rezervovat u nás</p><h2 class="t">Jedna síť, <em>tři důvody se vracet</em></h2></div>
+      <div class="rv"><p class="kicker">Jedna síť</p><h2 class="t">Tři resorty, <em>jedna starost méně</em></h2></div>
       <div class="grid rv">
-        <div><b>Nejlepší cena napřímo</b><p>Rezervace přes náš web je vždy levnější než přes portály. Žádné poplatky navíc.</p></div>
-        <div><b>Plno? Zkuste vedle</b><p>Resorty jsou od sebe 6–20 minut. Když jeden nemá volno, druhý často ano.</p></div>
-        <div><b>Wellness jen pro vás</b><p>Ve všech resortech saunu a vířivku rezervujete soukromě k pobytu.</p></div>
+        <div><b>Plno? Zkuste vedle</b><p>Resorty jsou od sebe 6–20 minut. Když jeden nemá volno, druhý často ano – recepce vám poradí.</p></div>
+        <div><b>Wellness jen pro vás</b><p>Saunu a vířivku rezervujete soukromě k pobytu, nikdo cizí s vámi nebude.</p></div>
         <div><b>Jedna recepce</b><p>Telefon i e-maily pro všechny resorty vyřizuje jeden tým v Rapotíně.</p></div>
+        <div><b>Jídlo za rohem</b><p>Restaurace Červený dvůr vaří celý den – polední menu, víkendový brunch i rozvoz.</p></div>
       </div>
+    </div>
+  </section>
+
+  <section class="recenze" id="recenze" hidden>
+    <div class="wrap">
+      <div class="rv"><p class="kicker">Hosté o nás</p><h2 class="t">Co říkají <em>naši hosté</em></h2></div>
+      <div class="rev rv" id="rev"></div>
+    </div>
+  </section>
+
+  <section class="faq" id="faq">
+    <div class="wrap grid2">
+      <div class="rv"><p class="kicker">Časté dotazy</p><h2 class="t">Než <em>vyrazíte</em></h2></div>
+      <div class="faqs rv">
+        <details><summary>Jaké resorty patří do Nord Moravia Resorts?</summary><p>Resort Červený dvůr v Rapotíně (apartmány, privátní wellness, restaurace, svatby a akce), Vila Republika ve Velkých Losinách (šest wellness apartmánů u termálních lázní) a Wellness Hotel Soutok Kouty v Koutech nad Desnou, který otevíráme v létě 2028.</p></details>
+        <details><summary>Proč rezervovat napřímo a ne přes Booking?</summary><p>Při přímé rezervaci na našem webu máte pobyt o 5 % levněji než na Bookingu a dalších portálech, zvýhodněnou cenu privátního wellness a žádné rezervační poplatky. Se změnami vám pomůže přímo naše recepce.</p></details>
+        <details><summary>Jak daleko jsou resorty od sebe?</summary><p>Rapotín a Velké Losiny dělí zhruba 15 minut autem, do Koutů nad Desnou je to do 20 minut. Když je jeden resort plný, recepce vám nabídne volný termín v jiném.</p></details>
+        <details><summary>Mají resorty wellness?</summary><p>Ano. Ve všech resortech je privátní wellness se saunou a vířivkou, které si rezervujete jen pro sebe a své blízké.</p></details>
+        <details><summary>Kdo vyřizuje rezervace a dotazy?</summary><p>Jedna recepce v Rapotíně pro všechny resorty – telefonicky, e-mailem i přes rezervační formulář na webu. Vila Republika má navíc samoobslužný check-in.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="news" id="novinky">
+    <div class="wrap grid2">
+      <div class="rv"><p class="kicker">Novinky e-mailem</p><h2 class="t">Volné termíny <em>a akce</em> jednou za měsíc</h2><p class="lead" style="margin-top:14px">Last minute pobyty, sezonní hody v restauraci a nabídky jen pro odběratele. Žádný spam.</p></div>
+      <form class="nl rv" name="newsletter" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/?odebirate=1#novinky">
+        <input type="hidden" name="form-name" value="newsletter">
+        <p hidden><label>Nevyplňujte <input name="bot-field"></label></p>
+        <label>E-mail<input type="email" name="email" required autocomplete="email" placeholder="vas@email.cz"></label>
+        <button type="submit" class="btn gold">Odebírat</button>
+        <small>Odesláním souhlasíte se zasíláním novinek Nord Moravia Resorts (Mori Reality s.r.o.). Odhlásit se můžete jedním klikem v každém e-mailu.</small>
+        <p class="ok" id="nl-ok" hidden>Děkujeme, jste přihlášeni k odběru.</p>
+      </form>
     </div>
   </section>
 
@@ -105,12 +234,13 @@
     <div class="cols">
       <div><a class="logo" href="./" style="color:var(--cream)"><svg viewBox="0 0 90 104" fill="none" aria-hidden="true" style="width:24px;height:28px"><path d="M14,90 L14,14 L76,90 L76,14" stroke="#B8922E" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>NORD MORAVIA</b><small>Resorts &amp; Wellness</small></span></a><p style="margin-top:16px">Tři resorty v Jeseníkách.<br>Jeden klid.</p></div>
       <div><h4>Resorty</h4><div id="f-res"></div></div>
-      <div><h4>Navigace</h4><a href="#resorty">Resorty</a><br><a href="#tym">Tým</a><br><a href="portal-vlastniku/">Portál vlastníků</a><br><a href="#investice">Investice</a></div>
+      <div><h4>Navigace</h4><a href="#resorty">Resorty</a><br><a href="#faq">Časté dotazy</a><br><a href="#tym">Tým</a><br><a href="portal-vlastniku/">Portál vlastníků</a><br><a href="#investice">Investice</a><br><a href="#" onclick="NMR.cookies();return false">Nastavení cookies</a></div>
       <div><h4>Kontakt</h4><div id="f-kontakt"></div></div>
     </div>
     <div class="bottom"><span id="f-copy"></span><span>Resort Červený dvůr · Vila Republika · Soutok Kouty</span></div>
   </div>
 </footer>
 <script src="assets/nmr.js"></script>
+<script src="assets/nmr-common.js" defer></script>
 </body>
 </html>

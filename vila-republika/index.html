@@ -14,7 +14,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/vr.css">
 </head>
-<body>
+<body data-nmr-resort="vila-republika" data-nmr-cta="rezervace.html">
 
 <header class="hdr" id="hdr">
   <div class="wrap">
@@ -51,12 +51,14 @@
         <label>Příjezd<input type="date" name="od" id="q-od" required></label>
         <label>Odjezd<input type="date" name="do" id="q-do" required></label>
         <button type="submit" class="btn red">Ověřit volné apartmány →</button>
-        <p class="bbar-note">Nejlepší cena napřímo · bez poplatků za rezervaci</p>
+        <p class="bbar-note">Napřímo o 5 % levněji než na portálech · sleva na wellness</p>
       </form>
     </div>
   </section>
 
   <section class="facts-band"><div class="wrap facts" id="facts"></div></section>
+
+  <section data-nmr-vyhody hidden></section>
 
   <section class="intro" id="vila">
     <div class="wrap two">
@@ -166,5 +168,6 @@
 
 <script src="assets/vr.js"></script>
 <script src="assets/home.js"></script>
+<script src="../assets/nmr-common.js" defer></script>
 </body>
 </html>

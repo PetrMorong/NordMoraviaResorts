@@ -1,0 +1,36 @@
+/* Společné prvky sítě NMR – přebírají písma a barvy webu, kde jsou vložené (proměnné --disp, --ink, --paper, --line). */
+[data-nmr-vyhody][hidden]{display:none}
+
+/* blok výhod přímé rezervace */
+.nmr-vy{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:clamp(24px,5vw,72px);align-items:start}
+.nmr-vy-h small{display:block;font-size:12px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;opacity:.7;margin-bottom:10px}
+.nmr-vy-h h2{font-family:var(--disp,Georgia,serif);font-weight:400;font-size:clamp(28px,3.4vw,44px);line-height:1.1;margin:0 0 14px}
+.nmr-vy-h p{opacity:.78;max-width:40ch}
+.nmr-vy ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line,#ddd);border:1px solid var(--line,#ddd)}
+.nmr-vy li{background:var(--paper,#fff);padding:24px 22px;display:flex;flex-direction:column;gap:8px}
+.nmr-vy li b{font-family:var(--disp,Georgia,serif);font-weight:400;font-size:21px;line-height:1.2}
+.nmr-vy li span{font-size:14.5px;opacity:.75;line-height:1.55}
+@media(max-width:900px){.nmr-vy{grid-template-columns:1fr}.nmr-vy ul{grid-template-columns:1fr}}
+
+/* kompaktní pruh (rezervační stránka, pod vyhledáváním) */
+.nmr-vy-pruh{display:flex;flex-wrap:wrap;gap:8px 22px;align-items:center;font-size:14px;padding:14px 18px;color:inherit;border:1px solid color-mix(in srgb,currentColor 28%,transparent);background:color-mix(in srgb,currentColor 7%,transparent)}
+.nmr-vy-pruh b{font-weight:600;margin-right:6px}
+.nmr-vy-pruh span{opacity:.85;white-space:nowrap}
+
+/* lepicí rezervační lišta – jen mobil */
+.nmr-sticky{position:fixed;left:0;right:0;bottom:0;z-index:60;display:none;align-items:center;justify-content:space-between;gap:12px;
+  padding:10px max(16px,env(safe-area-inset-left)) calc(10px + env(safe-area-inset-bottom));background:var(--ink,#111);color:#fff;
+  box-shadow:0 -8px 24px rgba(0,0,0,.18);transform:translateY(110%);transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+.nmr-sticky.on{transform:none}
+.nmr-sticky b{display:block;font-size:15px;line-height:1.2}
+.nmr-sticky small{display:block;font-size:12px;opacity:.75;line-height:1.3}
+.nmr-sticky a{flex:none;background:#fff;color:var(--ink,#111);font-weight:700;font-size:15px;padding:12px 18px;text-decoration:none}
+@media(max-width:760px){.nmr-sticky{display:flex}body:has(.nmr-sticky.on) .nmr-cc{bottom:76px}}
+
+/* souhlas s cookies */
+.nmr-cc{position:fixed;left:16px;right:16px;bottom:16px;z-index:70;max-width:560px;margin-left:auto;background:#fff;color:#1a1a1a;
+  border:1px solid rgba(0,0,0,.12);box-shadow:0 12px 40px rgba(0,0,0,.18);padding:18px 20px;font:14px/1.55 system-ui,sans-serif}
+.nmr-cc p{margin:0 0 12px}
+.nmr-cc div{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+.nmr-cc button{font:600 14px system-ui,sans-serif;padding:10px 16px;border:1px solid #1a1a1a;background:#fff;color:#1a1a1a;cursor:pointer}
+.nmr-cc button.ok{background:#1a1a1a;color:#fff}

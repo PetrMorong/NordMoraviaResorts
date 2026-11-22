@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="assets/cd.css">
 <script src="https://booking.previo.cz/iframe/"></script>
 </head>
-<body class="page-book">
+<body class="page-book" data-nmr-resort="cerveny-dvur">
 <header class="hdr always" id="hdr">
   <div class="wrap">
     <a class="logo" href="index.html" aria-label="Resort Červený dvůr – úvod"><img src="images/logo-light.svg" alt="Červený dvůr" width="151" height="44"></a>
@@ -44,6 +44,7 @@
         <label>Odjezd<input type="date" name="do" id="b-do" required></label>
         <button type="submit" class="btn red">Zobrazit volné apartmány</button>
       </form>
+      <div data-nmr-vyhody="pruh" hidden style="margin-top:14px"></div>
       <ul class="perks"><li>Bez poplatků za rezervaci</li><li>Snídaně v ceně</li><li>Okamžité potvrzení</li></ul>
     </div>
   </section>
@@ -88,5 +89,6 @@
   CD.footer(N); CD.header();
 })();
 </script>
+<script src="../assets/nmr-common.js" defer></script>
 </body>
 </html>

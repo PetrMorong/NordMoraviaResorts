@@ -26,6 +26,7 @@ collections:
           - { label: "Čísla", name: "cisla", widget: "list", fields: [{ label: "Číslo", name: "cislo", widget: "string" }, { label: "Popis", name: "popis", widget: "string" }] }
           - { label: "O nás", name: "o_nas", widget: "object", fields: [{ label: "Nadpis", name: "nadpis", widget: "string" }, { label: "Text", name: "text", widget: "text" }] }
           - { label: "Kontakt", name: "kontakt", widget: "object", fields: [{ label: "E-mail", name: "email", widget: "string" }, { label: "Telefon", name: "telefon", widget: "string" }, { label: "Firma", name: "firma", widget: "string" }, { label: "IČO", name: "ico", widget: "string" }] }
+          - { label: "Měření (všechny weby sítě)", name: "mereni", widget: "object", hint: "Jeden kontejner a jeden pixel pro NMR, Červený dvůr, Vilu Republiku i Kouty. Prázdné = nic se nenačte a lišta cookies se nezobrazí.", fields: [{ label: "Google Tag Manager ID", name: "gtm_id", widget: "string", required: false, hint: "např. GTM-ABC1234" }, { label: "Meta Pixel ID", name: "meta_pixel_id", widget: "string", required: false }] }
       - name: "resorty"
         label: "Resorty"
         file: "data/nmr/resorty.json"
@@ -44,10 +45,27 @@ collections:
               - { label: "Štítky", name: "stitky", widget: "list", field: { label: "Štítek", name: "stitek", widget: "string" } }
               - { label: "Cena od (text)", name: "cena_od", widget: "string" }
               - { label: "Hlavní fotka", name: "foto", widget: "image" }
+              - { label: "Výřez hlavní fotky", name: "foto_pozice", widget: "string", required: false, hint: "Co má zůstat vidět, když se fotka ořízne: vodorovně a svisle v %, např. 30% 50% = budova vlevo od středu" }
               - { label: "Druhá fotka", name: "foto2", widget: "image" }
               - { label: "Web resortu", name: "web", widget: "string" }
               - { label: "Odkaz na rezervaci", name: "rezervace", widget: "string" }
               - { label: "Stav", name: "stav", widget: "select", options: [{label: "Otevřeno", value: "otevreno"}, {label: "Připravujeme", value: "pripravujeme"}] }
+      - name: "vyhody"
+        label: "Výhody přímé rezervace"
+        file: "data/nmr/vyhody.json"
+        fields:
+          - { label: "Zobrazovat", name: "aktivni", widget: "boolean", default: true, hint: "Zobrazí se na úvodu NMR, Červeného dvora a Vily Republiky a na rezervačních stránkách. Slevu je potřeba mít nastavenou i v Previo!" }
+          - { label: "Malý nadpis", name: "kicker", widget: "string" }
+          - { label: "Nadpis", name: "nadpis", widget: "string" }
+          - { label: "Text", name: "text", widget: "text" }
+          - { label: "Pruh na rezervační stránce – úvod", name: "pruh_nadpis", widget: "string" }
+          - { label: "Text v liště na mobilu", name: "lista", widget: "string" }
+          - { label: "Výhody", name: "body", widget: "list", summary: "{{fields.nadpis}}", fields: [{ label: "Nadpis", name: "nadpis", widget: "string" }, { label: "Text", name: "text", widget: "text" }] }
+      - name: "recenze"
+        label: "Recenze hostů"
+        file: "data/nmr/recenze.json"
+        fields:
+          - { label: "Recenze", name: "recenze", widget: "list", summary: "{{fields.jmeno}} – {{fields.resort}}", hint: "Jen skutečné recenze (Google, Booking), ideálně se souhlasem hosta. Prázdný seznam = sekce se nezobrazí.", fields: [{ label: "Text", name: "text", widget: "text" }, { label: "Jméno (např. Jana K.)", name: "jmeno", widget: "string" }, { label: "Resort", name: "resort", widget: "string", required: false }, { label: "Zdroj", name: "zdroj", widget: "string", required: false, hint: "Google / Booking.com" }] }
       - name: "tym"
         label: "Tým"
         file: "data/nmr/tym.json"

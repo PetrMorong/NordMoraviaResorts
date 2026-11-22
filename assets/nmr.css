@@ -129,3 +129,32 @@ h2.t em,h1 em{font-style:italic;font-weight:400}
  .bb{transform:none;margin:24px 0 0}.bb form{grid-template-columns:1fr 1fr}.bb label{border-bottom:1px solid var(--line)}.bb button{grid-column:1/-1;min-height:64px}.hero{padding-bottom:40px}.nums{padding-top:60px}
  .windows{grid-template-columns:1fr;gap:12px}.win{aspect-ratio:16/10}.foot .cols{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.nums .row,.why .grid,.team{grid-template-columns:1fr}.bb input,.bb select{font-size:16px}.pics .b{display:none}.pics{padding:0}}
+
+/* ===== konverze (listopad 2026) ===== */
+.hdr nav a.nav-cta{opacity:1;border:1px solid var(--gold);padding:6px 14px;color:var(--gold-l)}.hdr nav a.nav-cta:hover{background:var(--gold);color:#fff}
+.bb .trust{font-size:13.5px;color:var(--stone);display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}
+.bb .trust b{color:var(--gold);font-weight:700}.bb .trust i{font-style:normal;opacity:.5}
+.vyhody{padding:clamp(70px,9vw,120px) 0;--paper:var(--cream);--line:var(--line)}
+.vyhody .nmr-vy li{background:#fff}
+.vyhody .nmr-vy-h small{color:var(--gold);opacity:1}
+.rtext .ft .btn{min-height:44px;padding:0 20px}
+.rtext .ft .price{flex-basis:100%;margin-bottom:4px}
+.recenze{padding:clamp(70px,9vw,110px) 0;background:var(--cream-2)}
+.rev{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:40px}
+.rev figure{background:#fff;padding:28px;border:1px solid var(--line)}
+.rev blockquote{font-family:var(--disp);font-size:21px;line-height:1.35;margin-bottom:16px}
+.rev figcaption{font-size:13px;color:var(--stone)}
+.faq,.news{padding:clamp(70px,9vw,110px) 0}
+.news{background:var(--ink);color:var(--cream)}.news .lead{color:rgba(248,244,238,.72)}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:clamp(32px,6vw,90px);align-items:start}
+.faqs details{border-bottom:1px solid var(--line);padding:18px 0}
+.faqs summary{cursor:pointer;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:16px}
+.faqs summary::-webkit-details-marker{display:none}
+.faqs summary::after{content:"+";font-size:22px;line-height:1;color:var(--gold)}.faqs details[open] summary::after{content:"–"}
+.faqs p{color:var(--stone);margin-top:10px;max-width:62ch}
+.nl{display:grid;grid-template-columns:1fr auto;gap:12px 10px;align-items:end}
+.nl label{display:flex;flex-direction:column;gap:6px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(248,244,238,.7);font-weight:600}
+.nl input{min-height:48px;border:1px solid var(--line-d);background:transparent;color:var(--cream);padding:0 14px;font-size:16px;letter-spacing:0;text-transform:none}
+.nl small,.nl .ok{grid-column:1/-1;font-size:12.5px;color:rgba(248,244,238,.6)}.nl .ok{color:var(--gold-l);font-size:15px}
+@media(max-width:860px){.grid2,.rev{grid-template-columns:1fr}.nl{grid-template-columns:1fr}}
+@media(max-width:860px){.bb .trust{color:rgba(248,244,238,.8)}.bb .trust b{color:var(--gold-l)}}

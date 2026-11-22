@@ -54,3 +54,17 @@ Lokálně: `npx serve .` – stránky čtou JSON přes fetch, dvojklikem z disku
 - Doména vila-republika.cz: po spuštění přesměrovat (301) na nordmoraviaresorts.cz/vila-republika/.
 - Fotky na úvodu jsou z Cloudinary (`data/nmr/resorty.json`).
 - Rezervace Soutok Kouty: napojit `netlify/functions/dostupnost.js` na Previo (přístupy do proměnných prostředí na Netlify).
+
+## Měření a konverze (listopad 2026)
+
+Všechny weby sítě (NMR, Červený dvůr, Vila Republika, Soutok Kouty) načítají `assets/nmr-common.js`:
+
+- **Jedno měření pro celou síť** – ID Google Tag Manageru a Meta Pixelu se zadává v CMS: *Nord Moravia – úvodní stránka → Texty a kontakt → Měření*. Dokud je prázdné, nic se nenačítá a lišta cookies se nezobrazí.
+- **Souhlas s cookies** – Google Consent Mode v2, výchozí stav „zamítnuto“, Meta Pixel se spustí až po „Přijmout vše“. Odkaz „Nastavení cookies“ je v patičce NMR.
+- **Události v dataLayer** (v GTM z nich udělat konverze GA4 / Google Ads / Meta):
+  `zacatek_rezervace`, `zobrazeni_rezervace`, `hledani_terminu`, `klik_telefon`, `klik_email`, `klik_wellness_rezervace`, `klik_rezervace_stolu`, `klik_menu_restaurace`, `odeslani_formulare` (poptávky, newsletter). Každá nese `resort`.
+- **Dokončená rezervace** proběhne uvnitř Previo okna (jiná doména), web ji nevidí. V Previo nastavit měření rezervačního modulu (GA4 / GTM), případně děkovnou stránku – jinak GA uvidí jen začátek rezervace.
+- **Výhody přímé rezervace** (−5 % + sleva na wellness) – texty v CMS *Výhody přímé rezervace*. **Slevu je nutné mít skutečně nastavenou v Previo** (cena pro přímý kanál o 5 % nižší, sleva na wellness v Reservio / na recepci).
+- **Lepicí lišta na mobilu** – nastavuje se atributy `data-nmr-cta*` na `<body>` každé stránky.
+- **Newsletter** – Netlify formulář `newsletter`; kontakty exportovat do e-mailového nástroje (Ecomail / Mailchimp).
+- **Recenze** – CMS *Recenze hostů*, jen skutečné recenze; prázdný seznam = sekce se nezobrazí.

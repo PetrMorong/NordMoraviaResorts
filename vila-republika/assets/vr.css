@@ -196,3 +196,5 @@ section{padding:clamp(72px,10vw,130px) 0}
 .note{font-size:14px;color:var(--muted);margin-top:16px}
 .note a{color:var(--navy);border-bottom:1px solid var(--red)}
 .net,.net summary,.tools .btn,.logo{flex:none}
+/* blok výhod přímé rezervace (sdílený NMR) – navazuje na další sekci */
+section[data-nmr-vyhody]{padding-bottom:0}

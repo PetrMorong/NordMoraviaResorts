@@ -8,18 +8,23 @@
   bg.addEventListener('click', () => { const o = hdr.classList.toggle('open'); bg.setAttribute('aria-expanded', o); });
   document.querySelectorAll('#nav a').forEach(a => a.addEventListener('click', () => hdr.classList.remove('open')));
 
-  let N, R, T, I;
-  try { [N, R, T, I] = await Promise.all(['nastaveni', 'resorty', 'tym', 'investice'].map(load)); }
+  let N, R, T, I, RV;
+  try { [N, R, T, I, RV] = await Promise.all(['nastaveni', 'resorty', 'tym', 'investice', 'recenze'].map(load)); }
   catch (e) { document.body.insertAdjacentHTML('afterbegin', '<p style="background:#fde8e8;padding:12px 20px">Data se nenačetla – web je potřeba spustit přes server (Netlify nebo npx serve).</p>'); return; }
   const res = R.resorty;
 
   // hero
   $('#h1').innerHTML = `${esc(N.hero.nadpis1)}<br><em>${esc(N.hero.nadpis2)}</em>`;
   $('#perex').textContent = N.hero.perex;
-  $('#windows').innerHTML = res.map(r => `<a class="win" href="#${r.id}"><img src="${r.foto}" alt="${esc(r.nazev)}"><i class="bar" style="background:${r.barva === '#141117' ? '#EDE7DA' : r.barva}"></i>${r.stav === 'pripravujeme' ? '<span class="soon">Otevíráme 2028</span>' : ''}<span class="cap"><small>${esc(r.typ)} · ${esc(r.misto)}</small><b>${esc(r.nazev)}</b><span>${esc(r.cena_od)}</span></span></a>`).join('');
+  $('#windows').innerHTML = res.map(r => `<a class="win" href="#${r.id}"><img src="${r.foto}" alt="${esc(r.nazev)}"${r.foto_pozice ? ` style="object-position:${esc(r.foto_pozice)}"` : ''}><i class="bar" style="background:${r.barva === '#141117' ? '#EDE7DA' : r.barva}"></i>${r.stav === 'pripravujeme' ? '<span class="soon">Otevíráme 2028</span>' : ''}<span class="cap"><small>${esc(r.typ)} · ${esc(r.misto)}</small><b>${esc(r.nazev)}</b><span>${esc(r.cena_od)}</span></span></a>`).join('');
 
   // vyhledání – resort se vybere, termín se předá rezervaci daného resortu
   $('#kde').innerHTML = `<option value="">Vyberte resort</option>` + res.map(r => `<option value="${r.id}">${esc(r.nazev.replace('Wellness Hotel ', '').replace('Resort ', ''))}${r.stav === 'pripravujeme' ? ' (2028)' : ''}</option>`).join('');
+  const pre = new URLSearchParams(location.search).get('resort') || (res.find(r => r.stav !== 'pripravujeme') || {}).id;
+  if (pre) $('#kde').value = pre;
+  const hv = N.cisla.find(c => /★/.test(c.cislo));
+  $('#trust').innerHTML = [hv ? `<b>${esc(hv.cislo)}</b> ${esc(hv.popis)}` : '', '<b>−5 %</b> napřímo oproti portálům', '<b>sleva</b> na privátní wellness'].filter(Boolean).join('<i>·</i>');
+  if (/odebirate=1/.test(location.search)) { const ok = $('#nl-ok'); if (ok) ok.hidden = false; }
   const iso = d => d.toISOString().slice(0, 10), t = new Date(); const fri = new Date(t); fri.setDate(t.getDate() + ((5 - t.getDay() + 7) % 7 || 7));
   const sun = new Date(fri); sun.setDate(fri.getDate() + 2);
   Object.assign($('#od'), {value: iso(fri), min: iso(t)}); Object.assign($('#do'), {value: iso(sun), min: iso(t)});
@@ -38,12 +43,19 @@
   $('#rows').innerHTML = res.map(r => {
     const ext = r.web.startsWith('http');
     return `<article class="rrow rv" id="${r.id}">
-      <div class="pics"><i class="accent" style="background:${r.barva}"></i><img class="a" src="${r.foto}" alt="${esc(r.nazev)}" loading="lazy"><img class="b" src="${r.foto2}" alt="" loading="lazy"></div>
+      <div class="pics"><i class="accent" style="background:${r.barva}"></i><img class="a" src="${r.foto}" alt="${esc(r.nazev)}" loading="lazy"${r.foto_pozice ? ` style="object-position:${esc(r.foto_pozice)}"` : ''}><img class="b" src="${r.foto2}" alt="" loading="lazy"></div>
       <div class="rtext"><p class="meta"><i style="background:${r.barva}"></i>${esc(r.typ)} · ${esc(r.misto)}</p><h3>${esc(r.nazev)}</h3><p>${esc(r.popis)}</p>
         <div class="tags">${r.stitky.map(s => `<span>${esc(s)}</span>`).join('')}</div>
-        <div class="ft"><span class="price">${esc(r.cena_od)}</span><a class="btn" href="${r.web}"${ext ? ' target="_blank" rel="noopener"' : ''}>${r.stav === 'pripravujeme' ? 'Prohlédnout hotel' : 'Web resortu'} →</a></div></div>
+        <div class="ft"><span class="price">${esc(r.cena_od)}</span><a class="btn gold" href="${r.rezervace}">${r.stav === 'pripravujeme' ? 'Nezávazná poptávka' : 'Rezervovat napřímo'} →</a><a class="btn line" href="${r.web}"${ext ? ' target="_blank" rel="noopener"' : ''}>${r.stav === 'pripravujeme' ? 'Prohlédnout hotel' : 'Web resortu'}</a></div></div>
     </article>`;
   }).join('');
+
+  // recenze – jen skutečné, z CMS; prázdný seznam = sekce se nezobrazí
+  const rv = (RV && RV.recenze) || [];
+  if (rv.length) {
+    $('#rev').innerHTML = rv.map(x => `<figure><blockquote>„${esc(x.text)}“</blockquote><figcaption><b>${esc(x.jmeno)}</b>${x.resort ? ` · ${esc(x.resort)}` : ''}${x.zdroj ? ` · ${esc(x.zdroj)}` : ''}</figcaption></figure>`).join('');
+    $('#recenze').hidden = false;
+  }
 
   // o nás + tým
   $('#about-h').innerHTML = esc(N.o_nas.nadpis).replace(/ (je ta doma\.)$/, ' <em>$1</em>');
