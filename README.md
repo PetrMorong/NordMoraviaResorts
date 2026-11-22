@@ -68,3 +68,14 @@ Všechny weby sítě (NMR, Červený dvůr, Vila Republika, Soutok Kouty) načí
 - **Lepicí lišta na mobilu** – nastavuje se atributy `data-nmr-cta*` na `<body>` každé stránky.
 - **Newsletter** – Netlify formulář `newsletter`; kontakty exportovat do e-mailového nástroje (Ecomail / Mailchimp).
 - **Recenze** – CMS *Recenze hostů*, jen skutečné recenze; prázdný seznam = sekce se nezobrazí.
+
+## Předgenerování obsahu (SEO a AI vyhledávače)
+
+Stránky si obsah berou z `data/*.json` skriptem v prohlížeči. Aby obsah viděli i roboti, kteří JavaScript nespouští (ChatGPT, Perplexity, Claude, náhledy na Facebooku), Netlify při každém nasazení spustí `scripts/prerender.mjs` (nastaveno v `netlify.toml`):
+
+- stránku „spustí“ v jsdomu nad aktuálními daty a výsledné HTML uloží do nasazené verze,
+- v prohlížeči se obsah vykreslí znovu ze stejných dat – CMS funguje beze změny, úprava v CMS = nový build = nové HTML,
+- lokální soubory v repozitáři se nemění (běží jen na Netlify),
+- když se stránka nevykreslí, nechá se původní HTML a build nespadne.
+
+Nové stránky je potřeba přidat do seznamu `PAGES` ve skriptu. Ruční test: `npm install` a `npm run build` (přepíše HTML – spouštět jen na kopii).

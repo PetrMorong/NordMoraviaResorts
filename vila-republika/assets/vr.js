@@ -31,13 +31,14 @@ const VR = {
   },
   // jednoduchý lightbox: items [{src, alt}], kliknutí na [data-i] uvnitř root
   lightbox(items, root) {
-    let d = document.getElementById('lb');
+    let d = document.getElementById('lbg');
     if (!d) {
-      document.body.insertAdjacentHTML('beforeend', `<dialog class="lb" id="lb" aria-label="Galerie"><button class="x" aria-label="Zavřít">×</button><button class="nav prev" aria-label="Předchozí">‹</button><img alt=""><button class="nav next" aria-label="Další">›</button><p></p></dialog>`);
-      d = document.getElementById('lb');
+      document.body.insertAdjacentHTML('beforeend', `<dialog class="lb" id="lbg" aria-label="Galerie"><button class="x" aria-label="Zavřít">×</button><button class="nav prev" aria-label="Předchozí">‹</button><img alt=""><button class="nav next" aria-label="Další">›</button><p></p></dialog>`);
+      d = document.getElementById('lbg');
     }
     const im = d.querySelector('img'), cap = d.querySelector('p'); let i = 0;
-    const show = () => { im.src = VR.img(items[i].src, 1800); im.alt = items[i].alt; cap.textContent = `${items[i].alt} · ${i + 1} / ${items.length}`; };
+    im.onload = () => im.style.opacity = 1;
+    const show = () => { im.style.opacity = 0; im.src = VR.img(items[i].src, 1800); im.alt = items[i].alt; cap.textContent = `${items[i].alt} · ${i + 1} / ${items.length}`; };
     root.querySelectorAll('[data-i]').forEach(b => b.onclick = () => { i = +b.dataset.i; show(); d.showModal(); });
     d.querySelector('.x').onclick = () => d.close();
     d.querySelector('.prev').onclick = () => { i = (i - 1 + items.length) % items.length; show(); };

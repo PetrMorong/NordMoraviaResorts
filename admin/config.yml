@@ -70,7 +70,7 @@ collections:
         label: "Tým"
         file: "data/nmr/tym.json"
         fields:
-          - { label: "Lidé", name: "lide", widget: "list", summary: "{{fields.jmeno}}", fields: [{ label: "Jméno", name: "jmeno", widget: "string" }, { label: "Role", name: "role", widget: "string" }, { label: "Popis", name: "bio", widget: "text" }] }
+          - { label: "Lidé", name: "lide", widget: "list", summary: "{{fields.jmeno}}", hint: "Celý tým je na stránce O nás. Na úvodu jen ti, které host potká (zaškrtnout „Na úvodu“).", fields: [{ label: "Jméno", name: "jmeno", widget: "string" }, { label: "Role", name: "role", widget: "string" }, { label: "Popis", name: "bio", widget: "text" }, { label: "Fotka (portrét)", name: "foto", widget: "image", required: false, hint: "Prázdné = zobrazí se zástupný obrázek" }, { label: "Na úvodu pro hosty", name: "na_uvodu", widget: "boolean", default: false }, { label: "Role na úvodu", name: "uvod_role", widget: "string", required: false }, { label: "Text na úvodu", name: "uvod_text", widget: "text", required: false }] }
 
   # Oddělená kolekce, aby šla v rolích zamknout (právní formulace výnosu)
   - name: "investice"
@@ -82,11 +82,19 @@ collections:
         fields:
           - { label: "Nadpis", name: "nadpis", widget: "string" }
           - { label: "Text", name: "text", widget: "text" }
-          - { label: "Výnos (velké číslo)", name: "vynos", widget: "string" }
-          - { label: "Popis výnosu", name: "vynos_popis", widget: "string" }
-          - { label: "Body", name: "body", widget: "list", fields: [{ label: "Nadpis", name: "nadpis", widget: "string" }, { label: "Text", name: "text", widget: "text" }] }
+          - { label: "Možnosti investice", name: "moznosti", widget: "list", summary: "{{fields.nazev}} – {{fields.vynos}}", hint: "Pevný úrok uvádět jen u zápůjčky. U koupě apartmánu výnos negarantovat.", fields: [{ label: "Název", name: "nazev", widget: "string" }, { label: "Výnos (velký text)", name: "vynos", widget: "string" }, { label: "Popis výnosu", name: "vynos_popis", widget: "string" }, { label: "Text", name: "text", widget: "text" }, { label: "Body", name: "body", widget: "list", field: { label: "Bod", name: "bod", widget: "string" } }, { label: "Tlačítko", name: "tlacitko", widget: "string" }, { label: "Odkaz (prázdné = e-mail)", name: "odkaz", widget: "string", required: false }] }
+          - { label: "Proč s námi", name: "body", widget: "list", fields: [{ label: "Nadpis", name: "nadpis", widget: "string" }, { label: "Text", name: "text", widget: "text" }] }
           - { label: "Upozornění", name: "upozorneni", widget: "string" }
           - { label: "Odkaz na prodej apartmánů", name: "apartmany_url", widget: "string" }
+          - label: "Apartmány v prodeji"
+            name: "prodej"
+            widget: "object"
+            hint: "Ceny aktualizovat podle prodejních webů"
+            fields:
+              - { label: "Nadpis", name: "nadpis", widget: "string" }
+              - { label: "Text", name: "text", widget: "text" }
+              - { label: "Projekty", name: "projekty", widget: "list", summary: "{{fields.nazev}} – {{fields.cena}}", fields: [{ label: "Název", name: "nazev", widget: "string" }, { label: "Místo", name: "misto", widget: "string" }, { label: "Cena od", name: "cena", widget: "string" }, { label: "Popis", name: "popis", widget: "text" }, { label: "Výnos (jen modelový, s upozorněním)", name: "vynos", widget: "string", required: false }, { label: "Fotka", name: "foto", widget: "image" }, { label: "Odkaz", name: "odkaz", widget: "string" }, { label: "Tlačítko", name: "tlacitko", widget: "string" }] }
+              - { label: "Vybrané byty", name: "byty", widget: "list", summary: "{{fields.nazev}} – {{fields.cena}}", fields: [{ label: "Název", name: "nazev", widget: "string" }, { label: "Dispozice", name: "dispozice", widget: "string" }, { label: "Plocha", name: "plocha", widget: "string" }, { label: "Cena", name: "cena", widget: "string" }, { label: "Odkaz na detail", name: "odkaz", widget: "string" }] }
 
   - name: "web"
     label: "Soutok Kouty – texty a nastavení"

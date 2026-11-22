@@ -1,0 +1,14 @@
+{
+  "name": "nord-moravia-resorts",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/prerender.mjs"
+  },
+  "dependencies": {
+    "jsdom": "^24.1.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

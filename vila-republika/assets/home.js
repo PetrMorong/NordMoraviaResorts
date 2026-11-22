@@ -36,7 +36,8 @@
 
   // lightbox
   const lb = $('lb'); let G = [], gi = 0, gName = '';
-  const show = () => { $('lb-img').src = img(G[gi], 1800); $('lb-img').alt = gName; $('lb-cap').textContent = `${gName} · ${gi + 1} / ${G.length}`; };
+  $('lb-img').onload = () => $('lb-img').style.opacity = 1;
+  const show = () => { $('lb-img').style.opacity = 0; $('lb-img').src = img(G[gi], 1800); $('lb-img').alt = gName; $('lb-cap').textContent = `${gName} · ${gi + 1} / ${G.length}`; };
   document.querySelectorAll('[data-g]').forEach(b => b.onclick = () => { const a = apts[+b.dataset.g]; G = a.fotky; gi = 0; gName = a.nazev; show(); lb.showModal(); });
   $('lb-x').onclick = () => lb.close();
   $('lb-prev').onclick = () => { gi = (gi - 1 + G.length) % G.length; show(); };

@@ -1,13 +1,7 @@
 {
   "nadpis": "Investujte do Jeseníků s námi.",
-  "text": "Nabízíme přímou investici do našich developerských projektů s fixním výnosem. Transparentní podmínky, lokální tým a reálné nemovitosti.",
-  "vynos": "10 %",
-  "vynos_popis": "fixní roční výnos p.a.",
+  "text": "Dvě cesty, jak se zapojit: půjčit nám na konkrétní projekt s pevným úrokem, nebo si koupit vlastní apartmán, který za vás pronajímáme.",
   "body": [
-    {
-      "nadpis": "Fixní výnos",
-      "text": "10 % p.a. na vložený kapitál, výplata dle smluvních podmínek."
-    },
     {
       "nadpis": "Reálné projekty",
       "text": "Investice jdou přímo do konkrétních nemovitostních projektů v Jeseníkách – ne do fondů."
@@ -17,6 +11,76 @@
       "text": "Znáte lidi, kteří za projekty stojí. Transparentní reporting a přímá komunikace."
     }
   ],
-  "upozorneni": "Investice podléhá smluvním podmínkám. Není veřejnou nabídkou cenných papírů.",
-  "apartmany_url": "https://soutok-kouty.cz"
+  "upozorneni": "Zápůjčka i koupě apartmánu se řídí smluvními podmínkami. Nejde o veřejnou nabídku cenných papírů ani o garanci výnosu z pronájmu.",
+  "apartmany_url": "https://soutok-kouty.cz",
+  "moznosti": [
+    {
+      "nazev": "Zápůjčka na projekty",
+      "vynos": "10 % p.a.",
+      "vynos_popis": "pevný úrok ze zápůjčky",
+      "text": "Půjčíte nám na konkrétní developerský projekt v Jeseníkách. Úrok je daný smlouvou a nezávisí na obsazenosti ani sezóně.",
+      "body": [
+        "Pevný úrok 10 % ročně",
+        "Konkrétní projekt, ne fond",
+        "Splatnost a výplata úroků podle smlouvy"
+      ],
+      "tlacitko": "Mám zájem o zápůjčku",
+      "odkaz": ""
+    },
+    {
+      "nazev": "Koupě apartmánu",
+      "vynos": "Výnos z pronájmu",
+      "vynos_popis": "podle skutečné obsazenosti",
+      "text": "Koupíte si vlastní apartmán, který pronajímáme v rámci poolu. Výnos se odvíjí od skutečných tržeb – jeho výši negarantujeme, vše ale vidíte v portálu vlastníků.",
+      "body": [
+        "Vlastní nemovitost zapsaná v katastru",
+        "Podíl na tržbách celého poolu",
+        "Vlastní noci v kterémkoli resortu sítě"
+      ],
+      "tlacitko": "Apartmány v prodeji",
+      "odkaz": "#prodej"
+    }
+  ],
+  "prodej": {
+    "nadpis": "Apartmány *v prodeji*",
+    "text": "Aktuálně prodáváme ve dvou projektech. Ceny a dostupnost jednotek najdete na prodejních webech.",
+    "projekty": [
+      {
+        "nazev": "Wellness Hotel Soutok Kouty",
+        "misto": "Kouty nad Desnou",
+        "cena": "od 2,59 mil. Kč",
+        "popis": "23 apartmánů 1+kk 800 m od lanovky, otevíráme v létě 2028. Předprodejní ceny platí do 31. 3. 2027 nebo do prodeje 8 jednotek.",
+        "vynos": "modelový výnos 6,7 % p.a. při 50% obsazenosti, negarantovaný",
+        "foto": "soutok-kouty/images/suite-01.webp",
+        "odkaz": "https://soutok-kouty.cz/",
+        "tlacitko": "Prodejní web Soutok Kouty"
+      },
+      {
+        "nazev": "Resort Červený dvůr",
+        "misto": "Rapotín",
+        "cena": "od 2 590 000 Kč",
+        "popis": "Investiční apartmány 1+kk až 3+kk v historickém areálu s restaurací a wellness. Pronajímáme je hostům resortu, vy dostáváte podíl z tržeb.",
+        "vynos": "",
+        "foto": "images/cd-nadvori.webp",
+        "odkaz": "https://www.mori-reality.cz/cervenydvur/",
+        "tlacitko": "Apartmány v nabídce"
+      }
+    ],
+    "byty": [
+      {
+        "nazev": "Apartmán č. 20 · Rapotín",
+        "dispozice": "1+kk",
+        "plocha": "25,02 m²",
+        "cena": "2 590 000 Kč",
+        "odkaz": "https://www.mori-reality.cz/cervenydvur/byt/?Id=20"
+      },
+      {
+        "nazev": "Apartmán č. 37 · Rapotín",
+        "dispozice": "2+kk",
+        "plocha": "40,86 m²",
+        "cena": "3 490 000 Kč",
+        "odkaz": "https://www.mori-reality.cz/cervenydvur/byt/?Id=37"
+      }
+    ]
+  }
 }

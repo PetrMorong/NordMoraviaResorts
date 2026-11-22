@@ -1,5 +1,7 @@
 [build]
   publish = "."
+  # předgenerování obsahu do HTML (viz scripts/prerender.mjs) – kvůli vyhledávačům s AI a náhledům na sítích
+  command = "node scripts/prerender.mjs"
   functions = "netlify/functions"
 
 [[headers]]

@@ -3,37 +3,57 @@
     {
       "jmeno": "Petr Morong ml.",
       "role": "Zakladatel & strategie",
-      "bio": "Stojí za vizí a rozvojem portfolia. Řídí investiční strategii a nastavuje koncepci resortů po ekonomické i provozní stránce."
-    },
-    {
-      "jmeno": "Markéta Dvořáková",
-      "role": "Prodej & zákaznická péče",
-      "bio": "Zajišťuje prodej a komunikaci s majiteli. Provází investory od výběru jednotky až po její uvedení do provozu."
-    },
-    {
-      "jmeno": "Helena Morongová",
-      "role": "Provoz & správa na místě",
-      "bio": "Žije přímo v Jeseníkách a stará se o každodenní chod resortů – předání apartmánů, úklid i komunikaci s hosty."
+      "bio": "Stojí za vizí a rozvojem portfolia. Řídí investiční strategii a nastavuje koncepci resortů po ekonomické i provozní stránce.",
+      "foto": "",
+      "na_uvodu": true,
+      "uvod_role": "Majitel",
+      "uvod_text": "Resorty jsem budoval od první rekonstrukce. Rád slyším, co se vám líbilo – i co máme zlepšit."
     },
     {
       "jmeno": "Andrea Kuttlerová",
       "role": "Provoz & hotelové standardy",
-      "bio": "Přináší zkušenosti z hotelu Kolštejn. Dbá na kvalitu služeb a standardy pohostinství."
+      "bio": "Přináší zkušenosti z hotelu Kolštejn. Dbá na kvalitu služeb a standardy pohostinství.",
+      "foto": "",
+      "na_uvodu": true,
+      "uvod_role": "Provozní resortů",
+      "uvod_text": "Postará se o váš pobyt od rezervace po odjezd. Recepce v Rapotíně je tu pro všechny resorty."
+    },
+    {
+      "jmeno": "Kateřina Fejlková",
+      "role": "Vedoucí restaurace & event manager",
+      "bio": "Vede Restauraci Červený dvůr a připravuje svatby, oslavy i firemní akce – od první poptávky po poslední přípitek.",
+      "foto": "",
+      "na_uvodu": true,
+      "uvod_role": "Vedoucí restaurace & event manager",
+      "uvod_text": "Vede Restauraci Červený dvůr a stará se o svatby, oslavy i firemní akce. Ozvěte se jí s jakoukoli akcí."
+    },
+    {
+      "jmeno": "Markéta Morongová",
+      "role": "Prodej & zákaznická péče",
+      "bio": "Zajišťuje prodej a komunikaci s majiteli. Provází investory od výběru jednotky až po její uvedení do provozu.",
+      "foto": "",
+      "na_uvodu": false
     },
     {
       "jmeno": "Pavel Souček",
       "role": "Provoz & guest experience",
-      "bio": "Zkušenosti z hotelové sítě Orea. Zaměřuje se na zážitek hosta a efektivitu provozu."
+      "bio": "Zkušenosti z hotelové sítě Orea. Zaměřuje se na zážitek hosta a efektivitu provozu.",
+      "foto": "",
+      "na_uvodu": false
     },
     {
       "jmeno": "Tomáš Křen",
       "role": "Revenue & marketing",
-      "bio": "Řídí cenovou strategii, dynamické nacenění a marketing s ohledem na sezónnost."
+      "bio": "Řídí cenovou strategii, dynamické nacenění a marketing s ohledem na sezónnost.",
+      "foto": "",
+      "na_uvodu": false
     },
     {
       "jmeno": "Petr Morong st.",
       "role": "Technická správa & stavby",
-      "bio": "Odpovídá za technickou správu budov, rekonstrukce a dohled nad řemeslníky."
+      "bio": "Odpovídá za technickou správu budov, rekonstrukce a dohled nad řemeslníky.",
+      "foto": "",
+      "na_uvodu": false
     }
   ]
 }
