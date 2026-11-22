@@ -67,8 +67,8 @@
   $('places').innerHTML = O.mista.map(m => `<li><div><b>${esc(m.nazev)}</b><span>${esc(m.text)}</span></div><em>${esc(m.vzdalenost)}</em></li>`).join('');
 
   // recenze
-  const r = N.recenze[0];
-  if (r) $('quote').innerHTML = `<blockquote>„${esc(r.text)}“</blockquote><p>— ${esc(r.autor)}</p>`;
+  // velký citát (N.recenze) se nezobrazuje – recenze jdou z Reservio / TrustYou / Google / Booking níže
+  $('quote').innerHTML = '';
 
   // hodnocení wellness z Reservio (data/nmr/reservio.json se obnovuje při každém nasazení)
   const RS = await fetch('../data/nmr/reservio.json', {cache: 'no-cache'}).then(x => x.ok ? x.json() : null).catch(() => null);

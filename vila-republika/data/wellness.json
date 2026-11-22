@@ -1,0 +1,93 @@
+{
+  "hero_foto": "vilaRepublikaFoto/wellness/DSC01791-HDR_xrkdf9",
+  "nadpis": "Privátní wellness *ve Velkých Losinách*",
+  "perex": "Finská sauna, vířivka, ochlazovací bazének a odpočívárna – po dobu rezervace jen pro vás. Pro hosty vily i pro veřejnost, každý den včetně víkendů.",
+  "vybaveni": [
+    {
+      "nazev": "Finská sauna",
+      "text": "Prostorná sauna s podsvícením a aromaterapií.",
+      "foto": "vilaRepublikaFoto/wellness/DSC01755-HDR_jf1qnz"
+    },
+    {
+      "nazev": "Vířivka",
+      "text": "Whirlpool vana pro dva až čtyři, s výhledem do odpočívárny.",
+      "foto": "https://res.cloudinary.com/morireality/image/upload/f_auto,q_auto,c_fill,g_west,w_800,h_600/vilaRepublikaFoto/wellness/DSC01791-HDR_xrkdf9"
+    },
+    {
+      "nazev": "Ochlazovací bazének",
+      "text": "Osvěžení po sauně, vedle i ochlazovací vědro.",
+      "foto": "vilaRepublikaFoto/wellness/DSC02016-HDR_onzspt"
+    },
+    {
+      "nazev": "Odpočívárna",
+      "text": "Dřevěná lehátka, víno a ovoce k VIP rezervaci.",
+      "foto": "vilaRepublikaFoto/wellness/DSC01861_jluirn"
+    }
+  ],
+  "kroky": [
+    {
+      "nadpis": "Rezervujete online",
+      "text": "Vyberete termín a délku v Reservio, platit můžete na místě, kartou online nebo poukazem."
+    },
+    {
+      "nadpis": "Přijdete do připraveného",
+      "text": "Sauna je nahřátá, vířivka napuštěná, ručníky a prostěradla čekají."
+    },
+    {
+      "nadpis": "Celé je jen vaše",
+      "text": "90 nebo 120 minut bez cizích lidí. Mezi rezervacemi je čas na úklid."
+    },
+    {
+      "nadpis": "Spojte to s lázněmi",
+      "text": "Termální lázně Velké Losiny jsou pár kroků od vily – ideální kombinace na celý den."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Je wellness jen pro ubytované?",
+      "a": "Ne. Wellness si může zarezervovat kdokoli. Ubytovaní hosté vily mají cenu zhruba o 15 % nižší."
+    },
+    {
+      "q": "Pro kolik osob je wellness?",
+      "a": "Wellness je privátní pro vás a vaše blízké – pro páry i menší skupiny přátel."
+    },
+    {
+      "q": "Jaký je rozdíl mezi Standard a VIP?",
+      "a": "Standard je 90 minut wellness. VIP je 120 minut a k tomu láhev vína, ovoce a svíčky."
+    },
+    {
+      "q": "Co si vzít s sebou?",
+      "a": "Ručníky a prostěradla jsou připravené. Stačí plavky a případně přezůvky."
+    },
+    {
+      "q": "Jak se platí?",
+      "a": "Na místě, kartou online při rezervaci nebo dárkovým poukazem."
+    },
+    {
+      "q": "Dá se wellness darovat?",
+      "a": "Ano, prodáváme dárkové poukazy na wellness i na pobyt ve vile."
+    }
+  ],
+  "galerie": [
+    {
+      "foto": "vilaRepublikaFoto/wellness/DSC01791-HDR_xrkdf9",
+      "popis": "Vířivka a odpočívárna"
+    },
+    {
+      "foto": "vilaRepublikaFoto/wellness/DSC01755-HDR_jf1qnz",
+      "popis": "Finská sauna"
+    },
+    {
+      "foto": "vilaRepublikaFoto/wellness/DSC02016-HDR_onzspt",
+      "popis": "Ochlazovací bazének"
+    },
+    {
+      "foto": "vilaRepublikaFoto/wellness/DSC01861_jluirn",
+      "popis": "Odpočinek s vínem"
+    },
+    {
+      "foto": "vilaRepublikaFoto/wellness/DSC01740-HDR_nddukh",
+      "popis": "Chodba wellness"
+    }
+  ]
+}

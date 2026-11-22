@@ -246,3 +246,28 @@ section[data-nmr-vyhody]{padding-bottom:0}
 .hero-rating a{color:var(--beige);opacity:.92}.hero-rating a:hover{opacity:1;text-decoration:underline}
 .hero-rating b{color:#F2B9B8;font-weight:700}.hero-rating i{font-style:normal;opacity:.5}
 .hero-rating span{opacity:.92}
+
+/* ---- stránka Wellness ---- */
+.w-hero{min-height:min(88svh,820px)}
+.w-ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.w-vyb{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.w-vyb figure{margin:0}
+.w-vyb img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+.w-vyb figcaption{padding-top:12px;display:grid;gap:4px}
+.w-vyb figcaption b{font-size:18px}
+.w-vyb figcaption span{font-size:15px;opacity:.8}
+.w-kroky{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;counter-reset:k}
+.w-kroky>div{border-top:1px solid var(--line);padding-top:16px}
+.w-kroky span{display:block;font-size:13px;letter-spacing:.12em;color:var(--red,#B5413F);margin-bottom:8px}
+.w-kroky b{display:block;font-size:19px;margin-bottom:6px}
+.w-kroky p{font-size:15px;opacity:.82;margin:0}
+.w-faq details{border-bottom:1px solid var(--line);padding:16px 0}
+.w-faq summary{cursor:pointer;font-weight:600;font-size:17px;list-style:none;display:flex;justify-content:space-between;gap:16px}
+.w-faq summary::-webkit-details-marker{display:none}
+.w-faq summary::after{content:"+";font-weight:400}
+.w-faq details[open] summary::after{content:"–"}
+.w-faq p{margin:10px 0 0;opacity:.85}
+#cenik .btn{margin-top:4px}
+@media(max-width:900px){.w-vyb,.w-kroky{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.w-vyb,.w-kroky{grid-template-columns:1fr}}
+.w-gal .g:last-child:nth-child(4n+1):not(.big){grid-column:auto}

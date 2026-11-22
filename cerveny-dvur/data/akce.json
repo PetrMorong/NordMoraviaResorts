@@ -1,10 +1,10 @@
 {
   "svatby": {
     "nadpis": "Svatba, *na kterou se nezapomíná*",
-    "text": "Obřad pod širým nebem v zahradě nebo v altánu, hostina a zábava v zámeckém sále až pro 60 hostů, ubytování pro zhruba 50 svatebčanů a ranní snídaně – vše na jednom místě, bez přejezdů a shánění taxíků. Novomanželské apartmá s wellness dostanete v den svatby jako dárek.",
+    "text": "Obřad pod širým nebem v zahradě nebo v altánu, hostina a zábava v sále až pro 60 hostů, ubytování pro zhruba 50 svatebčanů a ranní snídaně – vše na jednom místě, bez přejezdů a shánění taxíků. Novomanželské apartmá s wellness dostanete v den svatby jako dárek.",
     "body": [
       "Obřad v zahradě nebo v altánu",
-      "Zámecký sál až pro 60 hostů vč. inventáře",
+      "Sál až pro 60 hostů vč. inventáře",
       "Vlastní catering nebo bar s obsluhou",
       "Ubytování cca 50 osob za zvýhodněnou cenu",
       "Novomanželské apartmá s wellness zdarma"
@@ -17,7 +17,7 @@
   },
   "firmy": {
     "nadpis": "Firemní akce *a teambuilding*",
-    "text": "Historický sál s moderním zázemím pro školení, prezentace i večerní program, ubytování pro celý tým a privátní wellness na zakončení dne.",
+    "text": "Sál s moderním zázemím pro školení, prezentace i večerní program, ubytování pro celý tým a privátní wellness na zakončení dne.",
     "parametry": [
       {
         "k": "Sál",

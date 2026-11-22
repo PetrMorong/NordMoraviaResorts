@@ -79,3 +79,9 @@ Stránky si obsah berou z `data/*.json` skriptem v prohlížeči. Aby obsah vid�
 - když se stránka nevykreslí, nechá se původní HTML a build nespadne.
 
 Nové stránky je potřeba přidat do seznamu `PAGES` ve skriptu. Ruční test: `npm install` a `npm run build` (přepíše HTML – spouštět jen na kopii).
+
+## SEO
+
+- `sitemap.xml` a `robots.txt` v kořeni (admin a demo portálu se neindexují). Sitemap po spuštění odeslat v Google Search Console.
+- Strukturovaná data (schema.org) v `<head>` každé stránky: Resort/LodgingBusiness/Hotel, Restaurant, DaySpa, EventVenue, FAQPage, BreadcrumbList.
+- 301 přesměrování starých URL (resortcervenydvur.cz, vila-republika.cz) je v `netlify.toml`. Fungují, až budou obě domény (s www i bez) přidané v Netlify jako aliasy tohoto webu.

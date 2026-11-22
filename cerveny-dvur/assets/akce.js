@@ -10,6 +10,6 @@
   $('f-title').innerHTML = em(F.nadpis); $('f-text').textContent = F.text;
   $('f-params').innerHTML = F.parametry.map(p => `<div><dt>${esc(p.k)}</dt><dd>${esc(p.v)}</dd></div>`).join('');
   $('f-foto').innerHTML = `<img src="${img(F.foto, 1000, 750)}" alt="Nádvoří Červeného dvora" loading="lazy">`;
-  $('f-mail').href = `mailto:${N.kontakt.email_akce}?subject=${encodeURIComponent('Firemní akce – poptávka')}`;
+  if ($('f-mail')) $('f-mail').href = `mailto:${N.kontakt.email_akce}?subject=${encodeURIComponent('Firemní akce – poptávka')}`;
   CD.footer(N); CD.header(); CD.reveal();
 })();

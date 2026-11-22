@@ -4,21 +4,73 @@
 <meta charset="utf-8">
 <script>if(/\/cerveny-dvur$/.test(location.pathname))location.replace(location.pathname+"/"+location.search+location.hash)</script>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Rezervace – Resort Červený dvůr Rapotín</title>
-<meta name="description" content="Rezervujte si apartmán v Resortu Červený dvůr napřímo – bez poplatků, snídaně v ceně.">
-<meta property="og:title" content="Rezervace – Resort Červený dvůr Rapotín">
-<meta property="og:image" content="https://res.cloudinary.com/morireality/image/upload/f_jpg,q_auto,c_fill,w_1200,h_630/Rapotin/web/exterier-vecer">
-<link rel="icon" href="images/symbol-dark.svg">
+<title>Rezervace pobytu napřímo – apartmány u Šumperka | Červený dvůr</title>
+<meta name="description" content="Rezervujte apartmán v Resortu Červený dvůr u Šumperka napřímo – o 5 % levněji než na portálech. Vyberte termín, apartmán, snídani, wellness i pobytový balíček.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://res.cloudinary.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/cd.css">
-<script src="https://booking.previo.cz/iframe/"></script>
+
+<link rel="canonical" href="https://nordmoraviaresorts.cz/cerveny-dvur/rezervace.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#231204">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="cs_CZ">
+<meta property="og:site_name" content="Resort Červený dvůr">
+<meta property="og:url" content="https://nordmoraviaresorts.cz/cerveny-dvur/rezervace.html">
+<meta property="og:title" content="Rezervace pobytu napřímo – apartmány u Šumperka | Červený dvůr">
+<meta property="og:description" content="Rezervujte apartmán v Resortu Červený dvůr u Šumperka napřímo – o 5 % levněji než na portálech. Vyberte termín, apartmán, snídani, wellness i pobytový balíček.">
+<meta property="og:image" content="https://nordmoraviaresorts.cz/cerveny-dvur/images/og-cd.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Resort Červený dvůr">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json" id="seo-ld">
+[
+ {
+  "@context": "https://schema.org",
+  "@type": "Resort",
+  "name": "Resort Červený dvůr",
+  "url": "https://nordmoraviaresorts.cz/cerveny-dvur/",
+  "potentialAction": {
+   "@type": "ReserveAction",
+   "target": "https://nordmoraviaresorts.cz/cerveny-dvur/rezervace.html"
+  }
+ },
+ {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+   {
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Nord Moravia Resorts",
+    "item": "https://nordmoraviaresorts.cz/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Resort Červený dvůr",
+    "item": "https://nordmoraviaresorts.cz/cerveny-dvur/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 3,
+    "name": "Rezervace",
+    "item": "https://nordmoraviaresorts.cz/cerveny-dvur/rezervace.html"
+   }
+  ]
+ }
+]
+</script>
 </head>
 <body class="page-book" data-nmr-resort="cerveny-dvur">
 <header class="hdr always" id="hdr">
   <div class="wrap">
     <a class="logo" href="index.html" aria-label="Resort Červený dvůr – úvod"><img src="images/logo-light.svg" alt="Červený dvůr" width="151" height="44"></a>
-    <nav id="nav"><a href="index.html#apartmany">Ubytování</a><a href="restaurace.html">Restaurace</a><a href="wellness.html">Wellness</a><a href="akce.html">Svatby a akce</a><a href="index.html#galerie">Galerie</a></nav>
+    <nav id="nav"><a href="index.html#apartmany">Ubytování</a><a href="balicky.html">Balíčky</a><a href="restaurace.html">Restaurace</a><a href="wellness.html">Wellness</a><a href="akce.html">Svatby a akce</a><a href="index.html#galerie">Galerie</a></nav>
     <div class="tools">
       <details class="net">
         <summary aria-label="Další resorty Nord Moravia">Resorty ▾</summary>
@@ -35,23 +87,76 @@
   </div>
 </header>
 <main>
-  <section class="book-head">
+  <section class="bk-head">
     <div class="wrap">
-      <p class="kicker light">Rezervace napřímo</p>
-      <h1>Vyberte termín <em>a apartmán</em></h1>
-      <form class="bbar inline" id="dates">
-        <label>Příjezd<input type="date" name="od" id="b-od" required></label>
-        <label>Odjezd<input type="date" name="do" id="b-do" required></label>
-        <button type="submit" class="btn red">Zobrazit volné apartmány</button>
-      </form>
-      <div data-nmr-vyhody="pruh" hidden style="margin-top:14px"></div>
-      <ul class="perks"><li>Bez poplatků za rezervaci</li><li>Snídaně v ceně</li><li>Okamžité potvrzení</li></ul>
+      <ol class="bk-steps" id="bk-steps"><li class="on">Termín</li><li>Apartmán</li><li>Doplňky</li><li>Údaje</li></ol>
+      <h1 class="title" id="bk-h1">Rezervace <em>napřímo</em></h1>
+      <p class="bk-perks" id="bk-perks">O 5 % levněji než na portálech · zvýhodněné wellness · bez poplatků</p>
     </div>
   </section>
-  <section class="book-frame">
-    <div class="wrap">
-      <div class="frame"><iframe id="previo-booking-iframe" name="previo-booking-iframe" title="Rezervační systém Previo" scrolling="no" frameborder="0" width="100%" height="1600" allowtransparency="true"></iframe></div>
-      <p class="note">Rezervaci zpracovává systém Previo. Wellness a masáže si rezervujete <a id="reservio" target="_blank" rel="noopener">zde</a>, stůl v restauraci <a href="restaurace.html">zde</a>.</p>
+
+  <section class="bk">
+    <div class="wrap bk-grid">
+      <div class="bk-main">
+        <div class="bk-pkg" id="bk-pkg" hidden></div>
+
+        <form class="bk-card" id="s1">
+          <h2>1 · Termín a hosté</h2>
+          <div class="bk-fields">
+            <label>Příjezd<input type="date" name="od" id="f-od" required></label>
+            <label>Odjezd<input type="date" name="do" id="f-do" required></label>
+            <label>Dospělí<select name="dospeli" id="f-dosp"></select></label>
+            <label>Děti<select name="deti" id="f-deti"></select></label>
+          </div>
+          <p class="bk-err" id="s1-err" hidden></p>
+          <button class="btn red arrow" type="submit">Zobrazit volné apartmány</button>
+        </form>
+
+        <div class="bk-card" id="s2" hidden>
+          <h2>2 · Vyberte apartmán</h2>
+          <p class="bk-note" id="s2-note"></p>
+          <div class="bk-rooms" id="rooms"></div>
+        </div>
+
+        <div class="bk-card" id="s3" hidden>
+          <h2>3 · Doplňky k pobytu</h2>
+          <div class="bk-extras" id="extras"></div>
+          <button class="btn red arrow" type="button" id="s3-next">Pokračovat k údajům</button>
+        </div>
+
+        <form class="bk-card" id="s4" name="rezervace" method="POST" data-netlify="true" netlify-honeypot="bot" hidden>
+          <h2>4 · Vaše údaje</h2>
+          <input type="hidden" name="form-name" value="rezervace">
+          <p hidden><label>Nevyplňujte<input name="bot"></label></p>
+          <input type="hidden" name="souhrn" id="f-souhrn">
+          <input type="hidden" name="cena" id="f-cena">
+          <div class="bk-fields two">
+            <label>Jméno<input name="jmeno" autocomplete="given-name" required></label>
+            <label>Příjmení<input name="prijmeni" autocomplete="family-name" required></label>
+            <label>E-mail<input type="email" name="email" autocomplete="email" required></label>
+            <label>Telefon<input type="tel" name="telefon" autocomplete="tel" required></label>
+          </div>
+          <label class="bk-wide">Poznámka<textarea name="poznamka" rows="3" placeholder="Čas příjezdu, přání k pobytu, preferovaný čas wellness…"></textarea></label>
+          <details class="bk-firm"><summary>Fakturovat na firmu</summary>
+            <div class="bk-fields two"><label>Firma<input name="firma"></label><label>IČO<input name="ico" inputmode="numeric"></label></div>
+          </details>
+          <label class="bk-check"><input type="checkbox" name="souhlas" required> <span>Souhlasím s <a href="#podminky" id="cond-open">obchodními a storno podmínkami</a> a se zpracováním osobních údajů pro účely rezervace.</span></label>
+          <label class="bk-check"><input type="checkbox" name="newsletter" value="ano"> <span>Chci občas dostat tip na akci nebo nový balíček (max. 1× měsíčně).</span></label>
+          <p class="bk-err" id="s4-err" hidden></p>
+          <button class="btn red arrow" type="submit" id="s4-btn">Odeslat rezervaci</button>
+          <p class="bk-note" id="s4-note"></p>
+        </form>
+
+        <div class="bk-card bk-done" id="done" hidden></div>
+
+        <div class="bk-cond" id="podminky" hidden><h3>Obchodní a storno podmínky</h3><ul id="cond-list"></ul></div>
+      </div>
+
+      <aside class="bk-sum" id="sum">
+        <h3>Váš pobyt</h3>
+        <div id="sum-body"><p class="bk-note">Vyberte termín a počet hostů.</p></div>
+        <div class="bk-help">Potřebujete poradit? <a id="sum-tel"></a></div>
+      </aside>
     </div>
   </section>
 </main>
@@ -70,25 +175,11 @@
   <div class="wrap">
     <img src="images/logo-light.svg" alt="Červený dvůr" width="123" height="36">
     <p>Resort Červený dvůr · součást <a href="/">Nord Moravia Resorts</a></p>
-    <nav><a href="index.html#historie">Historie</a><a href="#kontakt">Kontakt</a><a id="ftr-fb" target="_blank" rel="noopener">Facebook</a><a id="ftr-ig" target="_blank" rel="noopener">Instagram</a><a href="/admin/">Správa obsahu</a></nav>
+    <nav><a href="index.html#historie">Historie</a><a href="balicky.html">Balíčky</a><a href="firmy.html">Pro firmy</a><a href="#kontakt">Kontakt</a><a id="ftr-fb" target="_blank" rel="noopener">Facebook</a><a id="ftr-ig" target="_blank" rel="noopener">Instagram</a><a href="/admin/">Správa obsahu</a></nav>
   </div>
 </footer>
 <script src="assets/cd.js"></script>
-<script>
-(async () => {
-  const N = await CD.load('nastaveni');
-  const q = new URLSearchParams(location.search), od = document.getElementById('b-od'), dd = document.getElementById('b-do');
-  if (q.get('od')) od.value = q.get('od'); if (q.get('do')) dd.value = q.get('do');
-  const had = q.get('od') && q.get('do'); CD.dates(od, dd);
-  const base = `https://booking.previo.cz/?hotId=${encodeURIComponent(N.previo_hotel_id)}&lang=cs&guestFilter=1&hideCurrencies=EUR`;
-  const frame = document.getElementById('previo-booking-iframe');
-  const go = d => { frame.src = base + (d ? `&arrival=${od.value}&departure=${dd.value}` : ''); };
-  go(had);
-  document.getElementById('dates').addEventListener('submit', e => { e.preventDefault(); history.replaceState(null, '', `?od=${od.value}&do=${dd.value}`); go(true); frame.scrollIntoView({behavior: 'smooth'}); });
-  document.getElementById('reservio').href = N.reservio_url;
-  CD.footer(N); CD.header();
-})();
-</script>
+<script src="assets/rezervace.js"></script>
 <script src="../assets/nmr-common.js" defer></script>
 </body>
 </html>

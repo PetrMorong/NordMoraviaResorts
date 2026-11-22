@@ -1,0 +1,99 @@
+{
+  "hero_foto": "Rapotin/nadvori_qmoqtm",
+  "nadpis": "Firemní akce *v zámeckém resortu*",
+  "perex": "Školení, teambuilding, firemní večírek nebo ubytování pro tým. Sál pro 60 osob, 20 apartmánů, vlastní restaurace a privátní wellness – vše v jednom areálu 7 minut od Šumperka.",
+  "sluzby": [
+    {
+      "nazev": "Školení a porady",
+      "text": "Sál až pro 60 osob s technikou, coffee breaky a obědy z naší kuchyně. Celodenní i vícedenní program.",
+      "foto": "Rapotin/DSC06988_1_rnmmw4"
+    },
+    {
+      "nazev": "Teambuilding",
+      "text": "Zahrada, herna s ping-pongem a šipkami, pétanque, výlety do Jeseníků a večer privátní wellness.",
+      "foto": "Rapotin/zahrada_pohled_bkxpez"
+    },
+    {
+      "nazev": "Firemní večírky",
+      "text": "Vánoční večírek, výročí nebo oslava úspěchu – raut, obsluha, hudba a ubytování hned vedle sálu.",
+      "foto": "Rapotin/web/exterier-vecer"
+    },
+    {
+      "nazev": "Ubytování pro firmy",
+      "text": "Pracovní cesty, montážní a servisní týmy. Apartmány s kuchyňkou, parkování v areálu, faktura na firmu.",
+      "foto": "Rapotin/web/apt-komfort"
+    }
+  ],
+  "program": [
+    {
+      "cas": "9:00",
+      "text": "Příjezd, káva a snídaňové pečivo"
+    },
+    {
+      "cas": "9:30",
+      "text": "Dopolední blok v sále"
+    },
+    {
+      "cas": "12:30",
+      "text": "Oběd v restauraci"
+    },
+    {
+      "cas": "13:30",
+      "text": "Odpolední blok nebo teambuilding v zahradě"
+    },
+    {
+      "cas": "18:00",
+      "text": "Privátní wellness po skupinách"
+    },
+    {
+      "cas": "19:30",
+      "text": "Večeře nebo raut, večerní program"
+    }
+  ],
+  "vyhody": [
+    {
+      "nadpis": "Vše na jednom místě",
+      "text": "Sál, ubytování, jídlo i wellness v jednom areálu – nikdo nikam nepřejíždí."
+    },
+    {
+      "nadpis": "Jeden kontakt",
+      "text": "Akci s vámi připraví event manažerka od nabídky po vyúčtování."
+    },
+    {
+      "nadpis": "Faktura na firmu",
+      "text": "Fakturujeme na IČO, zálohově i po akci. Lze využít i FKSP a benefitní programy."
+    },
+    {
+      "nadpis": "Dobrá dostupnost",
+      "text": "Šumperk 7 minut, Olomouc 1 hodina, Ostrava 2 hodiny. Parkování zdarma v areálu."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Kolik lidí se vejde do sálu?",
+      "a": "Až 60 osob divadelně, menší počet v uspořádání škola nebo U. Sál má 96 m²."
+    },
+    {
+      "q": "Kolik lidí můžete ubytovat?",
+      "a": "Zhruba 50 osob ve 20 apartmánech. Při větší akci můžeme rezervovat celý resort jen pro vás."
+    },
+    {
+      "q": "Jakou máte techniku?",
+      "a": "Dataprojektor, plátno, flipchart a ozvučení. Wi-Fi v celém areálu."
+    },
+    {
+      "q": "Vystavujete fakturu na firmu?",
+      "a": "Ano, na IČO. Ubytování a poukazy lze hradit i z FKSP."
+    },
+    {
+      "q": "Zajistíte stravování?",
+      "a": "Ano – coffee breaky, obědy, večeře i raut připraví naše restaurace přímo v areálu."
+    },
+    {
+      "q": "Jak rychle pošlete nabídku?",
+      "a": "Obvykle do jednoho pracovního dne od poptávky."
+    }
+  ],
+  "kontakt_osoba": "Kateřina Fejlková",
+  "kontakt_role": "Vedoucí restaurace & event manager"
+}

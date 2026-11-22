@@ -14,8 +14,8 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const ORIGIN = 'https://nordmoraviaresorts.cz';
 const PAGES = [
   'index.html', 'o-nas.html', 'investori.html',
-  'cerveny-dvur/index.html', 'cerveny-dvur/restaurace.html', 'cerveny-dvur/wellness.html', 'cerveny-dvur/akce.html',
-  'vila-republika/index.html',
+  'cerveny-dvur/index.html', 'cerveny-dvur/restaurace.html', 'cerveny-dvur/wellness.html', 'cerveny-dvur/balicky.html', 'cerveny-dvur/firmy.html', 'cerveny-dvur/akce.html',
+  'vila-republika/index.html', 'vila-republika/wellness.html',
   'soutok-kouty/index.html',
 ];
 // skripty, které nepřidávají obsah (měření, cookies, lepicí lišta) nebo potřebují externí služby

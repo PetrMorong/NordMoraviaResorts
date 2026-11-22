@@ -1,0 +1,104 @@
+{
+  "rezim_poznamka": "Dokud není zapnuté napojení na Previo (proměnné PREVIO_API_KEY a PREVIO_LIVE na Netlify), počítá se cena z tohoto ceníku a rezervace přijde recepci k potvrzení. Po zapnutí bere ceny i volné apartmány živě z Previo.",
+  "sleva_primo": 5,
+  "snidane_osoba_noc": 290,
+  "min_noci": 2,
+  "deti_zdarma_do": 6,
+  "typy": [
+    {
+      "nazev": "Apartmán pro dva",
+      "previo_id": "",
+      "cena_noc": 2490,
+      "max_osob": 2,
+      "pocet": 6
+    },
+    {
+      "nazev": "Apartmán Komfort",
+      "previo_id": "",
+      "cena_noc": 2790,
+      "max_osob": 4,
+      "pocet": 6
+    },
+    {
+      "nazev": "Apartmán Suite",
+      "previo_id": "",
+      "cena_noc": 3190,
+      "max_osob": 4,
+      "pocet": 3
+    },
+    {
+      "nazev": "Rodinný apartmán komfort",
+      "previo_id": "",
+      "cena_noc": 4290,
+      "max_osob": 6,
+      "pocet": 2
+    },
+    {
+      "nazev": "Rodinný apartmán superior 2+1",
+      "previo_id": "",
+      "cena_noc": 4690,
+      "max_osob": 8,
+      "pocet": 1
+    },
+    {
+      "nazev": "Rodinný apartmán superior",
+      "previo_id": "",
+      "cena_noc": 4990,
+      "max_osob": 8,
+      "pocet": 2
+    }
+  ],
+  "doplnky": [
+    {
+      "id": "wellness",
+      "nazev": "Privátní wellness 90 min",
+      "popis": "Sauna, vířivka a odpočívárna jen pro vás – zvýhodněná cena k pobytu",
+      "cena": 1690,
+      "jednotka": "pobyt"
+    },
+    {
+      "id": "wellness-vip",
+      "nazev": "Wellness VIP 120 min",
+      "popis": "S proseccem, ovocem a svíčkami",
+      "cena": 2290,
+      "jednotka": "pobyt"
+    },
+    {
+      "id": "masaz",
+      "nazev": "Masáž 60 min",
+      "popis": "Klasická olejová – termín domluvíme",
+      "cena": 1590,
+      "jednotka": "osoba"
+    },
+    {
+      "id": "prosecco",
+      "nazev": "Prosecco a ovoce na pokoji",
+      "popis": "Připravené k příjezdu",
+      "cena": 690,
+      "jednotka": "pobyt"
+    },
+    {
+      "id": "late",
+      "nazev": "Pozdní check-out do 12:00",
+      "popis": "Podle obsazenosti",
+      "cena": 490,
+      "jednotka": "pobyt"
+    },
+    {
+      "id": "pes",
+      "nazev": "Pejsek",
+      "popis": "Za každou noc",
+      "cena": 250,
+      "jednotka": "noc"
+    }
+  ],
+  "podminky": "Zrušení zdarma do 1 dne před příjezdem, při pozdějším zrušení 50 % z ceny rezervace. Zrušení e-mailem na info@resortcervenydvur.cz.",
+  "podminky_url": "",
+  "podminky_text": [
+    "Storno poplatky: zrušení zdarma 1 den před příjezdem; méně než 1 den před příjezdem 50 % z ceny rezervace.",
+    "Pro zákazníka je závazná cena uvedená v ubytovacím poukazu (voucheru), který obdržíte e-mailem. Ubytovatel může v případech, které nemůže ovlivnit (např. vyšší moc), změnit dohodnuté podmínky pobytu.",
+    "Zrušení pobytu vyžaduje e-mail na info@resortcervenydvur.cz; rozhoduje datum a čas odeslání. U větších skupin mohou být sjednány individuální storno poplatky.",
+    "Storno poplatky neúčtujeme při úmrtí v rodině, hospitalizaci zákazníka nebo člena rodiny, vážném onemocnění, povolávacím rozkazu nebo živelné pohromě – je potřeba doložit písemně do 3 dnů.",
+    "Ubytovatel: Mori Reality s.r.o., Pernerova 697/35, 186 00 Praha 8, IČO 14426021."
+  ]
+}
