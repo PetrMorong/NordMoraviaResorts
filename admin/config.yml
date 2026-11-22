@@ -234,6 +234,7 @@ collections:
         label: "Nastavení, úvod, kontakt, poukazy"
         file: "vila-republika/data/nastaveni.json"
         fields:
+          - { label: "Galerie", name: "galerie", widget: "list", summary: "{{fields.popis}}", hint: "Ideálně 14 fotek – každá 7. je velká", fields: [{ label: "Fotka", name: "foto", widget: "image" }, { label: "Popisek", name: "popis", widget: "string" }] }
           - { label: "Hero – fotka", name: "hero_foto", widget: "image", hint: "Cloudinary ID nebo nahraný obrázek" }
           - { label: "Hero – nadpis", name: "hero_nadpis", widget: "string", hint: "*text* = zvýraznění barvou" }
           - { label: "Hero – perex", name: "hero_perex", widget: "text" }

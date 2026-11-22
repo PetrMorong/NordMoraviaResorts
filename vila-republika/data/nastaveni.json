@@ -1,6 +1,6 @@
 {
   "nazev": "Vila Republika",
-  "hero_foto": "vilaRepublikaFoto/LL406610_yfobxv",
+  "hero_foto": "vilaRepublikaFoto/LL406598_r1hc78",
   "hero_nadpis": "Prvorepubliková vila *pod Hrubým Jeseníkem*",
   "hero_perex": "Wellness apartmány v lázeňských Velkých Losinách. Každý apartmán jiný, privátní wellness jen pro vás, termální lázně za rohem.",
   "fakta": [
@@ -53,5 +53,63 @@
       "5 000 Kč",
       "10 000 Kč"
     ]
-  }
+  },
+  "galerie": [
+    {
+      "foto": "vilaRepublikaFoto/356584285_1096124314696983_2263942071942825600_n_xv0nkq",
+      "popis": "Zahrada mezi vilou a zahradním domkem"
+    },
+    {
+      "foto": "vilaRepublikaFoto/SpolecenskaMistnost/DSC01918-HDR_ltphob",
+      "popis": "Společenská místnost"
+    },
+    {
+      "foto": "vilaRepublikaFoto/SpolecenskaMistnost/DSC01951-HDR_r9c6ro",
+      "popis": "Kuchyňka ve společenské místnosti"
+    },
+    {
+      "foto": "vilaRepublikaFoto/SpolecenskaMistnost/DSC01924-HDR_zldqdu",
+      "popis": "Posezení u vína"
+    },
+    {
+      "foto": "vilaRepublikaFoto/IMG_1287-HDR-min_fjfc2b",
+      "popis": "Venkovní posezení"
+    },
+    {
+      "foto": "vilaRepublikaFoto/SpolecenskaMistnost/DSC01974-min_gpkq1v",
+      "popis": "Velký stůl pro celou partu"
+    },
+    {
+      "foto": "vilaRepublikaFoto/SpolecenskaMistnost/DSC01987-min_ljoda4",
+      "popis": "Pivo z výčepu"
+    },
+    {
+      "foto": "vilaRepublikaFoto/IMG_1389-HDR-min_iycbno",
+      "popis": "Altán s grilem"
+    },
+    {
+      "foto": "vilaRepublikaFoto/wellness/DSC01791-HDR_xrkdf9",
+      "popis": "Privátní wellness s vířivkou"
+    },
+    {
+      "foto": "vilaRepublikaFoto/wellness/DSC01755-HDR_jf1qnz",
+      "popis": "Sauna"
+    },
+    {
+      "foto": "vilaRepublikaFoto/IMG_1338-HDR-min_i68xc6",
+      "popis": "Houpačka pod jabloní"
+    },
+    {
+      "foto": "vilaRepublikaFoto/DSC08524-HDR_rx1gft",
+      "popis": "Vstupní hala"
+    },
+    {
+      "foto": "vilaRepublikaFoto/DSC08530-HDR_bw0gqc",
+      "popis": "Schodiště"
+    },
+    {
+      "foto": "vilaRepublikaFoto/IMG_1349-HDR-min_d00shg",
+      "popis": "Zahrada s trampolínou"
+    }
+  ]
 }

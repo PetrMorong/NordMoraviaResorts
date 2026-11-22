@@ -88,6 +88,13 @@
     <div><dt>Příjezd / odjezd</dt><dd>${esc(N.check_in)} / ${esc(N.check_out)}</dd></div>
     <div><dt>Provozovatel</dt><dd>${esc(K.provozovatel)}</dd></div>`;
   $('ftr-fb').href = K.facebook; $('ftr-ig').href = K.instagram;
+  // galerie + lightbox
+  const GAL = N.galerie || [];
+  if (GAL.length) {
+    $('gal').innerHTML = GAL.map((g, i) => `<button class="g${i % 7 === 0 ? ' big' : ''}" data-i="${i}" aria-label="Zvětšit: ${esc(g.popis)}"><img src="${img(g.foto, i % 7 === 0 ? 1000 : 600, i % 7 === 0 ? 1000 : 600)}" alt="${esc(g.popis)}" loading="lazy"><span>${esc(g.popis)}</span></button>`).join('');
+    VR.lightbox(GAL.map(g => ({src: g.foto, alt: g.popis})), $('gal'));
+  } else $('galerie').hidden = true;
+
 
   VR.header(); VR.reveal();
 })();

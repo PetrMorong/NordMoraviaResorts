@@ -29,6 +29,22 @@ const VR = {
     if (b) b.onclick = () => { const o = nav.classList.toggle('open'); b.setAttribute('aria-expanded', o); };
     if (nav) nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
   },
+  // jednoduchý lightbox: items [{src, alt}], kliknutí na [data-i] uvnitř root
+  lightbox(items, root) {
+    let d = document.getElementById('lb');
+    if (!d) {
+      document.body.insertAdjacentHTML('beforeend', `<dialog class="lb" id="lb" aria-label="Galerie"><button class="x" aria-label="Zavřít">×</button><button class="nav prev" aria-label="Předchozí">‹</button><img alt=""><button class="nav next" aria-label="Další">›</button><p></p></dialog>`);
+      d = document.getElementById('lb');
+    }
+    const im = d.querySelector('img'), cap = d.querySelector('p'); let i = 0;
+    const show = () => { im.src = VR.img(items[i].src, 1800); im.alt = items[i].alt; cap.textContent = `${items[i].alt} · ${i + 1} / ${items.length}`; };
+    root.querySelectorAll('[data-i]').forEach(b => b.onclick = () => { i = +b.dataset.i; show(); d.showModal(); });
+    d.querySelector('.x').onclick = () => d.close();
+    d.querySelector('.prev').onclick = () => { i = (i - 1 + items.length) % items.length; show(); };
+    d.querySelector('.next').onclick = () => { i = (i + 1) % items.length; show(); };
+    d.addEventListener('click', e => { if (e.target === d) d.close(); });
+    addEventListener('keydown', e => { if (!d.open) return; if (e.key === 'ArrowLeft') d.querySelector('.prev').click(); if (e.key === 'ArrowRight') d.querySelector('.next').click(); });
+  },
   // propojí dva date inputy (odjezd vždy po příjezdu)
   dates(od, dd) {
     const t = new Date(); od.min = VR.iso(t);
