@@ -40,7 +40,7 @@
 
 [[redirects]]
   from = "https://www.resortcervenydvur.cz/cs/pro-firmy/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/akce.html"
+  to = "https://nordmoraviaresorts.cz/cerveny-dvur/firmy.html"
   status = 301
   force = true
 
@@ -154,7 +154,7 @@
 
 [[redirects]]
   from = "https://resortcervenydvur.cz/cs/pro-firmy/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/akce.html"
+  to = "https://nordmoraviaresorts.cz/cerveny-dvur/firmy.html"
   status = 301
   force = true
 

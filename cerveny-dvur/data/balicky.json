@@ -2,7 +2,7 @@
   "hero_foto": "Rapotin/web/exterier-soumrak",
   "nadpis": "Pobytové *balíčky*",
   "perex": "Ubytování, snídaně, privátní wellness a masáže v jedné ceně. Vyberte balíček, zvolte termín a rezervujte přímo u nás – bez provize portálům.",
-  "poznamka": "Ceny balíčků se počítají podle zvoleného apartmánu a termínu. Parkování, Wi-Fi a poplatek obci jsou vždy v ceně.",
+  "poznamka": "Ceny balíčků se počítají podle zvoleného apartmánu a termínu. Parkování a Wi-Fi jsou vždy v ceně.",
   "balicky": [
     {
       "id": "romanticky",
@@ -48,7 +48,7 @@
         "Relaxační masáž 60 minut",
         "Prosecco a čerstvé ovoce na pokoji",
         "Káva a dezert",
-        "Parkování v areálu a poplatek obci v ceně"
+        "Parkování v areálu zdarma"
       ]
     },
     {
@@ -72,7 +72,7 @@
         "Masáž lávovými kameny 60 min pro každého",
         "Poukázka na svařák nebo punč se zákuskem",
         "Poukaz do restaurace 600 Kč",
-        "Parkování, Wi-Fi a poplatek obci v ceně"
+        "Parkování a Wi-Fi zdarma"
       ]
     },
     {
@@ -96,7 +96,7 @@
         "Vánoční výzdoba apartmánu",
         "Vánočka a horké kakao na uvítanou",
         "Krabička vánočního cukroví",
-        "Parkování, Wi-Fi a poplatek obci v ceně"
+        "Parkování a Wi-Fi zdarma"
       ]
     },
     {
@@ -120,7 +120,7 @@
         "Privátní wellness 90 minut",
         "Prosecco a čerstvé ovoce na pokoji",
         "Káva a dezert pro každou",
-        "Parkování v areálu a poplatek obci v ceně"
+        "Parkování v areálu zdarma"
       ]
     },
     {
@@ -143,7 +143,7 @@
         "Relaxační masáž 60 minut",
         "Zapůjčení trekingových holí a pétanque",
         "Káva a domácí dezert",
-        "Parkování v areálu a poplatek obci v ceně"
+        "Parkování v areálu zdarma"
       ]
     },
     {
@@ -167,7 +167,7 @@
         "Olejová masáž 60 min pro každého",
         "Překvapení na pokoji",
         "Poukaz do restaurace 600 Kč",
-        "Parkování, Wi-Fi a poplatek obci v ceně"
+        "Parkování a Wi-Fi zdarma"
       ]
     }
   ]

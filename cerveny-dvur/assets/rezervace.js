@@ -138,7 +138,7 @@
       const portal = S.rate.portal || S.rate.cena;
       rows.push(`<div class="bk-s-total"><span>Celkem</span><b>${kc(total())}</b></div>`);
       if (portal > S.rate.cena + 1) rows.push(`<p class="bk-s-save">Ušetříte ${kc(portal - S.rate.cena)} oproti portálům</p>`);
-      rows.push(`<p class="bk-note">Poplatek obci a parkování v ceně. ${esc(R.podminky || '')}</p>`);
+      rows.push(`<p class="bk-note">Parkování a Wi-Fi zdarma. ${esc(R.podminky || '')}</p>`);
     }
     $('sum-body').innerHTML = rows.join('');
   };
