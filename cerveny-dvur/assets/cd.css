@@ -376,3 +376,14 @@ html{scroll-padding-top:100px}
 @media(max-width:700px){#j-gal .cap small{display:none}}
 /* blok výhod přímé rezervace (sdílený NMR) – navazuje na další sekci */
 section[data-nmr-vyhody]{padding-bottom:0}
+/* recenze z Googlu */
+.quote .g-rev{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;text-align:left;margin-top:18px}
+.quote .g-rev figure{border:1px solid var(--line);padding:24px;background:var(--paper)}
+.quote .g-rev blockquote{font-size:17px;line-height:1.5;max-width:none;margin:0 0 12px}
+.quote .g-rev figcaption{font-size:13px;color:var(--muted)}.quote .g-rev figcaption a{text-decoration:underline}
+@media(max-width:860px){.quote .g-rev{grid-template-columns:1fr}}
+/* hodnocení v úvodu */
+.hero-rating{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;margin-top:18px;font-size:15px}
+.hero-rating a{color:var(--paper);opacity:.92}.hero-rating a:hover{opacity:1;text-decoration:underline}
+.hero-rating b{color:#E9D5C9;font-weight:700}.hero-rating i{font-style:normal;opacity:.5}
+.hero-rating span{opacity:.92}

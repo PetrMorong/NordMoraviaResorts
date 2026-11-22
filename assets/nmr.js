@@ -52,7 +52,12 @@
     }).join('');
   
     // recenze – jen skutečné, z CMS; prázdný seznam = sekce se nezobrazí
-    const rv = (RV && RV.recenze) || [];
+    let rv = (RV && RV.recenze) || [];
+  if (!rv.length) {
+    const RS = await fetch('data/nmr/reservio.json', {cache: 'no-cache'}).then(x => x.ok ? x.json() : null).catch(() => null);
+    const v = RS && RS['vila-republika'];
+    if (v && v.recenze) rv = v.recenze.slice(0, 3).map(x => ({text: x.text, jmeno: x.jmeno, resort: 'Wellness Vila Republika', zdroj: `Reservio ★ ${v.hodnoceni.toLocaleString('cs-CZ', {maximumFractionDigits: 1})} (${v.pocet})`}));
+  }
     if (rv.length) {
       $('#rev').innerHTML = rv.map(x => `<figure><blockquote>„${esc(x.text)}“</blockquote><figcaption><b>${esc(x.jmeno)}</b>${x.resort ? ` · ${esc(x.resort)}` : ''}${x.zdroj ? ` · ${esc(x.zdroj)}` : ''}</figcaption></figure>`).join('');
       $('#recenze').hidden = false;

@@ -89,11 +89,12 @@ async function render(page) {
   const html = '<!DOCTYPE html>\n' + doc.documentElement.outerHTML;
   dom.window.close();
 
-  const filled = (html.match(/<(img|li|article|details|figure)\b/g) || []).length - (src.match(/<(img|li|article|details|figure)\b/g) || []).length;
+  const txt = h => h.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').length;
+  const filled = txt(html) - txt(src);
   if (errors.length) console.warn(`  ! ${page}: ${errors.slice(0, 3).join(' | ')}`);
-  if (filled <= 0) { console.warn(`  ! ${page}: skript nic nevykreslil, ponechávám původní HTML`); return false; }
+  if (filled < 100) { console.warn(`  ! ${page}: skript nic nevykreslil, ponechávám původní HTML`); return false; }
   await writeFile(file, html);
-  console.log(`  ✓ ${page} (+${filled} prvků obsahu)`);
+  console.log(`  ✓ ${page} (+${filled} znaků obsahu)`);
   return true;
 }
 

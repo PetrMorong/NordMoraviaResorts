@@ -50,7 +50,8 @@
   $('well-title').innerHTML = em(W.nadpis);
   $('well-text').textContent = W.text;
   $('well-items').innerHTML = W.vybaveni.map(v => `<li>${esc(v)}</li>`).join('');
-  $('well-price').textContent = W.cena;
+  if ($('well-price')) $('well-price').textContent = W.cena;
+  if (W.cenik && W.cenik.length && $('well-price-box')) $('well-price-box').outerHTML = `<dl class="well-cenik"><div class="h"><dt></dt><dd>Veřejnost</dd><dd>Ubytovaní</dd></div>${W.cenik.map(c => `<div><dt>${esc(c.nazev)}</dt><dd>${esc(c.cena)}</dd><dd><b>${esc(c.cena_ubytovani)}</b></dd></div>`).join('')}</dl>`;
   $('well-cta').href = N.reservio_url;
   $('well-pics').innerHTML = W.fotky.map((f, i) => `<img src="${img(f, i ? 600 : 900, i ? 700 : 1100)}" alt="Privátní wellness" loading="lazy">`).join('');
 
@@ -67,7 +68,36 @@
 
   // recenze
   const r = N.recenze[0];
-  if (r) $('quote').innerHTML = `<blockquote>„${esc(r.text)}“</blockquote><p>— ${esc(r.autor)}</p>`; else $('recenze').remove();
+  if (r) $('quote').innerHTML = `<blockquote>„${esc(r.text)}“</blockquote><p>— ${esc(r.autor)}</p>`;
+
+  // hodnocení wellness z Reservio (data/nmr/reservio.json se obnovuje při každém nasazení)
+  const RS = await fetch('../data/nmr/reservio.json', {cache: 'no-cache'}).then(x => x.ok ? x.json() : null).catch(() => null);
+  const rv = RS && RS['vila-republika'];
+  document.querySelectorAll('.well-rating, #quote .rs, #quote .ty').forEach(e => e.remove()); // po předgenerování nevkládat podruhé
+  if (rv && rv.pocet) {
+    const zn = rv.hodnoceni.toLocaleString('cs-CZ', {maximumFractionDigits: 1});
+    $('well-cta').insertAdjacentHTML('afterend', `<a class="well-rating" href="${rv.url}" target="_blank" rel="noopener"><b>★ ${zn}</b> z 5 · ${rv.pocet} hodnocení na Reservio</a>`);
+    $('quote').insertAdjacentHTML('beforeend', `<div class="rs"><p class="rs-h"><b>★ ${zn} / 5</b> · ${rv.pocet} hodnocení wellness na <a href="${rv.url}" target="_blank" rel="noopener">Reservio</a></p><div class="rs-list">${rv.recenze.slice(0, 3).map(x => `<figure><blockquote>„${esc(x.text)}“</blockquote><figcaption>${esc(x.jmeno)} · ★★★★★</figcaption></figure>`).join('')}</div></div>`);
+  } else if (!r) $('recenze').remove();
+  // TrustYou – skutečné recenze ze všech portálů (widget jako na starém webu)
+  const ty = rv && rv.trustyou;
+  // hodnocení i v úvodu: TrustYou (všechny portály) + Google + Reservio wellness
+  const GV = RS && RS.google && RS.google['vila-republika'];
+  const fmt = n => n.toLocaleString('cs-CZ', {maximumFractionDigits: 1});
+  const NM = await fetch('../data/nmr/nastaveni.json', {cache: 'no-cache'}).then(x => x.ok ? x.json() : null).catch(() => null);
+  const BK = NM && NM.booking && NM.booking['vila-republika'];
+  const hr = [
+    ty ? `<a href="#recenze"><b>${ty.skore}/100</b> ${esc(ty.popis)} · ${ty.pocet} recenzí</a>` : '',
+    GV && GV.pocet ? `<a href="${esc(GV.url)}" target="_blank" rel="noopener"><b>${fmt(GV.hodnoceni)} ★</b> Google</a>` : '',
+    rv && rv.pocet ? `<a href="${rv.url}" target="_blank" rel="noopener"><b>${fmt(rv.hodnoceni)} ★</b> wellness</a>` : '',
+    BK && BK.skore ? `<span><b>${esc(BK.skore)}</b> ${esc(BK.popis)} na Bookingu · ${BK.pocet} hodnocení</span>` : '',
+  ].filter(Boolean);
+  if (hr.length) { $('hero-rating').innerHTML = hr.join('<i>·</i>'); $('hero-rating').hidden = false; }
+  if (ty) {
+    $('quote').insertAdjacentHTML('beforeend', `<div class="ty"><p class="rs-h"><b>${esc(ty.popis)} ${ty.skore}/100</b> · ${ty.pocet} recenzí z ${ty.zdroju} portálů (TrustYou)</p><iframe src="${esc(ty.widget)}" title="Recenze hostů Vila Republika" loading="lazy" id="ty-frame"></iframe></div>`);
+    const s = document.getElementById('ty-js') || document.createElement('script'); s.id = 'ty-js'; s.src = 'https://cdn.trustyou.com/v2/hotel/widget-ui/shared/iframeResizer/4.3.2/iframeResizer.min.js';
+    s.onload = () => window.iFrameResize && iFrameResize({checkOrigin: false}, '#ty-frame'); document.body.appendChild(s);
+  }
 
   // poukazy
   const P = N.poukazy; let val = P.hodnoty[2] || P.hodnoty[0];

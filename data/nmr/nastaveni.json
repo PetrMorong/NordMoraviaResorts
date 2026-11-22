@@ -10,8 +10,8 @@
       "popis": "začali jsme v Jeseníkách jako malý tým"
     },
     {
-      "cislo": "4,8★",
-      "popis": "průměrné hodnocení hostů napříč resorty"
+      "cislo": "4,6★",
+      "popis": "hodnocení hostů na Googlu (Resort Červený dvůr)"
     },
     {
       "cislo": "3",
@@ -31,5 +31,17 @@
   "mereni": {
     "gtm_id": "",
     "meta_pixel_id": ""
+  },
+  "booking": {
+    "cerveny-dvur": {
+      "skore": "8,7",
+      "popis": "Skvělé",
+      "pocet": 215
+    },
+    "vila-republika": {
+      "skore": "8,8",
+      "popis": "Skvělé",
+      "pocet": 327
+    }
   }
 }

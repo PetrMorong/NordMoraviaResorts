@@ -11,7 +11,9 @@
   $('b-rez').href = R.rezervace_url;
   $('b-roz').href = R.rozvoz_url;
   // Restaurace má vlastní Google profil (oddělený od resortu)
-  const g = R.google || {};
+  const RS = await fetch('../data/nmr/reservio.json', {cache: 'no-cache'}).then(x => x.ok ? x.json() : null).catch(() => null);
+  const GR = RS && RS.google && RS.google['cerveny-dvur-restaurace'];
+  const g = GR ? {znamka: GR.hodnoceni.toLocaleString('cs-CZ', {maximumFractionDigits: 1}), pocet: GR.pocet, odkaz: GR.url} : (R.google || {});
   $('rating').href = g.odkaz;
   $('rating').innerHTML = g.znamka
     ? `<b>${esc(g.znamka)} ★</b> ${esc(g.pocet)} recenzí na Googlu · ohodnoťte nás`

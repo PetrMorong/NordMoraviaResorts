@@ -63,8 +63,26 @@
   $('hist-text').textContent = N.historie.text;
   $('hist-foto').innerHTML = `<img src="${img(N.historie.foto, 1100, 760)}" alt="Historická fotografie Červeného dvora" loading="lazy">`;
 
-  const r = N.recenze[0], g = N.google_hodnoceni;
-  $('quote').innerHTML = (r ? `<blockquote>„${esc(r.text)}“</blockquote><p>— ${esc(r.autor)}</p>` : '') +
+  // hodnocení a recenze z Google profilu resortu (data/nmr/reservio.json, obnovuje se při nasazení)
+  const RS = await fetch('../data/nmr/reservio.json', {cache: 'no-cache'}).then(x => x.ok ? x.json() : null).catch(() => null);
+  const GG = RS && RS.google && RS.google['cerveny-dvur'];
+  const r = N.recenze[0], g = GG ? {znamka: GG.hodnoceni.toLocaleString('cs-CZ', {maximumFractionDigits: 1}), pocet: GG.pocet, odkaz: GG.url} : N.google_hodnoceni;
+  const gr = (GG && GG.recenze) || [];
+  // hodnocení i v úvodu: resort + restaurace na Googlu (+ wellness z Reservio, až tam budou hodnocení)
+  const fmt = n => n.toLocaleString('cs-CZ', {maximumFractionDigits: 1});
+  const GRs = RS && RS.google && RS.google['cerveny-dvur-restaurace'], RW = RS && RS['cerveny-dvur'];
+  const NM = await fetch('../data/nmr/nastaveni.json', {cache: 'no-cache'}).then(x => x.ok ? x.json() : null).catch(() => null);
+  const BK = NM && NM.booking && NM.booking['cerveny-dvur'];
+  const hr = [
+    GG && GG.pocet ? `<a href="${esc(GG.url)}" target="_blank" rel="noopener"><b>${fmt(GG.hodnoceni)} ★</b> resort · ${GG.pocet} recenzí na Googlu</a>` : '',
+    GRs && GRs.pocet ? `<a href="restaurace.html"><b>${fmt(GRs.hodnoceni)} ★</b> restaurace</a>` : '',
+    RW && RW.pocet ? `<a href="wellness.html"><b>${fmt(RW.hodnoceni)} ★</b> wellness</a>` : '',
+    BK && BK.skore ? `<span><b>${esc(BK.skore)}</b> ${esc(BK.popis)} na Bookingu · ${BK.pocet} hodnocení</span>` : '',
+  ].filter(Boolean);
+  if (hr.length) { $('hero-rating').innerHTML = hr.join('<i>·</i>'); $('hero-rating').hidden = false; }
+  $('quote').innerHTML = (gr.length
+      ? `<p class="kicker">Recenze z Googlu</p><div class="g-rev">${gr.map(x => `<figure><blockquote>„${esc(x.text)}“</blockquote><figcaption>${x.profil ? `<a href="${esc(x.profil)}" target="_blank" rel="noopener">${esc(x.jmeno)}</a>` : esc(x.jmeno)} · ★★★★★${x.kdy ? ` · ${esc(x.kdy)}` : ''}</figcaption></figure>`).join('')}</div>`
+      : (r ? `<blockquote>„${esc(r.text)}“</blockquote><p>— ${esc(r.autor)}</p>` : '')) +
     `<p style="margin-top:22px"><a class="btn line" href="${esc(g.odkaz)}" target="_blank" rel="noopener">${esc(g.znamka)} ★ · ${esc(g.pocet)} recenzí na Googlu</a></p>`;
 
   CD.footer(N); CD.header(); CD.reveal();

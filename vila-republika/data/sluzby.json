@@ -2,7 +2,7 @@
   "wellness": {
     "nadpis": "Privátní wellness *jen pro vás*",
     "text": "Celé wellness si zarezervujete jen pro sebe – nikdo cizí, žádné spěchání. Když ho nevyužívají ubytovaní hosté, je otevřené i veřejnosti, každý den včetně víkendů.",
-    "cena": "od 1 590 Kč / 90 min",
+    "cena": "od 1 990 Kč / 90 min",
     "vybaveni": [
       "Finská a bio sauna",
       "Whirlpool vana",
@@ -14,6 +14,18 @@
     "fotky": [
       "https://res.cloudinary.com/morireality/image/upload/f_auto,q_auto,c_fill,g_west,w_900,h_1100/vilaRepublikaFoto/wellness/DSC01791-HDR_xrkdf9",
       "vilaRepublikaFoto/wellness/DSC01755-HDR_jf1qnz"
+    ],
+    "cenik": [
+      {
+        "nazev": "Standard · 90 min",
+        "cena": "1 990 Kč",
+        "cena_ubytovani": "1 690 Kč"
+      },
+      {
+        "nazev": "VIP · 120 min + víno, ovoce, svíčky",
+        "cena": "2 490 Kč",
+        "cena_ubytovani": "2 115 Kč"
+      }
     ]
   },
   "spolecenska": {

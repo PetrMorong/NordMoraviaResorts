@@ -1,0 +1,94 @@
+{
+  "vila-republika": {
+    "nazev": "Privátní Wellness Vila Republika",
+    "hodnoceni": 4.57,
+    "pocet": 182,
+    "url": "https://vila-republika.reservio.com",
+    "recenze": [
+      {
+        "jmeno": "Jana",
+        "text": "Vše v naprostém pořádku, velká spokojenost. 😊",
+        "datum": "2026-10-10"
+      },
+      {
+        "jmeno": "Marie",
+        "text": "Úžasný odpočinek, naprosto jsme si to užili. Děkujeme 😊❤️",
+        "datum": "2026-06-14"
+      },
+      {
+        "jmeno": "Petra",
+        "text": "Příjemný soukromý wellness pro dva, bylo to super, doporučuji",
+        "datum": "2026-02-05"
+      },
+      {
+        "jmeno": "Petr",
+        "text": "Vše bylo velmi hezky připraveno. Výborná komunikace. Pro nás naprosto dostačující. Navíc ubytování v top!",
+        "datum": "2025-12-28"
+      },
+      {
+        "jmeno": "Barbora",
+        "text": "Je to tam naprosto skvělé 😊 nádherné prostředí, vše nachystané 😊 naprosté soukromí 😊 určitě se budu vracet 😊",
+        "datum": "2025-12-21"
+      },
+      {
+        "jmeno": "Jana",
+        "text": "Vynikající relax, dokonalý odpočinek pro dva, vše čistě připraveno a uklizeno.",
+        "datum": "2025-10-28"
+      }
+    ],
+    "trustyou": {
+      "skore": 91,
+      "popis": "Vynikající",
+      "pocet": 307,
+      "zdroju": 4,
+      "widget": "https://api.trustyou.com/hotels/cae0a877-7792-4ef2-b2d8-8e1b919e273c/reviews.html?key=6d715e36-4335-4bd1-9d8a-c856cbc21cff&scale=5&pageSize=5"
+    }
+  },
+  "cerveny-dvur": {
+    "nazev": "Resort Červený dvůr",
+    "hodnoceni": null,
+    "pocet": 0,
+    "url": "https://resort-cerveny-dvur.reservio.com",
+    "recenze": []
+  },
+  "aktualizovano": "2026-11-22",
+  "google": {
+    "cerveny-dvur": {
+      "hodnoceni": 4.6,
+      "pocet": 65,
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJTZJefFcbEkcRYG9pEcuXA0Y",
+      "recenze": [
+        {
+          "jmeno": "Milan Tichý",
+          "profil": "",
+          "text": "Byli jsme velmi spokojeni. Resort leží na klidném místě v podhůří Jeseníků. Krásné pokoje, se vším co člověk potřebuje. Výborné wellness. Určitě se rádi vrátíme.",
+          "kdy": "listopad 2026"
+        },
+        {
+          "jmeno": "Jan Vaculík",
+          "profil": "",
+          "text": "Nádhera! Zdolali jsme Kokeše, večer wellness, pak úžasný zámek Velké Losiny, plus ruční papírnu a třetí den Praděd pěšky z Hvězdy a zpět. Krásné ubytování, nové zařízení pokoje i kuchyně, při snídani skvělá a milá obsluha s kávou. Stálo to za to, moc děkujeme!",
+          "kdy": "listopad 2026"
+        },
+        {
+          "jmeno": "Sabca Cermakova",
+          "profil": "",
+          "text": "Ubytování nádherné, romantické, tiché. Snídaně byla výborná, výborná káva podle výběru. Nejlepší zážitek bylo soukromé wellness se saunou, vířivkou, ochlazovacím bazénkem a s místem pro kvalitní odpočinek. Určitě doporučujeme.",
+          "kdy": "březen 2026"
+        }
+      ]
+    },
+    "cerveny-dvur-restaurace": {
+      "hodnoceni": 4.5,
+      "pocet": 13,
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJYdfcg8EbEkcR0bztZi6l2kY",
+      "recenze": []
+    },
+    "vila-republika": {
+      "hodnoceni": 4.5,
+      "pocet": 85,
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJg1ZF6nsdEkcRUUA0Pq_STjI",
+      "recenze": []
+    }
+  }
+}
