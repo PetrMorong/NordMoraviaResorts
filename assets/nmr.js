@@ -51,15 +51,29 @@
       </article>`;
     }).join('');
   
-    // recenze – jen skutečné, z CMS; prázdný seznam = sekce se nezobrazí
+    // recenze – vlastní z CMS mají přednost; jinak mix: Google (Červený dvůr) + Reservio (Vila) a pruh hodnocení ze všech zdrojů
     let rv = (RV && RV.recenze) || [];
-  if (!rv.length) {
     const RS = await fetch('data/nmr/reservio.json', {cache: 'no-cache'}).then(x => x.ok ? x.json() : null).catch(() => null);
-    const v = RS && RS['vila-republika'];
-    if (v && v.recenze) rv = v.recenze.slice(0, 3).map(x => ({text: x.text, jmeno: x.jmeno, resort: 'Wellness Vila Republika', zdroj: `Reservio ★ ${v.hodnoceni.toLocaleString('cs-CZ', {maximumFractionDigits: 1})} (${v.pocet})`}));
-  }
-    if (rv.length) {
-      $('#rev').innerHTML = rv.map(x => `<figure><blockquote>„${esc(x.text)}“</blockquote><figcaption><b>${esc(x.jmeno)}</b>${x.resort ? ` · ${esc(x.resort)}` : ''}${x.zdroj ? ` · ${esc(x.zdroj)}` : ''}</figcaption></figure>`).join('');
+    const n1 = v => Number(v).toLocaleString('cs-CZ', {maximumFractionDigits: 1});
+    const G = (RS && RS.google) || {}, V = RS && RS['vila-republika'], BK = (N && N.booking) || {};
+    if (!rv.length && RS) {
+      const gc = ((G['cerveny-dvur'] || {}).recenze || []).map(x => ({text: x.text, jmeno: x.jmeno, resort: 'Resort Červený dvůr', zdroj: 'Google ★★★★★'}));
+      const vr = ((V && V.recenze) || []).filter(x => x.text.length > 50).map(x => ({text: x.text, jmeno: x.jmeno, resort: 'Vila Republika · wellness', zdroj: 'Reservio ★★★★★'}));
+      for (let i = 0; i < 3; i++) { if (gc[i]) rv.push(gc[i]); if (vr[i]) rv.push(vr[i]); }
+    }
+    const badges = [];
+    if (RS) {
+      const g = k => G[k] && G[k].hodnoceni ? {z: 'Google', s: `★ ${n1(G[k].hodnoceni)}`, p: G[k].pocet, u: G[k].url} : null;
+      const b = k => BK[k] && BK[k].skore ? {z: 'Booking', s: BK[k].skore, p: BK[k].pocet} : null;
+      const ty = V && V.trustyou && V.trustyou.skore ? {z: 'TrustYou', s: `${V.trustyou.skore}/100`, p: V.trustyou.pocet} : null;
+      const rs = V && V.hodnoceni ? {z: 'Reservio wellness', s: `★ ${n1(V.hodnoceni)}`, p: V.pocet, u: V.url} : null;
+      [['Resort Červený dvůr', [g('cerveny-dvur'), b('cerveny-dvur')]], ['Vila Republika', [g('vila-republika'), b('vila-republika'), ty, rs]]].forEach(([r, xs]) => {
+        xs = xs.filter(Boolean); if (xs.length) badges.push(`<div class="rb"><b>${esc(r)}</b><div>${xs.map(x => `<${x.u ? `a href="${esc(x.u)}" target="_blank" rel="noopener"` : 'span'}><strong>${esc(x.s)}</strong><small>${esc(x.z)} · ${x.p}</small></${x.u ? 'a' : 'span'}>`).join('')}</div></div>`);
+      });
+    }
+    if (rv.length || badges.length) {
+      $('#rev-badges').innerHTML = badges.join('');
+      $('#rev').innerHTML = rv.slice(0, 6).map(x => `<figure${x.text.length > 160 ? ' class="long"' : ''}><blockquote>„${esc(x.text)}“</blockquote><figcaption><b>${esc(x.jmeno)}</b>${x.resort ? ` · ${esc(x.resort)}` : ''}${x.zdroj ? ` · ${esc(x.zdroj)}` : ''}</figcaption></figure>`).join('');
       $('#recenze').hidden = false;
     }
   }
