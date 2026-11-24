@@ -226,3 +226,5 @@ h2.t em,h1 em{font-style:italic;font-weight:400}
 .rev figure.long blockquote{font-size:18px}
 .rev figure{display:flex;flex-direction:column;justify-content:space-between}
 @media(max-width:700px){.rbs{grid-template-columns:1fr;gap:8px}.rb>div{margin-bottom:10px}}
+
+.dp-show{cursor:pointer}

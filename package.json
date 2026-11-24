@@ -3,9 +3,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node scripts/prerender.mjs"
+    "build": "node scripts/prerender.mjs",
+    "dev": "node scripts/dev.mjs",
+    "test:platba": "node scripts/test-platba.mjs"
   },
   "dependencies": {
+    "@netlify/blobs": "^8.2.0",
     "jsdom": "^24.1.3"
   },
   "engines": {

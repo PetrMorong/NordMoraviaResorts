@@ -343,6 +343,84 @@ collections:
               - { label: "Popis", name: "popis", widget: "text" }
               - { label: "Fotky", name: "fotky", widget: "list", field: { label: "Fotka", name: "foto", widget: "image" } }
           - { label: "Vybavení všech apartmánů", name: "vybaveni", widget: "list", field: { label: "Položka", name: "polozka", widget: "string" } }
+      - name: "rezervace"
+        label: "Rezervace – ceník, doplňky a podmínky"
+        file: "vila-republika/data/rezervace.json"
+        fields:
+          - { label: "Text pod nadpisem", name: "perks", widget: "string", required: false, hint: "Např. O 5 % levněji než na portálech · privátní wellness · bez poplatků" }
+          - { label: "Jak to funguje", name: "rezim_poznamka", widget: "text" }
+          - { label: "Sleva za přímou rezervaci (%)", name: "sleva_primo", widget: "number" }
+          - { label: "Snídaně (Kč za osobu a noc)", name: "snidane_osoba_noc", widget: "number", required: false }
+          - { label: "Minimální počet nocí", name: "min_noci", widget: "number" }
+          - label: "Sazby (varianty ceny)"
+            name: "sazby"
+            widget: "list"
+            summary: "{{fields.nazev}}"
+            hint: "Co host vybírá u apartmánu – např. Flexibilní / Nevratná −10 %."
+            fields:
+              - { label: "ID", name: "id", widget: "string" }
+              - { label: "Název", name: "nazev", widget: "string" }
+              - { label: "Popis", name: "popis", widget: "string", required: false }
+              - { label: "Sleva z ubytování (%)", name: "sleva", widget: "number", required: false, value_type: "int", default: 0, hint: "Např. 10 u nevratné sazby. Strava se platí celá." }
+              - { label: "Strava (Kč za dospělého a noc)", name: "strava_osoba_noc", widget: "number", required: false, value_type: "int", hint: "0 = bez stravy, např. 200 = snídaně, cena polopenze = polopenze. Prázdné = sazba se zatím nenabízí." }
+              - { label: "Strava (ikonka)", name: "strava", widget: "select", required: false, options: [{ label: "Bez stravy", value: "bez" }, { label: "Se snídaní", value: "snidane" }, { label: "S polopenzí", value: "polopenze" }] }
+              - { label: "Nevratná", name: "nevratna", widget: "boolean", required: false, default: false, hint: "Bez možnosti storna. Nabízí se jen s platbou předem (kartou nebo převodem se splatností)." }
+              - { label: "Platí od (příjezd)", name: "plati_od", widget: "datetime", required: false, format: "YYYY-MM-DD", date_format: "D. M. YYYY", time_format: false, hint: "Např. polopenze až od 1. 12. Prázdné = vždy." }
+              - { label: "Platí do (příjezd)", name: "plati_do", widget: "datetime", required: false, format: "YYYY-MM-DD", date_format: "D. M. YYYY", time_format: false }
+              - { label: "Se snídaní", name: "snidane", widget: "boolean", required: false, default: false }
+          - { label: "Poznámka v souhrnu", name: "souhrn_poznamka", widget: "string", required: false }
+          - label: "Apartmány – ceník"
+            name: "typy"
+            widget: "list"
+            summary: "{{fields.nazev}} – {{fields.cena_noc}} Kč"
+            hint: "Název musí přesně odpovídat názvu v Apartmánech. Cena = cena na portálech; sleva za přímou rezervaci se odečte sama."
+            fields:
+              - { label: "Název", name: "nazev", widget: "string" }
+              - { label: "Previo ID typu (obkId)", name: "previo_id", widget: "string", required: false }
+              - { label: "Cena za noc (Kč)", name: "cena_noc", widget: "number", required: false, hint: "Prázdné = apartmán se v rezervaci nenabízí." }
+              - label: "Cena podle počtu osob"
+                name: "ceny_osoby"
+                widget: "list"
+                required: false
+                summary: "do {{fields.osob}} osob – {{fields.cena}} Kč"
+                hint: "Cena za noc „do N osob“; když je vyplněné, má přednost před cenou za noc."
+                fields:
+                  - { label: "Do počtu osob", name: "osob", widget: "number", value_type: "int" }
+                  - { label: "Cena za noc (Kč)", name: "cena", widget: "number", value_type: "int" }
+              - { label: "Max. osob", name: "max_osob", widget: "number" }
+          - label: "Doplňky"
+            name: "doplnky"
+            widget: "list"
+            summary: "{{fields.nazev}} – {{fields.cena}} Kč / {{fields.jednotka}}"
+            fields:
+              - { label: "ID", name: "id", widget: "string" }
+              - { label: "Název", name: "nazev", widget: "string" }
+              - { label: "Popis", name: "popis", widget: "string" }
+              - { label: "Cena (Kč)", name: "cena", widget: "number" }
+              - { label: "Účtuje se za", name: "jednotka", widget: "select", options: ["pobyt", "noc", "osoba"] }
+              - { label: "Max. počet kusů", name: "max_ks", widget: "number", required: false, value_type: "int", default: 1 }
+              - { label: "Popisek počtu", name: "ks_label", widget: "string", required: false, hint: "Např. Počet vstupů, Počet masáží, Počet (kol × dní)" }
+              - { label: "Alternativa v jiném resortu", name: "alternativa", widget: "select", required: false, options: [{ label: "Wellness – Resort Červený dvůr", value: "cerveny-dvur:wellness" }, { label: "Wellness – Vila Republika", value: "vila-republika:wellness" }], hint: "Když je wellness v době pobytu plné nebo mimo provoz, nabídne se toto (křížový prodej)." }
+              - { label: "Mimo provoz", name: "mimo_provoz", widget: "boolean", required: false, default: false, hint: "Např. nejde vířivka – web wellness nenabídne a rovnou ukáže alternativu v jiném resortu." }
+              - { label: "Reservio ID služby", name: "reservio_sluzba", widget: "string", required: false, hint: "Vyplněné = host vybírá čas z volných termínů v Reservio Vily a rezervace se tam založí zdarma. ID vypíše: node scripts/reservio-sluzby.mjs vila-republika" }
+          - label: "Platba"
+            name: "platba"
+            widget: "object"
+            fields:
+              - { label: "Nabízet platbu kartou online", name: "karta", widget: "boolean", default: true }
+              - { label: "Nabízet bankovní převod (zálohový list)", name: "prevod", widget: "boolean", default: true }
+              - { label: "Záloha (% z ceny pobytu)", name: "zaloha_procent", widget: "number", default: 100, value_type: "int", min: 1, max: 100 }
+              - { label: "Splatnost zálohy při převodu (dní)", name: "prevod_splatnost_dni", widget: "number", default: 3, value_type: "int", hint: "Nejpozději den před příjezdem. Host je upozorněný, že bez úhrady do splatnosti se rezervace automaticky zruší (v Previo vyprší opce)." }
+              - { label: "Číslo účtu pro převod (zobrazí se hostovi)", name: "ucet", widget: "string", required: false }
+              - { label: "Text u platby kartou", name: "text_karta", widget: "string" }
+              - { label: "Text u převodu", name: "text_prevod", widget: "string" }
+          - { label: "Tip na wellness (děkovná stránka)", name: "wellness_tip", widget: "text", required: false }
+          - { label: "Storno jednou větou (u flexibilních sazeb)", name: "storno_kratce", widget: "string", required: false, hint: "Např. Zrušení zdarma do 1 dne před příjezdem" }
+          - { label: "Doporučená strava (výrazné tlačítko)", name: "doporucena_strava", widget: "select", required: false, default: "snidane", options: [{ label: "Se snídaní", value: "snidane" }, { label: "S polopenzí", value: "polopenze" }, { label: "Bez stravy", value: "bez" }], hint: "Řádek s touto stravou má výrazné tlačítko a štítek Nejoblíbenější." }
+          - { label: "Podmínky – krátce (v souhrnu)", name: "podminky", widget: "text" }
+          - { label: "Obchodní a storno podmínky", name: "podminky_text", widget: "list", field: { label: "Odstavec", name: "odstavec", widget: "text" } }
+          - { label: "Odkaz na plné podmínky", name: "podminky_url", widget: "string", required: false }
+          - { label: "Zpracování osobních údajů", name: "ochrana_udaju", widget: "list", required: false, field: { label: "Odstavec", name: "odstavec", widget: "text" } }
 
   # ── Resort Červený dvůr (/cerveny-dvur/) ──────────────────────────
   - name: "cd_web"
@@ -441,6 +519,23 @@ collections:
           - { label: "Snídaně (Kč za osobu a noc)", name: "snidane_osoba_noc", widget: "number" }
           - { label: "Minimální počet nocí", name: "min_noci", widget: "number" }
           - { label: "Děti zdarma do (let)", name: "deti_zdarma_do", widget: "number" }
+          - label: "Sazby (varianty ceny)"
+            name: "sazby"
+            widget: "list"
+            summary: "{{fields.nazev}}"
+            hint: "Co host vybírá u apartmánu – např. Se snídaní / Bez snídaně nebo Flexibilní / Nevratná −10 %."
+            fields:
+              - { label: "ID", name: "id", widget: "string" }
+              - { label: "Název", name: "nazev", widget: "string" }
+              - { label: "Popis", name: "popis", widget: "string", required: false }
+              - { label: "Sleva z ubytování (%)", name: "sleva", widget: "number", required: false, value_type: "int", default: 0, hint: "Např. 10 u nevratné sazby. Strava se platí celá." }
+              - { label: "Strava (Kč za dospělého a noc)", name: "strava_osoba_noc", widget: "number", required: false, value_type: "int", hint: "0 = bez stravy, např. 200 = snídaně, cena polopenze = polopenze. Prázdné = sazba se zatím nenabízí." }
+              - { label: "Strava (ikonka)", name: "strava", widget: "select", required: false, options: [{ label: "Bez stravy", value: "bez" }, { label: "Se snídaní", value: "snidane" }, { label: "S polopenzí", value: "polopenze" }] }
+              - { label: "Nevratná", name: "nevratna", widget: "boolean", required: false, default: false, hint: "Bez možnosti storna. Nabízí se jen s platbou předem (kartou nebo převodem se splatností)." }
+              - { label: "Platí od (příjezd)", name: "plati_od", widget: "datetime", required: false, format: "YYYY-MM-DD", date_format: "D. M. YYYY", time_format: false, hint: "Např. polopenze až od 1. 12. Prázdné = vždy." }
+              - { label: "Platí do (příjezd)", name: "plati_do", widget: "datetime", required: false, format: "YYYY-MM-DD", date_format: "D. M. YYYY", time_format: false }
+              - { label: "Se snídaní", name: "snidane", widget: "boolean", required: false, default: false, hint: "Připočte snídani (Kč za osobu a noc) za každého dospělého." }
+          - { label: "Poznámka v souhrnu", name: "souhrn_poznamka", widget: "string", required: false, hint: "Např. Parkování a Wi-Fi zdarma." }
           - label: "Apartmány – ceník"
             name: "typy"
             widget: "list"
@@ -449,9 +544,18 @@ collections:
             fields:
               - { label: "Název", name: "nazev", widget: "string" }
               - { label: "Previo ID typu (obkId)", name: "previo_id", widget: "string", required: false }
-              - { label: "Cena za noc (Kč)", name: "cena_noc", widget: "number" }
+              - { label: "Cena za noc (Kč)", name: "cena_noc", widget: "number", required: false, hint: "Prázdné = apartmán se v rezervaci nenabízí." }
+              - label: "Cena podle počtu osob"
+                name: "ceny_osoby"
+                widget: "list"
+                required: false
+                summary: "do {{fields.osob}} osob – {{fields.cena}} Kč"
+                hint: "Volitelné. Cena za noc „do N osob“; když je vyplněné, má přednost před cenou za noc."
+                fields:
+                  - { label: "Do počtu osob", name: "osob", widget: "number", value_type: "int" }
+                  - { label: "Cena za noc (Kč)", name: "cena", widget: "number", value_type: "int" }
               - { label: "Max. osob", name: "max_osob", widget: "number" }
-              - { label: "Počet apartmánů", name: "pocet", widget: "number" }
+              - { label: "Počet apartmánů", name: "pocet", widget: "number", required: false }
           - label: "Doplňky"
             name: "doplnky"
             widget: "list"
@@ -462,9 +566,30 @@ collections:
               - { label: "Popis", name: "popis", widget: "string" }
               - { label: "Cena (Kč)", name: "cena", widget: "number" }
               - { label: "Účtuje se za", name: "jednotka", widget: "select", options: ["pobyt", "noc", "osoba"] }
+              - { label: "Max. počet kusů", name: "max_ks", widget: "number", required: false, value_type: "int", default: 1, hint: "Víc než 1 = host si může koupit víc kusů (např. 2× wellness)." }
+              - { label: "Popisek počtu", name: "ks_label", widget: "string", required: false, hint: "Např. Počet vstupů, Počet masáží, Počet (kol × dní)" }
+              - { label: "Alternativa v jiném resortu", name: "alternativa", widget: "select", required: false, options: [{ label: "Wellness – Resort Červený dvůr", value: "cerveny-dvur:wellness" }, { label: "Wellness – Vila Republika", value: "vila-republika:wellness" }], hint: "Když je wellness v době pobytu plné nebo mimo provoz, nabídne se toto (křížový prodej)." }
+              - { label: "Mimo provoz", name: "mimo_provoz", widget: "boolean", required: false, default: false, hint: "Např. nejde vířivka – web wellness nenabídne a rovnou ukáže alternativu v jiném resortu." }
+              - { label: "Reservio ID služby", name: "reservio_sluzba", widget: "string", required: false, hint: "Vyplněné = host vybírá čas z volných termínů v Reservio a rezervace se tam založí zdarma (zaplaceno v rámci pobytu). ID vypíše: node scripts/reservio-sluzby.mjs" }
+          - label: "Platba"
+            name: "platba"
+            widget: "object"
+            hint: "Platba kartou funguje, až jsou na Netlify nastavené klíče ČSOB (viz README). Výši zálohy držte stejnou jako v Previo."
+            fields:
+              - { label: "Nabízet platbu kartou online", name: "karta", widget: "boolean", default: true }
+              - { label: "Nabízet bankovní převod (zálohový list)", name: "prevod", widget: "boolean", default: true }
+              - { label: "Záloha (% z ceny pobytu)", name: "zaloha_procent", widget: "number", default: 100, value_type: "int", min: 1, max: 100 }
+              - { label: "Splatnost zálohy při převodu (dní)", name: "prevod_splatnost_dni", widget: "number", default: 3, value_type: "int", hint: "Nejpozději den před příjezdem. Host je upozorněný, že bez úhrady do splatnosti se rezervace automaticky zruší (v Previo vyprší opce)." }
+              - { label: "Číslo účtu pro převod (zobrazí se hostovi)", name: "ucet", widget: "string", required: false }
+              - { label: "Text u platby kartou", name: "text_karta", widget: "string" }
+              - { label: "Text u převodu", name: "text_prevod", widget: "string" }
+          - { label: "Tip na wellness (děkovná stránka)", name: "wellness_tip", widget: "text", required: false, hint: "Zobrazí se po dokončení rezervace s tlačítkem na rezervaci wellness. Prázdné = nezobrazí se." }
+          - { label: "Storno jednou větou (u flexibilních sazeb)", name: "storno_kratce", widget: "string", required: false, hint: "Např. Zrušení zdarma do 1 dne před příjezdem" }
+          - { label: "Doporučená strava (výrazné tlačítko)", name: "doporucena_strava", widget: "select", required: false, default: "snidane", options: [{ label: "Se snídaní", value: "snidane" }, { label: "S polopenzí", value: "polopenze" }, { label: "Bez stravy", value: "bez" }], hint: "Řádek s touto stravou má výrazné tlačítko a štítek Nejoblíbenější." }
           - { label: "Podmínky – krátce (v souhrnu)", name: "podminky", widget: "text" }
           - { label: "Obchodní a storno podmínky", name: "podminky_text", widget: "list", field: { label: "Odstavec", name: "odstavec", widget: "text" } }
           - { label: "Odkaz na plné podmínky", name: "podminky_url", widget: "string", required: false }
+          - { label: "Zpracování osobních údajů", name: "ochrana_udaju", widget: "list", required: false, field: { label: "Odstavec", name: "odstavec", widget: "text" }, hint: "Zobrazí se v okně „Zpracování osobních údajů“ (odkaz v patičce). Prázdné = odkaz se nezobrazí." }
       - name: "firmy"
         label: "Stránka pro firmy"
         file: "cerveny-dvur/data/firmy.json"

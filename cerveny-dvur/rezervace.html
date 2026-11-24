@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://res.cloudinary.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/cd.css">
+<link rel="stylesheet" href="../assets/booking/booking.css">
 
 <link rel="canonical" href="https://nordmoraviaresorts.cz/cerveny-dvur/rezervace.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -87,78 +88,12 @@
   </div>
 </header>
 <main>
-  <section class="bk-head">
-    <div class="wrap">
-      <ol class="bk-steps" id="bk-steps"><li class="on">Termín</li><li>Apartmán</li><li>Doplňky</li><li>Údaje</li></ol>
-      <h1 class="title" id="bk-h1">Rezervace <em>napřímo</em></h1>
-      <p class="bk-perks" id="bk-perks">O 5 % levněji než na portálech · zvýhodněné wellness · bez poplatků</p>
-    </div>
-  </section>
-
-  <section class="bk">
-    <div class="wrap bk-grid">
-      <div class="bk-main">
-        <div class="bk-pkg" id="bk-pkg" hidden></div>
-
-        <form class="bk-card" id="s1">
-          <h2>1 · Termín a hosté</h2>
-          <div class="bk-fields">
-            <label>Příjezd<input type="date" name="od" id="f-od" required></label>
-            <label>Odjezd<input type="date" name="do" id="f-do" required></label>
-            <label>Dospělí<select name="dospeli" id="f-dosp"></select></label>
-            <label>Děti<select name="deti" id="f-deti"></select></label>
-          </div>
-          <p class="bk-err" id="s1-err" hidden></p>
-          <button class="btn red arrow" type="submit">Zobrazit volné apartmány</button>
-        </form>
-
-        <div class="bk-card" id="s2" hidden>
-          <h2>2 · Vyberte apartmán</h2>
-          <p class="bk-note" id="s2-note"></p>
-          <div class="bk-rooms" id="rooms"></div>
-        </div>
-
-        <div class="bk-card" id="s3" hidden>
-          <h2>3 · Doplňky k pobytu</h2>
-          <div class="bk-extras" id="extras"></div>
-          <button class="btn red arrow" type="button" id="s3-next">Pokračovat k údajům</button>
-        </div>
-
-        <form class="bk-card" id="s4" name="rezervace" method="POST" data-netlify="true" netlify-honeypot="bot" hidden>
-          <h2>4 · Vaše údaje</h2>
-          <input type="hidden" name="form-name" value="rezervace">
-          <p hidden><label>Nevyplňujte<input name="bot"></label></p>
-          <input type="hidden" name="souhrn" id="f-souhrn">
-          <input type="hidden" name="cena" id="f-cena">
-          <div class="bk-fields two">
-            <label>Jméno<input name="jmeno" autocomplete="given-name" required></label>
-            <label>Příjmení<input name="prijmeni" autocomplete="family-name" required></label>
-            <label>E-mail<input type="email" name="email" autocomplete="email" required></label>
-            <label>Telefon<input type="tel" name="telefon" autocomplete="tel" required></label>
-          </div>
-          <label class="bk-wide">Poznámka<textarea name="poznamka" rows="3" placeholder="Čas příjezdu, přání k pobytu, preferovaný čas wellness…"></textarea></label>
-          <details class="bk-firm"><summary>Fakturovat na firmu</summary>
-            <div class="bk-fields two"><label>Firma<input name="firma"></label><label>IČO<input name="ico" inputmode="numeric"></label></div>
-          </details>
-          <label class="bk-check"><input type="checkbox" name="souhlas" required> <span>Souhlasím s <a href="#podminky" id="cond-open">obchodními a storno podmínkami</a> a se zpracováním osobních údajů pro účely rezervace.</span></label>
-          <label class="bk-check"><input type="checkbox" name="newsletter" value="ano"> <span>Chci občas dostat tip na akci nebo nový balíček (max. 1× měsíčně).</span></label>
-          <p class="bk-err" id="s4-err" hidden></p>
-          <button class="btn red arrow" type="submit" id="s4-btn">Odeslat rezervaci</button>
-          <p class="bk-note" id="s4-note"></p>
-        </form>
-
-        <div class="bk-card bk-done" id="done" hidden></div>
-
-        <div class="bk-cond" id="podminky" hidden><h3>Obchodní a storno podmínky</h3><ul id="cond-list"></ul></div>
-      </div>
-
-      <aside class="bk-sum" id="sum">
-        <h3>Váš pobyt</h3>
-        <div id="sum-body"><p class="bk-note">Vyberte termín a počet hostů.</p></div>
-        <div class="bk-help">Potřebujete poradit? <a id="sum-tel"></a></div>
-      </aside>
-    </div>
-  </section>
+  <!-- rezervační komponenta (assets/booking/) – vykreslí kroky, ceník, wellness, platbu i výsledek -->
+  <div id="nmr-booking" data-resort="cerveny-dvur"></div>
+  <template id="nmr-booking-mezitim">Mezitím: <a href="wellness.html">privátní wellness</a> · <a href="restaurace.html">restaurace</a> · <a href="index.html#okoli">tipy na výlety</a></template>
+  <!-- Netlify formuláře musí být ve statickém HTML, aby je Netlify našlo (e-maily recepci): rezervace z formuláře, platba posílá server -->
+  <form name="rezervace" data-netlify="true" netlify-honeypot="bot" hidden><input name="bot"><input name="souhrn"><input name="cena"><input name="objednavka"><input name="jmeno"><input name="prijmeni"><input name="email"><input name="telefon"><textarea name="poznamka"></textarea><input name="firma"><input name="ico"><input name="zpusob"><input name="souhlas"><input name="newsletter"></form>
+  <form name="platba" data-netlify="true" hidden><input name="objednavka"><input name="resort"><input name="udalost"><input name="stav"><input name="zpusob"><input name="castka"><input name="host"><input name="email"><input name="telefon"><input name="pobyt"><input name="previo"><input name="wellness"><input name="chyby"><input name="test"></form>
 </main>
 <section class="cta" id="kontakt">
   <div class="wrap two">
@@ -179,7 +114,9 @@
   </div>
 </footer>
 <script src="assets/cd.js"></script>
-<script src="assets/rezervace.js"></script>
+<script src="../assets/datepicker.js"></script>
+<script src="../assets/booking/booking.js"></script>
+<script>(async () => { const N = await CD.load('nastaveni'); CD.footer(N); CD.header(); CD.reveal(); })();</script>
 <script src="../assets/nmr-common.js" defer></script>
 </body>
 </html>

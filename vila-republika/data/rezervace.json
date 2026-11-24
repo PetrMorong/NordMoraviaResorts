@@ -1,0 +1,276 @@
+{
+  "rezim_poznamka": "Dokud není zapnuté napojení na Previo (proměnné PREVIO_API_KEY_VR a PREVIO_LIVE_VR na Netlify), počítá se cena z tohoto ceníku a dostupnost potvrdí recepce. Po zapnutí bere ceny i volné apartmány živě z Previo.",
+  "sleva_primo": 5,
+  "min_noci": 1,
+  "snidane_osoba_noc": 200,
+  "souhrn_poznamka": "Parkování u vily a Wi-Fi zdarma. Samoobslužný check-in od 15:00.",
+  "sazby": [
+    {
+      "id": "flex",
+      "nazev": "Flexibilní · bez stravy",
+      "popis": "Zrušení zdarma do 2 dnů před příjezdem",
+      "sleva": 0,
+      "strava_osoba_noc": 0,
+      "nevratna": false,
+      "strava": "bez"
+    },
+    {
+      "id": "flex-snidane",
+      "nazev": "Flexibilní · se snídaní",
+      "popis": "Snídaně každé ráno · zrušení zdarma do 2 dnů před příjezdem",
+      "sleva": 0,
+      "strava_osoba_noc": 200,
+      "nevratna": false,
+      "strava": "snidane"
+    },
+    {
+      "id": "nevratna",
+      "nazev": "Nevratná −10 % · bez stravy",
+      "popis": "Nejnižší cena · bez možnosti storna",
+      "sleva": 10,
+      "strava_osoba_noc": 0,
+      "nevratna": true,
+      "strava": "bez"
+    },
+    {
+      "id": "nevratna-snidane",
+      "nazev": "Nevratná −10 % · se snídaní",
+      "popis": "Snídaně každé ráno · bez možnosti storna",
+      "sleva": 10,
+      "strava_osoba_noc": 200,
+      "nevratna": true,
+      "strava": "snidane"
+    }
+  ],
+  "typy": [
+    {
+      "nazev": "Lázeňský",
+      "previo_id": "",
+      "cena_noc": 1690,
+      "ceny_osoby": [
+        {
+          "osob": 2,
+          "cena": 1690
+        },
+        {
+          "osob": 3,
+          "cena": 1790
+        },
+        {
+          "osob": 4,
+          "cena": 1890
+        },
+        {
+          "osob": 5,
+          "cena": 2090
+        },
+        {
+          "osob": 6,
+          "cena": 2290
+        }
+      ],
+      "max_osob": 6
+    },
+    {
+      "nazev": "Losinský",
+      "previo_id": "",
+      "cena_noc": 1590,
+      "ceny_osoby": [
+        {
+          "osob": 2,
+          "cena": 1590
+        },
+        {
+          "osob": 3,
+          "cena": 1690
+        },
+        {
+          "osob": 4,
+          "cena": 1790
+        },
+        {
+          "osob": 5,
+          "cena": 1990
+        },
+        {
+          "osob": 6,
+          "cena": 2190
+        }
+      ],
+      "max_osob": 6
+    },
+    {
+      "nazev": "Jesenický",
+      "previo_id": "",
+      "cena_noc": 2190,
+      "ceny_osoby": [
+        {
+          "osob": 2,
+          "cena": 2190
+        },
+        {
+          "osob": 3,
+          "cena": 2290
+        },
+        {
+          "osob": 4,
+          "cena": 2390
+        },
+        {
+          "osob": 5,
+          "cena": 2590
+        },
+        {
+          "osob": 6,
+          "cena": 2790
+        },
+        {
+          "osob": 7,
+          "cena": 2990
+        },
+        {
+          "osob": 8,
+          "cena": 3190
+        }
+      ],
+      "max_osob": 8
+    },
+    {
+      "nazev": "Prvorepublikový",
+      "previo_id": "",
+      "cena_noc": null,
+      "max_osob": 8
+    },
+    {
+      "nazev": "Prezidentský",
+      "previo_id": "",
+      "cena_noc": 2590,
+      "ceny_osoby": [
+        {
+          "osob": 6,
+          "cena": 2590
+        },
+        {
+          "osob": 7,
+          "cena": 3090
+        },
+        {
+          "osob": 8,
+          "cena": 3590
+        },
+        {
+          "osob": 9,
+          "cena": 4090
+        }
+      ],
+      "max_osob": 9
+    },
+    {
+      "nazev": "Zahradní",
+      "previo_id": "",
+      "cena_noc": 2090,
+      "ceny_osoby": [
+        {
+          "osob": 2,
+          "cena": 2090
+        },
+        {
+          "osob": 3,
+          "cena": 2190
+        },
+        {
+          "osob": 4,
+          "cena": 2290
+        },
+        {
+          "osob": 5,
+          "cena": 2490
+        },
+        {
+          "osob": 6,
+          "cena": 2690
+        }
+      ],
+      "max_osob": 6
+    }
+  ],
+  "doplnky": [
+    {
+      "id": "wellness",
+      "nazev": "Privátní wellness Standard 90 min",
+      "popis": "Finská a bio sauna, vířivka a ochlazovací bazének jen pro vás",
+      "cena": 1690,
+      "jednotka": "pobyt",
+      "max_ks": 4,
+      "ks_label": "Počet vstupů",
+      "reservio_sluzba": "bd326ccd-eb07-4b81-a8f4-7fad135a705f",
+      "alternativa": "cerveny-dvur:wellness"
+    },
+    {
+      "id": "wellness-vip",
+      "nazev": "Privátní wellness VIP 120 min",
+      "popis": "+ láhev vína, ovoce a svíčky",
+      "cena": 2115,
+      "jednotka": "pobyt",
+      "max_ks": 4,
+      "ks_label": "Počet vstupů",
+      "reservio_sluzba": "db5ee059-4e89-4dd9-8933-a59aa5ea0cf3",
+      "alternativa": "cerveny-dvur:wellness"
+    },
+    {
+      "id": "masaz-apartman",
+      "nazev": "Masáž v apartmánu 60 min",
+      "popis": "Hodinová masáž přímo v apartmánu – termín domluvíme po rezervaci (tel. 725 304 817)",
+      "cena": 1350,
+      "jednotka": "pobyt",
+      "max_ks": 6,
+      "ks_label": "Počet masáží"
+    },
+    {
+      "id": "masaz",
+      "nazev": "Celotělová masáž 60 min",
+      "popis": "Masáž přímo ve vile – termín domluvíte s masérkou (tel. 608 459 928, Olga Veselá)",
+      "cena": 1350,
+      "jednotka": "pobyt",
+      "max_ks": 6,
+      "ks_label": "Počet masáží"
+    },
+    {
+      "id": "pes",
+      "nazev": "Domácí mazlíček",
+      "popis": "Pejsek může s vámi",
+      "cena": 290,
+      "jednotka": "pobyt"
+    },
+    {
+      "id": "elektrokolo",
+      "nazev": "Elektrokolo",
+      "popis": "Na výlety po Jeseníkách s pomocí do kopců – cena za kolo a den",
+      "cena": 1000,
+      "jednotka": "pobyt",
+      "max_ks": 12,
+      "ks_label": "Počet (kol × dní)"
+    }
+  ],
+  "wellness_tip": "Privátní wellness doporučujeme zarezervovat hned. O víkendech bývá plno a na poslední chvíli už volný čas často nenajdete.",
+  "platba": {
+    "karta": true,
+    "prevod": true,
+    "zaloha_procent": 100,
+    "prevod_splatnost_dni": 3,
+    "ucet": "",
+    "text_karta": "Okamžitá rezervace – platba kartou přes zabezpečenou platební bránu ČSOB.",
+    "text_prevod": "Předběžná rezervace – pošleme vám zálohový list. Po jeho úhradě rezervaci potvrdíme."
+  },
+  "podminky": "Zrušení zdarma do 2 dnů před příjezdem, při pozdějším zrušení 50 % z ceny rezervace, méně než 12 hodin před příjezdem 100 %. Zrušení e-mailem na info@vila-republika.cz.",
+  "podminky_url": "",
+  "ochrana_udaju": [],
+  "podminky_text": [
+    "Storno poplatky: zrušení zdarma 2 dny před příjezdem; méně než 2 dny před příjezdem 50 % z ceny rezervace; méně než 12 hodin před příjezdem 100 % z ceny rezervace.",
+    "Pro zákazníka je závazná cena uvedená v ubytovacím poukazu (voucheru). Ubytovatel může v případech, které nemůže ovlivnit (např. vyšší moc), změnit dohodnuté podmínky pobytu.",
+    "Zrušení pobytu vyžaduje e-mail s doručenkou na info@vila-republika.cz; rozhoduje datum a čas odeslání. U větších skupin mohou být sjednány individuální storno poplatky.",
+    "Storno poplatky neúčtujeme při úmrtí v rodině, hospitalizaci zákazníka nebo člena rodiny, vážném onemocnění, povolávacím rozkazu nebo živelné pohromě – je potřeba doložit písemně do 3 dnů.",
+    "Ubytovatel: Mori Reality s.r.o., Pernerova 697/35, 186 00 Praha 8, IČO 14426021."
+  ],
+  "storno_kratce": "Zrušení zdarma do 2 dnů před příjezdem"
+}

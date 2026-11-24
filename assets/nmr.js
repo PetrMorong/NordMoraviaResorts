@@ -29,6 +29,7 @@
     const iso = d => d.toISOString().slice(0, 10), t = new Date(); const fri = new Date(t); fri.setDate(t.getDate() + ((5 - t.getDay() + 7) % 7 || 7));
     const sun = new Date(fri); sun.setDate(fri.getDate() + 2);
     Object.assign($('#od'), {value: iso(fri), min: iso(t)}); Object.assign($('#do'), {value: iso(sun), min: iso(t)});
+    if (window.NMRDate) NMRDate.range($('#od'), $('#do'), {minNoci: 1});
     $('#od').addEventListener('change', e => { if ($('#do').value <= e.target.value) { const d = new Date(e.target.value); d.setDate(d.getDate() + 2); $('#do').value = iso(d); } });
     $('#bb').addEventListener('submit', e => {
       e.preventDefault(); const r = res.find(x => x.id === $('#kde').value);

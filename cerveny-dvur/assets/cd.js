@@ -43,6 +43,39 @@ const CD = {
     if (b) b.onclick = () => { const o = nav.classList.toggle('open'); b.setAttribute('aria-expanded', o); };
     if (nav) nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
   },
+  // Obchodní a storno podmínky + zpracování osobních údajů – okno nad stránkou.
+  // Podmínky jdou z Previo (funkce podminky), bez ní (lokálně, výpadek) z CMS (data/rezervace.json).
+  _podm: null,
+  async podminkyData() {
+    if (CD._podm) return CD._podm;
+    const f = await fetch('/.netlify/functions/podminky').then(r => r.ok ? r.json() : null).catch(() => null);
+    if (f && f.html) return (CD._podm = f);
+    const R = await CD.load('rezervace');
+    return (CD._podm = {zdroj: 'cms', storno: [], html: (R.podminky_text || [R.podminky]).filter(Boolean).map(t => `<p>${CD.esc(t)}</p>`).join(''), ochrana: R.ochrana_udaju || []});
+  },
+  async podminky(co = 'podminky') {
+    const P = await CD.podminkyData();
+    let d = document.getElementById('cd-modal');
+    if (!d) {
+      d = document.createElement('dialog'); d.id = 'cd-modal'; d.className = 'cd-modal';
+      d.addEventListener('click', e => { if (e.target === d || e.target.closest('[data-close]')) d.close(); });
+      document.body.append(d);
+    }
+    const ochrana = co === 'ochrana';
+    d.innerHTML = `<div class="cd-modal-box" role="document"><header><h2>${ochrana ? 'Zpracování osobních údajů' : 'Obchodní a storno podmínky'}</h2><button type="button" data-close aria-label="Zavřít">×</button></header>
+      <div class="cd-modal-body">${ochrana ? P.ochrana.map(t => `<p>${CD.esc(t)}</p>`).join('')
+        : `${P.storno.length ? `<h3>Storno podmínky</h3><ul>${P.storno.map(t => `<li>${CD.esc(t)}</li>`).join('')}</ul><h3>Doplňující obchodní podmínky</h3>` : ''}${P.html}`}</div>
+      <footer><button type="button" class="btn red" data-close>Zavřít</button></footer></div>`;
+    d.showModal();
+  },
+  async legalLinks() {
+    const nav = document.querySelector('.ftr nav');
+    if (!nav || nav.querySelector('[data-podminky]')) return;
+    const P = await CD.podminkyData().catch(() => null);
+    const a = (co, t) => { const x = document.createElement('a'); x.href = '#'; x.dataset.podminky = co; x.textContent = t; x.onclick = e => { e.preventDefault(); CD.podminky(co); }; nav.append(x); };
+    a('podminky', 'Obchodní a storno podmínky');
+    if (P && P.ochrana && P.ochrana.length) a('ochrana', 'Zpracování osobních údajů');
+  },
   // kontakt v patičce (společný pro všechny stránky)
   footer(N) {
     const K = N.kontakt, e = CD.esc, $ = id => document.getElementById(id);
@@ -56,6 +89,7 @@ const CD = {
     if ($('k-tel')) $('k-tel').href = 'tel:' + K.telefon.replace(/\s/g, '');
     if ($('ftr-fb')) $('ftr-fb').href = K.facebook;
     if ($('ftr-ig')) $('ftr-ig').href = K.instagram;
+    CD.legalLinks();
   },
   // jednoduchý lightbox: items [{src, alt}], kliknutí na [data-i] uvnitř root
   lightbox(items, root) {

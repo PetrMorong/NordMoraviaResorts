@@ -19,7 +19,7 @@ const PAGES = [
   'soutok-kouty/index.html',
 ];
 // skripty, které nepřidávají obsah (měření, cookies, lepicí lišta) nebo potřebují externí služby
-const SKIP = [/nmr-common\.js$/, /booking\.previo\.cz/, /googletagmanager/, /connect\.facebook/];
+const SKIP = [/nmr-common\.js$/, /datepicker\.js$/, /booking\/booking\.js$/, /booking\.previo\.cz/, /googletagmanager/, /connect\.facebook/];
 
 const toFile = url => {
   const u = new URL(url);

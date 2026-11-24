@@ -17,6 +17,16 @@
   $('hero-title').innerHTML = em(N.hero_nadpis);
   $('hero-perex').textContent = N.hero_perex;
   CD.dates($('q-od'), $('q-do'));
+  let datumZmeneno = false;
+  ['q-od', 'q-do'].forEach(id => $(id).addEventListener('change', () => { datumZmeneno = true; }));
+  if (window.NMRDate) CD.load('rezervace').then(R => NMRDate.range($('q-od'), $('q-do'), {minNoci: R.min_noci || 1})).catch(() => {});
+  // odkazy do rezervace přenesou termín z vyhledávání (u karty apartmánu vždy, jinde jen když ho host změnil)
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href="rezervace.html"]');
+    if (!a || !$('q-od').value || !$('q-do').value || (!a.dataset.apt && !datumZmeneno)) return;
+    e.preventDefault();
+    location.href = 'rezervace.html?' + new URLSearchParams({od: $('q-od').value, do: $('q-do').value, ...(a.dataset.apt ? {apt: a.dataset.apt} : {})});
+  });
   $('facts').innerHTML = N.fakta.map(f => `<div><b>${esc(f.cislo)}</b><span>${esc(f.text)}</span></div>`).join('');
 
   $('intro-title').innerHTML = em(N.intro_nadpis);
@@ -31,7 +41,7 @@
         <h3>${esc(a.nazev)}</h3>
         <p class="meta"><span>${esc(a.osoby)} ${/^\d$/.test(a.osoby) ? 'osoby' : 'osob'}</span><span>${esc(a.plocha)}</span></p>
         <p class="txt">${esc(a.popis)}</p>
-        <a class="link" href="rezervace.html">Ceny a dostupnost →</a>
+        <a class="link" href="rezervace.html" data-apt="${esc(a.nazev)}">Ceny a dostupnost →</a>
       </div>
     </article>`).join('');
 
