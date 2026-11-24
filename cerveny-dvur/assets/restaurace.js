@@ -53,6 +53,14 @@
   }).join('');
 
   $('spaces').innerHTML = R.prostory.map(p => `<div class="space"><div class="sp-img"><img src="${img(p.foto, 700, 525)}" alt="${esc(p.nazev)}${p.vizualizace ? ' – vizualizace' : ''}" loading="lazy">${p.vizualizace ? '<em class="viz">Vizualizace</em>' : ''}</div><b>${esc(p.nazev)}</b><span>${esc(p.text)}</span></div>`).join('');
+  // galerie interiéru (CMS: Fotky interiéru) – stejná mřížka a lightbox jako fotky jídel
+  const I = R.interier && R.interier.fotky || [];
+  if (!I.length) $('interier').remove();
+  else {
+    $('i-title').innerHTML = em(R.interier.nadpis || 'Jak to u nás *vypadá*');
+    $('i-gal').innerHTML = I.map((g, i) => `<button class="g${i === 0 ? ' big' : ''}" data-i="${i}" aria-label="Zvětšit: ${esc(g.popis)}"><img src="${img(g.foto, i ? 600 : 1000, i ? 600 : 1000)}" alt="${esc(g.popis)}" loading="lazy"><span class="cap"><b>${esc(g.popis)}</b></span></button>`).join('');
+    CD.lightbox(I.map(g => ({src: g.foto, alt: g.popis})), $('i-gal'));
+  }
   $('hours').innerHTML = R.oteviraci_doba.map(h => `<div><span>${esc(h.dny)}</span><b>${esc(h.cas)}</b></div>`).join('');
   $('prakticke').innerHTML = R.prakticke.map(p => `<li>${esc(p)}</li>`).join('');
 

@@ -9,7 +9,7 @@
 //              Sazba s vyplněným, ale nulovým/prázdným strava_osoba_noc se nenabízí (např. polopenze, dokud nemá cenu).
 //   sleva_primo – % sleva za přímou rezervaci (cena v ceníku = cena na portálech)
 import { Chyba, resort } from './resorty.mjs';
-import { previoLive, nabidka } from './previo.mjs';
+import { previoLive, nabidka, sluzbyHotelu } from './previo.mjs';
 import { sluzbaId, cenyZReservio } from './wellness.mjs';
 
 export { Chyba };
@@ -74,7 +74,8 @@ export function nabidkaCenik(r, { od, doo, dospeli, deti, n, bal }) {
 
 /** Nabídka jednotlivých apartmánů pro daný počet hostů (živě z Previo, jinak z ceníku). */
 async function nabidkaPro(r, t) {
-  if (previoLive(r)) return nabidka(r, { od: t.od, doo: t.doo, dospeli: t.dospeli, deti: t.deti, balicek: t.bal && t.bal.previo_stay_id });
+  if (previoLive(r)) return nabidka(r, { od: t.od, doo: t.doo, dospeli: t.dospeli, deti: t.deti, bal: t.bal,
+    sazby: sazbyResortu(r, t.od), strava: s => typStravy(s, stravaSazby(r, s)) });
   return nabidkaCenik(r, t);
 }
 const KOMBINACE_OD = 5; // od kolika hostů nabízet i dva apartmány (menší skupiny jen tehdy, když se nevejdou do jednoho)
@@ -103,7 +104,10 @@ async function kombinace(r, t, live) {
       osoby: `${a} + ${b}`, popis: `Pro ${osob} osob ve dvou apartmánech – ${a} a ${b} ${b < 5 ? 'osoby' : 'osob'}.`, volno: null, kombinace: true, sazby,
       pokoje: [{ typ: x.id, nazev: x.nazev, dospeli: tA.dospeli, deti: tA.deti }, { typ: y.id, nazev: y.nazev, dospeli: tB.dospeli, deti: tB.deti }] });
   }));
-  return out.sort((p, q) => Math.min(...p.sazby.map(s => s.cena)) - Math.min(...q.sazby.map(s => s.cena))).slice(0, 3);
+  // stejná dvojice apartmánů jen jednou (A+B i B+A při nerovném rozdělení hostů) – nechá se levnější rozdělení
+  const videno = new Set();
+  return out.sort((p, q) => Math.min(...p.sazby.map(s => s.cena)) - Math.min(...q.sazby.map(s => s.cena)))
+    .filter(k => { const kl = k.pokoje.map(p => p.typ).sort().join('+'); return !videno.has(kl) && videno.add(kl); }).slice(0, 3);
 }
 
 /** Nabídka pro termín – jednotlivé apartmány + pro větší skupiny dva apartmány. → { live, typy } */
@@ -132,6 +136,30 @@ export async function jineResorty(r, d, vsechny) {
   return out;
 }
 
+/** Cena doplňku za pobyt podle jednotky: pobyt (kus) | noc | osoba (dospělí) | osoba_noc. */
+export const castkaDoplnku = (x, { n, dospeli }) => {
+  const c = +x.cena || 0;
+  return x.jednotka === 'noc' ? c * n : x.jednotka === 'osoba' ? c * dospeli : x.jednotka === 'osoba_noc' ? c * dospeli * n : c;
+};
+
+/**
+ * Ceny doplňků → { idDoplnku: { cena, jednotka? } }. Pořadí: služba v Previo (doplněk má v CMS „previo_sluzba“ = pckId,
+ * cena i jednotka se berou z Previo) → cena služby v Reservio → (nic = platí CMS).
+ */
+export async function cenyDoplnku(r, od, doo) {
+  const out = Object.fromEntries(Object.entries(await cenyZReservio(r)).map(([k, c]) => [k, { cena: c }]));
+  if (previoLive(r) && od && doo) {
+    try {
+      const S = await sluzbyHotelu(r, od, doo);
+      for (const x of r.R.doplnky || []) {
+        const s = x.previo_sluzba && S[String(x.previo_sluzba)];
+        if (s && s.cena != null) out[x.id] = { cena: s.cena, jednotka: s.jednotka };
+      }
+    } catch (e) { console.error(`Služby z Previo (${r.id}):`, e.message); }
+  }
+  return out;
+}
+
 /**
  * Cena konkrétní objednávky. d = { od, do, dospeli, deti, typ, sazba, balicek (id), doplnky: [id] | { id: kusů } }
  * → { cena, ubytovani, doplnky: [{id, nazev, ks, cena, reservio}], apartman, sazbaNazev, typ, sazba, stayId, noci, live, ... }
@@ -141,8 +169,8 @@ export async function spocitejCenu(r, d) {
   const typ = typy.find(x => String(x.id) === String(d.typ));
   const rate = typ && typ.sazby.find(s => String(s.id) === String(d.sazba));
   if (!typ || !rate) throw new Chyba(live ? 'Vybraný apartmán už v tomto termínu není volný' : 'Neznámý apartmán nebo sazba');
-  const ceny = await cenyZReservio(r); // wellness napojené na Reservio: cena podle Reservio, jinak z CMS
-  const ex = x => { const c = ceny[x.id] ?? x.cena; return x.jednotka === 'noc' ? c * t.n : x.jednotka === 'osoba' ? c * t.dospeli : c; };
+  const ceny = await cenyDoplnku(r, t.od, t.doo); // Previo (služba hotelu) → Reservio → CMS
+  const ex = x => { const c = ceny[x.id] || {}; return castkaDoplnku({ ...x, ...c }, t); };
   // doplňky: ['id', …] nebo { id: počet kusů } – víc kusů jen u doplňků s „max_ks“ (např. 2 vstupy do wellness)
   const ks = Array.isArray(d.doplnky) ? Object.fromEntries(d.doplnky.map(id => [id, 1])) : (d.doplnky && typeof d.doplnky === 'object' ? d.doplnky : {});
   const bezVBalicku = new RegExp(r.R.balicek_bez_doplnku || 'wellness|masaz|prosecco');
@@ -157,13 +185,13 @@ export async function spocitejCenu(r, d) {
     if (!(r.R.doplnky || []).some(x => x.alternativa === `${rid}:${did}`) || t.bal) continue;
     const r2 = resort(rid), x2 = (r2.R.doplnky || []).find(x => x.id === did);
     if (!x2) continue;
-    const c2 = (await cenyZReservio(r2))[did] ?? x2.cena;
+    const c2 = ((await cenyDoplnku(r2, t.od, t.doo))[did] || {}).cena ?? x2.cena;
     const n = Math.min(Math.max(Math.floor(+ks[key]), 1), Math.max(+x2.max_ks || 1, 1));
     doplnky.push({ id: key, nazev: `${x2.nazev} – ${r2.nazev}`, ks: n, cena: c2 * n, reservio: sluzbaId(r2, x2) || undefined, resort: rid, doplnek: did });
   }
   const ubytovani = Math.round(rate.cena);
   const nevratna = rate.nevratna ?? jeNevratna(rate);
   const cena = ubytovani + Math.round(doplnky.reduce((a, x) => a + x.cena, 0));
-  return { cena, ubytovani, doplnky, apartman: typ.nazev, sazbaNazev: rate.nazev, nevratna, pokoje: typ.pokoje, typ: typ.id, sazba: rate.id, stayId: t.bal && t.bal.previo_stay_id, balicek: t.bal && t.bal.nazev,
+  return { cena, ubytovani, doplnky, apartman: typ.nazev, sazbaNazev: rate.nazev, nevratna, pokoje: typ.pokoje, typ: typ.id, sazba: rate.id, meaId: rate.meaId, stayId: t.bal && t.bal.previo_stay_id, balicek: t.bal && t.bal.nazev,
     od: t.od, do: t.doo, dospeli: t.dospeli, deti: t.deti, noci: t.n, live };
 }

@@ -5,6 +5,7 @@
     "body": [
       "Obřad v zahradě nebo v altánu",
       "Sál až pro 60 hostů vč. inventáře",
+      "Bezbariérový vstup do sálu – i pro hosty na vozíku",
       "Vlastní catering nebo bar s obsluhou",
       "Ubytování cca 50 osob za zvýhodněnou cenu",
       "Novomanželské apartmá s wellness zdarma"
@@ -38,6 +39,10 @@
       {
         "k": "Dostupnost",
         "v": "Šumperk 7 min · Olomouc 1 h · Ostrava 2 h"
+      },
+      {
+        "k": "Bezbariérovost",
+        "v": "bezbariérový vstup do sálu a restaurace"
       }
     ],
     "foto": "Rapotin/nadvori_qmoqtm"

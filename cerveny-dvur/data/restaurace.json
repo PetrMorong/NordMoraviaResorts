@@ -1,6 +1,6 @@
 {
-  "hero_foto": "images/restaurace-sal.webp",
-  "hero_vizualizace": true,
+  "hero_foto": "images/restaurace-interier.webp",
+  "hero_vizualizace": false,
   "hero_nadpis": "Restaurace *Červený dvůr*",
   "hero_perex": "Z kavárny je restaurace, která vaří celý den. Ve všední dny polední menu od 169 Kč, večer posezení u jídla a vína, o víkendu brunch.",
   "menu_url": "https://restaurace.resortcervenydvur.cz/menu/section:jidelni-listek/hlavni-chody-666",
@@ -67,8 +67,8 @@
     {
       "nazev": "Restaurace",
       "text": "Světlý sál s parketami – na oběd, schůzku i večer u vína. Sedět můžete u stolu, na pohovce nebo u baru.",
-      "foto": "images/restaurace-sal.webp",
-      "vizualizace": true
+      "foto": "images/restaurace-sal-okno.webp",
+      "vizualizace": false
     },
     {
       "nazev": "Salonek",
@@ -99,8 +99,50 @@
       "foto": "images/detsky-koutek.webp"
     }
   ],
+  "interier": {
+    "nadpis": "Jak to u nás *vypadá*",
+    "fotky": [
+      {
+        "foto": "images/restaurace-sal-celek.webp",
+        "popis": "Sál restaurace"
+      },
+      {
+        "foto": "images/restaurace-stoly.webp",
+        "popis": "Restaurace"
+      },
+      {
+        "foto": "images/restaurace-bar.webp",
+        "popis": "Bar a kavárna"
+      },
+      {
+        "foto": "images/restaurace-lounge.webp",
+        "popis": "Posezení na pohovce"
+      },
+      {
+        "foto": "images/restaurace-kresla.webp",
+        "popis": "Křesla u okna"
+      },
+      {
+        "foto": "images/restaurace-detail-stul.webp",
+        "popis": "Prostřený stůl"
+      },
+      {
+        "foto": "images/restaurace-bar-pult.webp",
+        "popis": "Barový pult"
+      },
+      {
+        "foto": "images/restaurace-fotbalek.webp",
+        "popis": "Fotbálek pro děti i dospělé"
+      },
+      {
+        "foto": "images/restaurace-detail-stolek.webp",
+        "popis": "Detail interiéru"
+      }
+    ]
+  },
   "prakticke": [
     "Parkování zdarma přímo v areálu",
+    "Bezbariérový vstup – i s vozíkem nebo kočárkem",
     "Platba kartou",
     "Dětský koutek a venkovní hřiště",
     "Salonek pro soukromé akce"

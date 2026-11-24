@@ -59,5 +59,5 @@ http.createServer(async (req, res) => {
   }
 }).listen(PORT, () => {
   console.log(`Web: http://localhost:${PORT}/cerveny-dvur/rezervace.html`);
-  console.log(`ČSOB: ${process.env.CSOB_MERCHANT_ID ? `${process.env.CSOB_MERCHANT_ID} (${process.env.CSOB_ENV || 'test'})` : 'není nastaveno – doplňte .env (viz .env.example)'} · Previo: ${process.env.PREVIO_LIVE === '1' ? 'živě' : 'vypnuto (ceník z CMS)'} · Reservio: ${process.env.RESERVIO_TOKEN ? (process.env.RESERVIO_JEN_CIST === '1' ? 'živé časy, rezervace se NEZAPISUJÍ' : 'živě – rezervace se zapisují!') : process.env.RESERVIO_DEMO === '1' ? 'UKÁZKA (vymyšlené časy)' : 'vypnuto'}`);
+  console.log(`ČSOB: ${process.env.CSOB_MERCHANT_ID ? `${process.env.CSOB_MERCHANT_ID} (${process.env.CSOB_ENV || 'test'})` : 'není nastaveno – doplňte .env (viz .env.example)'} · Previo: ${process.env.PREVIO_LIVE === '1' ? (process.env.PREVIO_JEN_CIST === '1' ? 'živé ceny, rezervace se NEZAPISUJÍ' : 'živě – rezervace se zapisují!') : 'vypnuto (ceník z CMS)'} · Reservio: ${process.env.RESERVIO_TOKEN ? (process.env.RESERVIO_JEN_CIST === '1' ? 'živé časy, rezervace se NEZAPISUJÍ' : 'živě – rezervace se zapisují!') : process.env.RESERVIO_DEMO === '1' ? 'UKÁZKA (vymyšlené časy)' : 'vypnuto'}`);
 });

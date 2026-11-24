@@ -1,5 +1,6 @@
 // Wellness k pobytu: volné časy z Reservio jen v době pobytu (od check-inu do check-outu), ceny podle Reservio.
 import { reservioZapnuto, reservioDemo, volneCasy, sluzby } from './reservio.mjs';
+import { casyHotelu } from './previo.mjs';
 
 /** ID služby v Reservio pro doplněk. V ukázkovém režimu (bez klíče) se wellness napojí na vymyšlenou službu. */
 export const sluzbaId = (r, x) => x.reservio_sluzba || (reservioDemo(r) && /wellness/.test(x.id) ? 'DEMO-' + ((String(x.nazev).match(/(\d+)\s*min/) || [0, 90])[1]) : '');
@@ -33,10 +34,11 @@ export async function cenyZReservio(r) {
 export async function casyPobytu(r, doplnek, od, doo, late = false) {
   const x = (r.R.doplnky || []).find(d => d.id === doplnek && sluzbaId(r, d));
   if (!x || !reservioZapnuto(r)) return null;
-  const konec = late ? CHECKOUT_LATE : r.checkout;
+  const h = await casyHotelu(r);                                               // příjezd/odjezd z Previo (jinak resorty.mjs)
+  const konec = late ? CHECKOUT_LATE : h.checkout;
   const casy = (await volneCasy(r, sluzbaId(r, x), od, doo)).filter(s => {
     const d = den(s.start);
-    if (d === od && cas(s.start) < r.checkin) return false;                   // před příjezdem
+    if (d === od && cas(s.start) < h.checkin) return false;                   // před příjezdem
     if (d === doo && (den(s.end) !== d || cas(s.end) > konec)) return false; // po odjezdu
     return true;
   });

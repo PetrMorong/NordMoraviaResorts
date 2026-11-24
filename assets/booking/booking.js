@@ -180,7 +180,9 @@ window.NMRBooking = (() => {
       const p = new URLSearchParams({od: S.od, do: S.do, dospeli: S.dospeli, deti: S.deti, ...(b ? {balicek: b.id} : {})});
       const j = await getJSON(api('rezervace', p)).catch(() => null);
       if (!j || !j.typy) return err('s1err', (j && j.chyba) || `Nabídku se teď nepodařilo načíst. Zkuste to prosím za chvíli, nebo nám napište či zavolejte (${kontakt}).`);
-      S.offer = j.typy; S.live = j.rezim === 'live'; S.jine = j.jine || [];
+      S.offer = j.typy; S.live = j.rezim === 'live'; S.jine = j.jine || []; S.obsazeno = j.obsazeno || [];
+      // ceny a jednotky doplňků pro termín (z Previo / Reservio) – přepíšou ceník z CMS
+      if (j.doplnky) (R.doplnky || []).forEach(x => { const c = j.doplnky[x.id]; if (c) { if (c.cena != null) x.cena = c.cena; if (c.jednotka) x.jednotka = c.jednotka; } });
       push('hledani_terminu', {od: S.od, do: S.do, hoste: S.dospeli + S.deti, balicek: b ? b.id : ''});
       renderRooms(); step(2);
     };
@@ -199,21 +201,31 @@ window.NMRBooking = (() => {
     const STRAVA = {bez: 'Bez stravy', snidane: 'Se snídaní', polopenze: 'S polopenzí'};
     // doporučená strava (výrazné tlačítko + štítek) – CMS: doporucena_strava, výchozí snídaně
     const dopor = R.doporucena_strava === '' ? null : (R.doporucena_strava || 'snidane');
+    // když doporučená strava v termínu není (např. polopenze až od 1. 12.), zvýrazní se snídaně
+    const dopT = t => (!dopor || t.sazby.some(r => r.strava === dopor) ? dopor : t.sazby.some(r => r.strava === 'snidane') ? 'snidane' : null);
     // nevratná sazba se nabízí jen s platbou předem (karta nebo převod se splatností)
     const nevratnaLze = () => !!(PAY && (PAY.karta || PAY.prevod));
     const renderRooms = () => {
       const n = nights(S.od, S.do), os = S.dospeli + S.deti;
       $('s2note').textContent = S.live ? `${nocí(n)} · ceny a volné apartmány v reálném čase` : `${nocí(n)} · ${os} ${os < 5 ? 'osoby' : 'osob'} · dostupnost potvrdí recepce do 24 hodin`;
-      if (!S.offer.length) {
-        // křížový prodej: u nás plno → stejný termín v ostatních resortech sítě
-        const q2 = new URLSearchParams({od: S.od, do: S.do, dospeli: S.dospeli, deti: S.deti});
-        $('rooms').innerHTML = `<p class="bk-note">Pro ${os} ${os < 5 ? 'osoby' : 'osob'} v tomto termínu u nás nemáme volný apartmán.${S.jine.length ? ' Ale v našem dalším resortu ano:' : ` Zkuste jiný termín nebo nás kontaktujte (${esc(kontakt)}) – rádi najdeme řešení.`}</p>
-          ${S.jine.map(x => `<div class="bk-cross"><div class="bk-cross-h"><b>${esc(x.nazev)}</b><small>${esc(x.misto || '')} · od ${kc(x.od)} za ${nocí(n)}</small></div>
+      // křížový prodej: stejný termín v ostatních resortech sítě (když je u nás plno nebo zbývá málo)
+      const q2 = new URLSearchParams({od: S.od, do: S.do, dospeli: S.dospeli, deti: S.deti});
+      const cross = () => S.jine.map(x => `<div class="bk-cross"><div class="bk-cross-h"><b>${esc(x.nazev)}</b><small>${esc(x.misto || '')} · od ${kc(x.od)} za ${nocí(n)}</small></div>
             <div class="bk-cross-list">${x.typy.map(t => `<a class="bk-cross-apt" href="${esc(x.stranka)}?${q2}&apt=${encodeURIComponent(t.nazev)}" data-cross="${esc(x.resort)}">
               <img src="${img(t.foto, 320, 220)}" alt="" loading="lazy"><span><b>${esc(t.nazev)}</b><small>${t.osoby ? esc(t.osoby) + ' osob · ' : ''}od ${kc(t.cena)}</small></span></a>`).join('')}</div>
-            <a class="btn red arrow" href="${esc(x.stranka)}?${q2}" data-cross="${esc(x.resort)}">Zobrazit volno – ${esc(x.nazev)}</a></div>`).join('')}`;
-        if (S.jine.length) push('cross_sell_zobrazeno', {cil: S.jine.map(x => x.resort).join(',')});
+            <a class="btn red arrow" href="${esc(x.stranka)}?${q2}" data-cross="${esc(x.resort)}">Zobrazit volno – ${esc(x.nazev)}</a></div>`).join('');
+      const crossEvents = () => {
+        if (S.jine.length) push('cross_sell_zobrazeno', {cil: S.jine.map(x => x.resort).join(','), plno: !S.offer.length});
         $('rooms').querySelectorAll('[data-cross]').forEach(a => a.addEventListener('click', () => push('cross_sell_klik', {cil: a.dataset.cross})));
+      };
+      // obsazené apartmány zkráceně – host vidí, že je plno (a že apartmán existuje), bez cen a tabulky
+      const plne = () => S.obsazeno.length ? `<div class="bk-full"><h3 class="bk-full-h">V tomto termínu obsazeno</h3>
+          ${S.obsazeno.map(t => `<div class="bk-full-r"><img src="${img(t.foto, 160, 110)}" alt="" loading="lazy"><span><b>${esc(t.nazev)}</b><small>${t.osoby ? esc(t.osoby) + ' osob' : ''}${t.plocha ? ' · ' + esc(t.plocha) : ''}</small></span><em>Obsazeno</em></div>`).join('')}
+          <p class="bk-note">Zkuste jiný termín, nebo nám zavolejte (${esc(kontakt)}) – rádi poradíme.</p></div>` : '';
+      if (!S.offer.length) {
+        $('rooms').innerHTML = `<p class="bk-note">Pro ${os} ${os < 5 ? 'osoby' : 'osob'} v tomto termínu u nás nemáme volný apartmán.${S.jine.length ? ' Ale v našem dalším resortu ano:' : ` Zkuste jiný termín nebo nás kontaktujte (${esc(kontakt)}) – rádi najdeme řešení.`}</p>
+          ${cross()}${plne()}`;
+        crossEvents();
         return;
       }
       // sazby jako tabulka podle Previa: vlevo podmínky zrušení (jedna buňka pro skupinu), vpravo řádky cena · strava · tlačítko
@@ -229,8 +241,8 @@ window.NMRBooking = (() => {
         return `<div class="bk-rgroup${nevr ? ' nevr' : ''}"><div class="bk-rpol">${pol}</div><div class="bk-rrows">
           ${rows.map(({r, k}) => `<div class="bk-rate">
             <div class="bk-rate-p"><b>${kc(r.cena)}</b></div>
-            <div class="bk-rate-l${r.strava === 'snidane' || r.strava === 'polopenze' ? ' jidlo' : ''}">${bal ? '' : ico(r.strava) + `<span>${STRAVA[r.strava] || esc(r.nazev)}</span>` + (r.strava === dopor ? '<em class="bk-tag">Nejoblíbenější</em>' : '')}</div>
-            <button class="btn ${bal || r.strava === dopor ? 'red' : 'bk-btn2'}" type="button" data-r="${i}" data-k="${k}">Vybrat</button>
+            <div class="bk-rate-l${r.strava === 'snidane' || r.strava === 'polopenze' ? ' jidlo' : ''}">${bal ? '' : ico(r.strava) + `<span>${STRAVA[r.strava] || esc(r.nazev)}</span>` + (r.strava === dopT(t) ? '<em class="bk-tag">Nejoblíbenější</em>' : '')}</div>
+            <button class="btn ${bal || r.strava === dopT(t) ? 'red' : 'bk-btn2'}" type="button" data-r="${i}" data-k="${k}">Vybrat</button>
           </div>`).join('')}</div></div>`;
       };
       const tabulka = (t, i) => `<div class="bk-rtable"><div class="bk-rth"><span>Podmínky zrušení</span><span>Cena za ${nocí(n)}</span><span>Strava</span><span></span></div>
@@ -239,8 +251,8 @@ window.NMRBooking = (() => {
       $('rooms').innerHTML = S.offer.map((t, i) => {
         const r0 = t.sazby[0], primo = r0 && r0.portal > r0.cena + 1 ? Math.round((1 - r0.cena / r0.portal) * 100) : 0;
         // větší skupina: nabídka dvou apartmánů (např. 4 + 4) pod jednotlivými apartmány
-        const nadpis = i === prvniKomb ? `<h3 class="bk-komb-h">${prvniKomb ? 'Nebo ve dvou apartmánech' : 'Ve dvou apartmánech'}<small>Pro větší skupiny – každý má své soukromí, platíte jednou rezervací.</small></h3>` : '';
-        return `${nadpis}<article class="bk-room${t.kombinace ? ' komb' : ''}">
+        const nadpis = i === prvniKomb ? `${plne()}<h3 class="bk-komb-h">${prvniKomb ? 'Nebo ve dvou apartmánech' : 'Ve dvou apartmánech'}<small>Pro větší skupiny – každý má své soukromí, platíte jednou rezervací.</small></h3>` : '';
+        return `${nadpis}<article class="bk-room${t.kombinace ? ' komb' : ''}" data-i="${i}">
           <div class="bk-room-img"><img src="${img(t.foto, 560, 420)}" alt="${esc(t.nazev)}" loading="lazy">${t.kombinace && t.foto2 ? `<img class="bk-img2" src="${img(t.foto2, 280, 210)}" alt="" loading="lazy">` : ''}${t.kombinace ? '<span class="bk-2apt">2 apartmány</span>' : ''}${t.volno != null && t.volno <= 2 ? `<span>${t.volno === 1 ? 'Poslední volný' : 'Zbývají 2'}</span>` : ''}</div>
           <div class="bk-room-body">
             <h3>${esc(t.nazev)}${primo ? ` <em class="bk-chip" title="Oproti cenám na portálech">−${primo} % napřímo</em>` : ''}</h3>
@@ -249,7 +261,9 @@ window.NMRBooking = (() => {
           </div>
           ${tabulka(t, i)}
         </article>`;
-      }).join('');
+      }).join('') + (prvniKomb < 0 ? plne() : '')
+        + (S.jine.length ? `<h3 class="bk-komb-h">Volno i v našem dalším resortu<small>Zbývá u nás posledních pár apartmánů – stejný termín můžete mít i jinde.</small></h3>${cross()}` : '');
+      crossEvents();
       $('rooms').querySelectorAll('[data-r]').forEach(bt => bt.onclick = () => {
         S.room = S.offer[+bt.dataset.r]; S.rate = S.room.sazby[+bt.dataset.k];
         push('vyber_apartmanu', {apartman: S.room.nazev, sazba: S.rate.nazev, value: Math.round(S.rate.cena), currency: 'CZK'});
@@ -259,7 +273,7 @@ window.NMRBooking = (() => {
       const apt = q.get('apt');
       if (apt && !S.aptShown) {
         S.aptShown = true;
-        const el = $('rooms').children[S.offer.findIndex(t => t.nazev === apt)];
+        const el = $('rooms').querySelector(`.bk-room[data-i="${S.offer.findIndex(t => t.nazev === apt)}"]`);
         if (el) { el.classList.add('hl'); setTimeout(() => el.scrollIntoView({behavior: 'smooth', block: 'center'}), 900); }
         else $('s2note').textContent += ` · ${apt} v tomto termínu není volný – vyberte prosím jiný apartmán nebo termín`;
       }
@@ -267,7 +281,7 @@ window.NMRBooking = (() => {
 
     // ---- krok 3: doplňky (wellness z Reservio: počet vstupů + výběr času v době pobytu) ----
     const D = R.doplnky || [];
-    const exOne = x => { const n = nights(S.od, S.do); return x.jednotka === 'noc' ? x.cena * n : x.jednotka === 'osoba' ? x.cena * S.dospeli : x.cena; };
+    const exOne = x => { const n = nights(S.od, S.do); return x.jednotka === 'noc' ? x.cena * n : x.jednotka === 'osoba' ? x.cena * S.dospeli : x.jednotka === 'osoba_noc' ? x.cena * S.dospeli * n : x.cena; };
     const ks = x => Math.min(S.ks[x.id] || 1, x.max_ks || 1);
     const exPrice = x => exOne(x) * ks(x);
     const WC = {};
@@ -342,7 +356,10 @@ window.NMRBooking = (() => {
     const renderExtras = () => {
       const X = D.filter(x => !(S.balicek && bezVBalicku.test(x.id))); // co je v balíčku, nenabízíme znovu
       if (!X.length) { $('extras').innerHTML = '<p class="bk-note">K tomuto pobytu nenabízíme žádné doplňky.</p>'; sum(); return; }
-      const price = x => `+ ${kc(exPrice(x))}${x.jednotka === 'osoba' && S.dospeli > 1 ? ` <small>(${S.dospeli}×)</small>` : ''}`;
+      const n = nights(S.od, S.do);
+      const kolik = x => x.jednotka === 'osoba' && S.dospeli > 1 ? `${S.dospeli}×` : x.jednotka === 'noc' && n > 1 ? `${kc(x.cena)} × ${nocí(n)}`
+        : x.jednotka === 'osoba_noc' && S.dospeli * n > 1 ? `${kc(x.cena)} × ${S.dospeli} os. × ${nocí(n)}` : '';
+      const price = x => `+ ${kc(exPrice(x))}${kolik(x) ? ` <small>(${kolik(x)})</small>` : ''}`;
       $('extras').innerHTML = X.map(x => `<div class="bk-xw"><label class="bk-x"><input type="checkbox" value="${esc(x.id)}"${S.extra[x.id] ? ' checked' : ''}>
         <span><b>${esc(x.nazev)}</b><small>${esc(x.popis || '')}</small></span><em data-p="${esc(x.id)}">${price(x)}</em></label>
         <div class="bk-xmore"${S.extra[x.id] ? '' : ' hidden'} data-more="${esc(x.id)}">${(x.max_ks || 1) > 1 ? `<label class="bk-ks">${esc(x.ks_label || 'Počet')} <select data-ks="${esc(x.id)}">${Array.from({length: x.max_ks}, (_, i) => `<option${i + 1 === ks(x) ? ' selected' : ''}>${i + 1}</option>`).join('')}</select></label>` : ''}<div data-w="${esc(x.id)}"></div></div></div>`).join('');
@@ -396,9 +413,23 @@ window.NMRBooking = (() => {
     };
 
     // ---- způsob platby ----
-    const zaloha = () => Math.round(total() * (PAY ? PAY.zaloha_procent : 100) / 100);
+    // záloha podle způsobu platby (Previo: např. 30 % kartou i převodem), nevratná sazba se platí celá – stejně jako server
     const zpusob = () => { const c = $('s4').querySelector('input[name=zpusob]:checked'); return c ? c.value : ''; };
-    const payInit = () => {
+    const zaloha = () => {
+      const t = total(), z = zpusob() === 'prevod' ? 'prevod' : 'karta';
+      if (!PAY || (S.rate && S.rate.nevratna)) return Math.round(t);
+      const kc0 = PAY[`zaloha_${z}_kc`], pct = PAY[`zaloha_${z}`] ?? PAY.zaloha_procent ?? 100;
+      return Math.max(1, Math.min(Math.round(t), Math.round(kc0 > 0 ? kc0 : t * pct / 100)));
+    };
+    // platební podmínky pro vybraný termín (z Previo se mohou lišit podle sezóny)
+    let payTermin = '';
+    const payInit = async () => {
+      const key = S.od + '|' + S.do;
+      if (payTermin !== key) {
+        const j = await getJSON(api('platba', new URLSearchParams({od: S.od, do: S.do}))).catch(() => null);
+        if (j && !j.chyba) { PAY = j.karta || j.prevod ? j : null; payTermin = key; }
+        $('s4note').textContent = PAY ? '' : 'Po odeslání vám do 24 hodin potvrdíme dostupnost a pošleme voucher s platebními údaji. Nic zatím neplatíte.';
+      }
       if (!PAY) return;
       $('pay').hidden = false;
       // převod jen s časem na úhradu (splatnost nejpozději den před příjezdem) – při příjezdu dnes/zítra jen kartou
@@ -416,10 +447,12 @@ window.NMRBooking = (() => {
     // splatnost převodu: za X dní (CMS), ale nejpozději den před příjezdem – stejně jako na serveru
     const splatnostText = () => { const d = [plus(today, PAY.prevod_splatnost_dni || 3), plus(S.od, -1)].sort()[0]; const n = Math.round((new Date(d + 'T12:00') - new Date(today + 'T12:00')) / 864e5); return `${n} ${n === 1 ? 'dne' : 'dnů'} (${dShort(d)})`; };
     const payNote = () => {
-      const z = zpusob(), a = kc(zaloha()), part = PAY.zaloha_procent < 100;
+      const z = zpusob(), zl = zaloha(), a = kc(zl), zbytek = Math.round(total()) - zl, part = zbytek > 0;
+      const pct = part && !PAY[`zaloha_${z}_kc`] ? ` (${PAY[`zaloha_${z}`]} %)` : '';
+      const doplatek = part ? ` Zbývajících ${kc(zbytek)} zaplatíte na místě.` : '';
       $('paynote').textContent = (z === 'karta'
-        ? `Po odeslání přejdete na zabezpečenou platební stránku ČSOB. Pro potvrzení rezervace je třeba uhradit ${part ? 'zálohu ' : ''}${a}. Po úspěšné platbě je rezervace potvrzená a potvrzení dostanete e-mailem.`
-        : `Po odeslání vám pošleme zálohový list. Výše zálohy za pobyt činí ${a}. Jakmile ji uhradíte, bude vaše rezervace potvrzena. Zálohu je potřeba uhradit do ${splatnostText()} – pokud do té doby nebude uhrazena, rezervace se automaticky zruší.`);
+        ? `Po odeslání přejdete na zabezpečenou platební stránku ČSOB. Pro potvrzení rezervace je třeba uhradit ${part ? `zálohu${pct} ` : ''}${a}.${doplatek} Po úspěšné platbě je rezervace potvrzená a potvrzení dostanete e-mailem.`
+        : `Po odeslání vám pošleme zálohový list. Výše zálohy činí ${a}${pct}.${doplatek} Jakmile zálohu uhradíte, bude vaše rezervace potvrzena. Zálohu je potřeba uhradit do ${splatnostText()} – pokud do té doby nebude uhrazena, rezervace se automaticky zruší.`);
       $('s4btn').textContent = z === 'karta' ? `Zaplatit ${a}` : 'Dokončit rezervaci';
       $('paytest').hidden = !PAY.test || z !== 'karta';
     };
@@ -457,17 +490,17 @@ window.NMRBooking = (() => {
       KROKY.forEach(id => $(id).hidden = true);
       $('sum').hidden = true; // údaje o pobytu jsou přímo ve výsledku
       $('steps').querySelectorAll('li').forEach(li => { li.className = 'done'; li.onclick = null; });
-      const info = rows => `<dl class="bk-pay-info">${rows.filter(r => r[1]).map(([a, b]) => `<dt>${a}</dt><dd>${b}</dd>`).join('')}</dl>`;
+      const info = rows => `<dl class="bk-pay-info">${rows.filter(r => r && r[1]).map(([a, b]) => `<dt>${a}</dt><dd>${b}</dd>`).join('')}</dl>`;
       const pobyt = [['Objednávka', esc(o.obj)], o.cislo ? ['Rezervace', esc(o.cislo)] : null, ['Termín', `${dShort(o.od)} – ${dShort(o.do)}`], ['Apartmán', esc(o.apartman)]].filter(Boolean);
       const test = o.test ? '<p class="bk-test">Testovací platba – žádné peníze se nestrhly.</p>' : '';
       let h;
       if (o.stav === 'zaplaceno') {
-        h = `<h2>Děkujeme, ${esc(o.jmeno)}!</h2><p>Platba proběhla v pořádku a vaše rezervace je potvrzená. Potvrzení pošleme na <b>${esc(o.email)}</b>.</p>${info([...pobyt, ['Zaplaceno', kc(o.zaloha)]])}${test}`;
+        h = `<h2>Děkujeme, ${esc(o.jmeno)}!</h2><p>Platba proběhla v pořádku a vaše rezervace je potvrzená. Potvrzení pošleme na <b>${esc(o.email)}</b>.</p>${info([...pobyt, [o.zaloha < o.cena ? 'Zaplacená záloha' : 'Zaplaceno', kc(o.zaloha)], o.zaloha < o.cena ? ['Doplatek na místě', kc(o.cena - o.zaloha)] : null].filter(Boolean))}${test}`;
         push('platba_dokoncena', {value: o.zaloha, currency: 'CZK', transaction_id: o.obj, zpusob: 'karta'});
       } else if (o.stav === 'ceka_na_prevod') {
         h = `<h2>Děkujeme, ${esc(o.jmeno)}!</h2><p>Rezervace je předběžná. Zálohový list vám pošleme na <b>${esc(o.email)}</b>. Jakmile zálohu uhradíte, rezervaci potvrdíme.</p>
           ${o.splatnost ? `<p class="bk-warn"><b>Zálohu uhraďte do ${dShort(o.splatnost)}.</b> Pokud do té doby nebude uhrazena, rezervace se automaticky zruší.</p>` : ''}
-          ${info([...pobyt, ['Záloha', kc(o.zaloha)], ['Splatnost', o.splatnost && dShort(o.splatnost)], ['Variabilní symbol', esc(o.vs)], ['Číslo účtu', o.ucet && esc(o.ucet)]])}
+          ${info([...pobyt, ['Záloha', kc(o.zaloha)], o.zaloha < o.cena ? ['Doplatek na místě', kc(o.cena - o.zaloha)] : null, ['Splatnost', o.splatnost && dShort(o.splatnost)], ['Variabilní symbol', esc(o.vs)], ['Číslo účtu', o.ucet && esc(o.ucet)]])}
           ${o.doklad ? `<div class="btns"><a class="btn red" href="/.netlify/functions/platba?obj=${o.obj}&t=${t}&doklad=1" target="_blank" rel="noopener">Stáhnout zálohový list (PDF)</a></div>` : ''}`;
       } else if (o.stav === 'ceka_na_platbu' && pokus < 5) {
         h = '<h2>Ověřujeme platbu…</h2><p>Chvilku strpení, čekáme na potvrzení od banky.</p>';

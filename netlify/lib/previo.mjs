@@ -8,7 +8,7 @@
 //   PREVIO_ZALOHOVY_LIST – "1": u platby převodem vystaví zálohový list přes API (REST invoice/addPayment).
 //                      Bez toho ho pošle recepce / automatický e-mail Previo („Předpis platby“). OVĚŘIT na testovacím hotelu.
 import { env } from './resorty.mjs';
-import { typStravy, jeNevratna } from './cena.mjs';
+import { jeNevratna } from './cena.mjs';
 
 const BASE = (process.env.PREVIO_URL || 'https://api.previo.app/').replace(/\/?$/, '/');
 const HOTEL = r => env(r, 'PREVIO_HOTEL_ID', false) || r.hotel;
@@ -25,7 +25,18 @@ export const x = s => String(s ?? '').replace(/[<>&'"]/g, c => ({ '<': '&lt;', '
 const auth = r => (KEY(r) ? { Authorization: 'ApiKey ' + KEY(r) } : {});
 
 // XML: název funkce „Hotel.getRates“ → URL …/x1/hotel/getRates, tělo je XML <request>…</request>
+// PREVIO_JEN_CIST=1 – živé ceny a obsazenost, ale nic se do Previo nezapíše (rezervace, platby jen do logu).
+// Na testování s ostrým hotelem – jinak by každá zkušební objednávka založila skutečnou rezervaci.
+const jenCist = () => process.env.PREVIO_JEN_CIST === '1';
+const ZAPIS_XML = /^Hotel\.(reservation|addPayment)$/;
+let falesne = 0;
+
 export async function previo(r, method, inner) {
+  if (jenCist() && ZAPIS_XML.test(method)) {
+    console.log(`[Previo jen čtení] ${r.id} ${method} se neodeslal:\n${inner.replace(/\s+/g, ' ').slice(0, 600)}`);
+    const id = 'TEST-' + (++falesne);
+    return `<response><resId>${id}</resId><comId>${id}</comId><voucher>${id}</voucher></response>`;
+  }
   const [a, b] = method.split('.');
   const url = BASE + 'x1/' + a.charAt(0).toLowerCase() + a.slice(1) + '/' + b;
   const login = KEY(r) ? '' : `<login>${x(env(r, 'PREVIO_LOGIN'))}</login><password>${x(env(r, 'PREVIO_PASSWORD'))}</password>`;
@@ -36,9 +47,13 @@ export async function previo(r, method, inner) {
   return t;
 }
 // REST: JSON, stejný API klíč
-export async function previoRest(r, path, { method = 'GET', body } = {}) {
+export async function previoRest(r, path, { method = 'GET', body, headers = {} } = {}) {
+  if (jenCist() && method !== 'GET') {
+    console.log(`[Previo jen čtení] ${r.id} REST ${method} ${path} se neodeslal: ${JSON.stringify(body || {}).slice(0, 300)}`);
+    return {};
+  }
   const res = await fetch(BASE + 'rest/' + path, {
-    method, headers: { 'Content-Type': 'application/json', Accept: 'application/json', ...auth(r) },
+    method, headers: { 'Content-Type': 'application/json', Accept: 'application/json', 'X-Previo-Hotel-ID': String(HOTEL(r)), ...auth(r), ...headers },
     body: body ? JSON.stringify(body) : undefined, signal: AbortSignal.timeout(9000),
   });
   const t = await res.text();
@@ -49,22 +64,149 @@ export async function previoRest(r, path, { method = 'GET', body } = {}) {
 export const tags = (xml, tag) => [...xml.matchAll(new RegExp(`<${tag}\\b[^>]*>([\\s\\S]*?)</${tag}>`, 'g'))].map(m => m[1]);
 export const val = (xml, tag) => { const m = xml.match(new RegExp(`<${tag}\\b[^>]*>([\\s\\S]*?)</${tag}>`)); return m ? m[1].trim() : ''; };
 
-/** Volné typy apartmánů a jejich sazby pro termín (živě z Previo). */
-export async function nabidka(r, { od, doo, dospeli, deti, balicek }) {
-  const term = `<term><from>${od}</from><to>${doo}</to></term><guests><adults>${dospeli}</adults><children>${deti}</children></guests>`;
-  // OVĚŘIT: tvar požadavku a odpovědi Hotel.getRates podle manuálu
-  const [kap, cen] = await Promise.all([previo(r, M.kapacita, term), previo(r, M.ceny, term + (balicek ? `<stayId>${x(balicek)}</stayId>` : ''))]);
-  const volno = Object.fromEntries(tags(kap, 'objectKind').map(k => [val(k, 'obkId'), +val(k, 'freeCount') || tags(k, 'object').length || 0]));
-  const sl = (r.R.sleva_primo || 0) / 100;
-  return r.R.typy.filter(t => t.previo_id && volno[t.previo_id] > 0).map(t => {
-    const a = r.A.find(p => p.nazev === t.nazev) || {};
-    const sazby = tags(cen, 'rate').filter(q => val(q, 'obkId') === String(t.previo_id)).map(q => {
-      const portal = +val(q, 'price');
-      const sz = { id: val(q, 'prlId') || val(q, 'rateId'), nazev: val(q, 'name'), popis: val(q, 'description') };
-      return { ...sz, portal, cena: portal * (1 - sl), strava: typStravy(sz), nevratna: jeNevratna(sz) };
-    }).filter(s => s.portal > 0);
-    return { id: t.previo_id, nazev: t.nazev, foto: a.foto || (a.fotky || [])[0], osoby: a.osoby, plocha: a.plocha, popis: a.popis, volno: volno[t.previo_id], sazby };
-  }).filter(t => t.sazby.length);
+// ── Živá nabídka ──────────────────────────────────────────────────────────────
+// Ověřeno na hotelu Červený dvůr (11/2026):
+//   Hotel.getRates → <ratePlan> základní sazby (Base rate) → <season from to(exkluzivně)> → <objectKind><obkId>
+//     <rate><occupancy>N</occupancy><price>Kč za noc</price></rate>, v sezóně i <meal><meaId><guaId><rate><price>
+//     (příplatek/sleva stravy za osobu a noc vůči výchozí stravě), <minStay>, <closeToArrival>, <closeToDeparture>
+//   REST calendar/availability?filterFrom&filterTo → [{ ratePlanId, availability: [{ date, roomKinds: [{ id, availability }] }] }]
+//   REST guest-categories (hlavička X-Previo-Language-ID) → kategorie hostů (dospělý / dítě 0–2 / dítě 3–17)
+// Strava v Previo: meaId 1 = bez stravy, 2 = snídaně (u ČD výchozí, v ceně), 5 = polopenze.
+// Sazby (flexibilní / nevratná, sleva) zůstávají v CMS – z Previo se bere cena ubytování, strava a volná kapacita.
+const MEA = { bez: 1, snidane: 2, polopenze: 5 };
+const cache = new Map();
+const memo = (k, ms, fn) => {
+  const c = cache.get(k);
+  if (c && c.do > Date.now()) return c.p;
+  const p = fn().catch(e => { cache.delete(k); throw e; });
+  cache.set(k, { p, do: Date.now() + ms });
+  return p;
+};
+const plusDen = (d, n = 1) => { const t = new Date(d + 'T12:00Z'); t.setUTCDate(t.getUTCDate() + n); return t.toISOString().slice(0, 10); };
+
+/** Kategorie hostů → { dospely: guaId, dite: guaId (3–17 let) } */
+const kategorie = r => memo('gua:' + r.id, 36e5, async () => {
+  const j = await previoRest(r, 'guest-categories', { headers: { 'X-Previo-Language-ID': '1' } });
+  const c = j.categories || [];
+  const dite = c.filter(q => q.guestCategoryTypeId !== 3 && !q.isWithoutBed).sort((a, b) => b.ageTo - a.ageTo)[0];
+  return { dospely: String(j.defaultCategoryId || (c.find(q => q.guestCategoryTypeId === 3) || {}).guestCategoryId), dite: dite ? String(dite.guestCategoryId) : null };
+});
+
+const hm = s => String(s || '').slice(0, 5);
+const praha = () => new Date().toLocaleString('sv-SE', { timeZone: 'Europe/Prague' }); // „2026-11-24 15:30:00“
+
+/** Nastavení hotelu (Hotel.get): čas příjezdu a odjezdu, uzávěrka online rezervací s příjezdem na dnešek. */
+export const hotelInfo = r => memo('hotel:' + r.id, 36e5, async () => {
+  const t = await previo(r, 'Hotel.get', '');
+  return { checkin: hm(val(t, 'arrival')) || r.checkin, checkout: hm(val(t, 'departure')) || r.checkout, uzaverka: hm(val(t, 'maxOnlineBookTime')) };
+});
+/** Čas příjezdu a odjezdu resortu – živě z Previo, jinak z resorty.mjs. */
+export const casyHotelu = async r => (previoLive(r) ? hotelInfo(r).catch(() => r) : r);
+
+/**
+ * Platební podmínky pro termín (Hotel.getPaymentMethods, sezóna podle data příjezdu).
+ * → { prevod: { procent, castka, dni } | null, karta: { procent, castka, dni, sleva } | null }
+ *   procent / castka = záloha (procenta z ceny, nebo pevná částka), dni = splatnost zálohy, sleva = sleva za platbu online (%)
+ *   null = způsob platby není v Previo pro tento termín povolený
+ */
+const PAY_ID = { prevod: '2', karta: '10' };
+export const platebniPodminky = (r, od, doo) => memo(`pay:${r.id}:${od}:${doo}`, 6e5, async () => {
+  const t = await previo(r, 'Hotel.getPaymentMethods', `<term><from>${od}</from><to>${doo}</to></term>`);
+  const metody = tags(t, 'paymentMethod');
+  const out = {};
+  for (const [k, id] of Object.entries(PAY_ID)) {
+    const m = metody.find(q => val(q, 'payId') === id);
+    if (!m) { out[k] = null; continue; }
+    const sez = tags(m, 'paymentSeason'), s = sez.find(q => val(q, 'from') <= od && od < val(q, 'to')) || sez[0] || '';
+    const adv = val(s, 'advance'), typ = val(adv, 'type'), v = +val(adv, 'value') || 0;
+    out[k] = { procent: !adv ? 100 : typ === 'per' ? v : null, castka: adv && typ !== 'per' ? v : null, dni: +val(adv, 'expiration') || null, sleva: +val(s, 'discount') || 0 };
+  }
+  return out;
+});
+
+/**
+ * Doplňkové služby hotelu (Hotel.getPackages) → { pckId: { nazev, cena, jednotka, web } }
+ * jednotka jako v CMS: 'pobyt' (za kus) | 'noc' | 'osoba' | 'osoba_noc'; web = služba je v Previo zobrazená v rezervačním formuláři.
+ */
+const PCU = { 1: 'pobyt', 12: 'pobyt', 13: 'pobyt', 2: 'noc', 3: 'osoba_noc', 4: 'osoba' };
+export const sluzbyHotelu = (r, od, doo) => memo(`pck:${r.id}:${od}:${doo}`, 36e5, async () => {
+  const t = await previo(r, 'Hotel.getPackages', `<term><from>${od}</from><to>${doo}</to></term><lanId>1</lanId>`);
+  return Object.fromEntries(tags(t, 'package').map(p => {
+    const s = val(p, 'season'), cena = +(val(s, 'price').match(/<price>([\d.]+)/) || [])[1];
+    return [val(p, 'pckId'), { nazev: val(p, 'name'), cena: cena >= 0 ? cena : null, jednotka: PCU[val(val(p, 'unit'), 'pcuId')] || 'pobyt', web: val(s, 'display') === 'true' }];
+  }));
+});
+
+/** Ceny a obsazenost z Previo pro termín (sdílené pro různé počty hostů – kombinace apartmánů). */
+const previoTermin = (r, od, doo) => memo(`t:${r.id}:${od}:${doo}`, 60e3, async () => {
+  const [xml, kal, kat, info] = await Promise.all([
+    previo(r, M.ceny, `<term><from>${od}</from><to>${doo}</to></term>`),
+    previoRest(r, `calendar/availability?filterFrom=${od}&filterTo=${plusDen(doo, -1)}`),
+    kategorie(r).catch(() => ({})),
+    hotelInfo(r).catch(() => ({})),
+  ]);
+  const plan = tags(xml, 'ratePlan')[0] || '';
+  const sezony = tags(plan, 'season').map(s => ({
+    od: val(s, 'from'), do: val(s, 'to'),
+    minStay: +val(s, 'minStay') || 0, cta: val(s, 'closeToArrival') === 'true', ctd: val(s, 'closeToDeparture') === 'true',
+    typy: Object.fromEntries(tags(s, 'objectKind').map(k => [val(k, 'obkId'),
+      Object.fromEntries(tags(k, 'rate').map(q => [+val(q, 'occupancy'), +val(q, 'price')]))])),
+    strava: tags(s, 'meal').reduce((o, m) => { const id = val(m, 'meaId'); (o[id] = o[id] || {})[val(m, 'guaId')] = +val(m, 'price'); return o; }, {}),
+  }));
+  const plan0 = (Array.isArray(kal) ? kal : []).find(p => p.ratePlanId === +val(plan, 'prlId')) || (Array.isArray(kal) ? kal[0] : null);
+  const volno = {};
+  for (const den of (plan0 && plan0.availability) || []) {
+    if (den.date < od || den.date >= doo) continue;
+    for (const k of den.roomKinds || []) volno[k.id] = Math.min(volno[k.id] ?? Infinity, +k.availability || 0);
+  }
+  return { sezony, volno, kat, info };
+});
+
+/** Volné typy apartmánů a jejich sazby pro termín (živě z Previo). Stejný tvar jako nabidkaCenik v cena.mjs. */
+export async function nabidka(r, { od, doo, dospeli, deti, bal, sazby: sazbyCms, strava: stravaCms }) {
+  const { sezony, volno, kat, info } = await previoTermin(r, od, doo);
+  // příjezd dnes až do uzávěrky online rezervací (Previo „maxOnlineBookTime“, u ČD 18:00)
+  const ted = praha();
+  if (info.uzaverka && od === ted.slice(0, 10) && ted.slice(11, 16) >= info.uzaverka) return [];
+  const noci = [];
+  for (let d = od; d < doo; d = plusDen(d)) noci.push(sezony.find(s => s.od <= d && d < s.do));
+  if (!noci.length || noci.some(s => !s)) return [];
+  // omezení z Previo: minimální délka pobytu (podle sezóny příjezdu), zákaz příjezdu / odjezdu
+  if (noci.length < noci[0].minStay || noci[0].cta) return [];
+  const odjezd = sezony.find(s => s.od <= doo && doo < s.do);
+  if (odjezd && odjezd.ctd) return [];
+
+  const osob = dospeli + deti, SL = (r.R.sleva_primo || 0) / 100;
+  const ad = kat.dospely, ch = kat.dite;
+  // příplatek stravy za noc pro celou skupinu (vůči výchozí stravě hotelu); null = strava v té noci není
+  const strava = (s, mea) => {
+    const m = s.strava[mea];
+    if (!m) return null;
+    const pr = g => (g && g in m ? m[g] : Object.values(m)[0] || 0);
+    return pr(ad) * dospeli + (ch ? pr(ch) : pr(ad)) * deti;
+  };
+  return r.R.typy.filter(t => t.previo_id && (volno[t.previo_id] || 0) > 0).map(t => {
+    const a = r.A.find(p => p.nazev === t.nazev);
+    if (!a) return null;
+    const obk = String(t.previo_id);
+    // ubytování bez stravy (cena za obsazenost + sleva za „bez stravy“) a strava zvlášť – sleva sazby se počítá jen z ubytování
+    let ubyt = 0;
+    for (const s of noci) {
+      const c = (s.typy[obk] || {})[osob];
+      if (!(c > 0)) return null;                         // pro tolik hostů typ nemá cenu = nevejdou se
+      ubyt += c + (strava(s, MEA.bez) ?? 0);
+    }
+    const stravaZa = typ => { let k = 0; for (const s of noci) { const p = strava(s, MEA[typ]), b = strava(s, MEA.bez); if (p == null) return null; k += p - (b ?? 0); } return k; };
+    const rates = bal
+      ? [{ id: 'balicek', nazev: bal.nazev, popis: (bal.obsahuje || []).slice(1, 4).join(' · '), cena: ubyt + (bal.priplatek || 0), strava: 'balicek', nevratna: false }]
+      : sazbyCms.map(s => {
+        const typ = stravaCms(s), k = typ === 'bez' ? 0 : stravaZa(typ);
+        if (k == null) return null;                         // strava v termínu není (např. polopenze až od 1. 12.)
+        return { id: s.id, nazev: s.nazev, popis: s.popis || '', cena: ubyt * (1 - (+s.sleva || 0) / 100) + k, strava: typ, nevratna: jeNevratna(s), sleva: +s.sleva || 0, meaId: MEA[typ] };
+      }).filter(Boolean);
+    return { id: t.nazev, previo: obk, nazev: t.nazev, foto: a.foto || (a.fotky || [])[0], osoby: String(a.osoby || ''), plocha: a.plocha, popis: a.popis, volno: volno[obk],
+      sazby: rates.map(q => ({ ...q, portal: q.cena, cena: q.cena * (1 - SL) })) };
+  }).filter(t => t && t.sazby.length);
 }
 
 /**
@@ -92,6 +234,9 @@ const pragueTime = d => new Date(d).toLocaleString('sv-SE', { timeZone: 'Europe/
  */
 export async function vytvorRezervaci(r, d, { stav = OPCE, opceDo } = {}) {
   const h = d.host || {};
+  const { checkin, checkout } = await casyHotelu(r);
+  // typ apartmánu = název z CMS (nebo rovnou obkId) → obkId z Previo
+  const obk = v => (r.R.typy.find(t => t.nazev === v || String(t.previo_id) === String(v)) || {}).previo_id || v;
   const note = [`Web – rezervace napřímo (−${r.R.sleva_primo || 0} %), objednávka ${d.obj || ''}`,
     d.zpusob === 'karta' ? 'Platba kartou online (ČSOB)' : d.zpusob === 'prevod' ? 'Platba převodem – zálohový list' : '',
     (d.doplnky || []).length ? 'Doplňky: ' + d.doplnky.join(', ') : '', h.poznamka].filter(Boolean).join(' | ');
@@ -100,13 +245,13 @@ export async function vytvorRezervaci(r, d, { stav = OPCE, opceDo } = {}) {
       <guests><numGuest>${(+p.dospeli || 1) + (+p.deti || 0)}</numGuest>
         ${i === 0 ? `<guest><firstName>${x(h.jmeno)}</firstName><lastName>${x(h.prijmeni)}</lastName><email>${x(h.email)}</email><phone>${x(h.telefon)}</phone></guest>` : ''}
       </guests>
-      <obkId>${x(p.typ)}</obkId>${d.sazba && /^\d+$/.test(d.sazba) ? `<prlId>${x(d.sazba)}</prlId>` : ''}<cmsId>3</cmsId>
+      <obkId>${x(obk(p.typ))}</obkId>${d.sazba && /^\d+$/.test(d.sazba) ? `<prlId>${x(d.sazba)}</prlId>` : ''}${d.meaId ? `<meaId>${x(d.meaId)}</meaId>` : ''}<cmsId>3</cmsId>
       <note>${x(d.pokoje && d.pokoje.length > 1 ? `Skupina – apartmán ${i + 1}/${d.pokoje.length}. ${note}` : note)}</note>
     </commission>`).join('')}</commissions>
     ${d.stayId ? `<styId>${x(d.stayId)}</styId>` : ''}
     <gCosId>${stav}</gCosId>${stav === OPCE && opceDo ? `<optionExpiration>${pragueTime(opceDo)}</optionExpiration>` : ''}
     <lanId>1</lanId>
-    <term><from>${d.od} ${r.checkin}:00</from><to>${d.do} ${r.checkout}:00</to></term>
+    <term><from>${d.od} ${checkin}:00</from><to>${d.do} ${checkout}:00</to></term>
     ${h.firma ? `<company><name>${x(h.firma)}</name>${h.ico ? `<idNum>${x(h.ico)}</idNum>` : ''}</company>` : ''}
     <contactPerson><name>${x(`${h.jmeno || ''} ${h.prijmeni || ''}`.trim())}</name><email>${x(h.email)}</email><phone>${x(h.telefon)}</phone></contactPerson>
     <price><total>${Math.round(+d.cena || 0)}</total><curId>1</curId></price>

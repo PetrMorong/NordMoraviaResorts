@@ -13,7 +13,7 @@
 import { resort } from '../lib/resorty.mjs';
 import { spocitejCenu, Chyba } from '../lib/cena.mjs';
 import { csobZapnuto, csobEnv, zalozPlatbu, platebniStranka, stavPlatby } from '../lib/csob.mjs';
-import { previoLive, vytvorRezervaci, zalohovyList, previoRest, OPCE } from '../lib/previo.mjs';
+import { previoLive, vytvorRezervaci, zalohovyList, previoRest, platebniPodminky, OPCE } from '../lib/previo.mjs';
 import { nactiObjednavku, ulozObjednavku, noveCislo, cisloPlatby, token } from '../lib/objednavky.mjs';
 import { vyrid, upozorni, overCasy, rezervujWellness, kolikZbyva, wellnessText } from '../lib/vyrizeni.mjs';
 import { reservioZapnuto, reservioDemo } from '../lib/reservio.mjs';
@@ -27,9 +27,32 @@ const prevodOk = r => !!P(r).prevod;
 const plus = (dny, h = 0) => new Date(Date.now() + dny * 864e5 + h * 36e5);
 const dnes = () => new Date().toLocaleDateString('sv-SE', { timeZone: 'Europe/Prague' });
 const denPred = (iso, n) => new Date(Date.parse(iso + 'T12:00Z') - n * 864e5).toISOString().slice(0, 10);
-/** Splatnost zálohy převodem: za X dní (CMS), ale nejpozději den před příjezdem. null = na převod je pozdě (příjezd dnes/zítra). */
-const splatnostPrevodu = (r, od) => {
-  const s = [plus(+P(r).prevod_splatnost_dni || 3).toLocaleDateString('sv-SE', { timeZone: 'Europe/Prague' }), denPred(od, 1)].sort()[0];
+/**
+ * Platební podmínky pro termín. Se zapnutým Previo z Previo (Hotel.getPaymentMethods: povolené způsoby, záloha, splatnost),
+ * jinak z CMS (rezervace.json → platba). Texty, účet a vypnutí způsobu v CMS platí vždy.
+ * → { karta, prevod, zaloha_karta, zaloha_prevod (%), zaloha_karta_kc, zaloha_prevod_kc (pevná záloha), prevod_splatnost_dni, zdroj }
+ */
+async function podminkyPlatby(r, od, doo) {
+  const p = P(r), z = +p.zaloha_procent || 100;
+  const cms = { ...p, zaloha_karta: z, zaloha_prevod: z, prevod_splatnost_dni: +p.prevod_splatnost_dni || 3, zdroj: 'cms' };
+  if (!previoLive(r) || !od || !doo) return cms;
+  try {
+    const q = await platebniPodminky(r, od, doo);
+    return { ...p, karta: !!p.karta && !!q.karta, prevod: !!p.prevod && !!q.prevod,
+      zaloha_karta: q.karta ? q.karta.procent : 100, zaloha_karta_kc: q.karta && q.karta.castka, zaloha_prevod: q.prevod ? q.prevod.procent : 100, zaloha_prevod_kc: q.prevod && q.prevod.castka,
+      prevod_splatnost_dni: (q.prevod && q.prevod.dni) || cms.prevod_splatnost_dni, zdroj: 'previo' };
+  } catch (e) { console.error(`Platební podmínky z Previo (${r.id}):`, e.message); return cms; }
+}
+/** Záloha v Kč: nevratná sazba se platí celá, jinak % nebo pevná částka podle způsobu platby. */
+const vyseZalohy = (pp, zpusob, cena, nevratna) => {
+  if (nevratna) return cena;
+  const kc = pp[`zaloha_${zpusob}_kc`], pct = pp[`zaloha_${zpusob}`];
+  const z = kc > 0 ? kc : cena * Math.min(Math.max(pct == null ? 100 : +pct, 1), 100) / 100;
+  return Math.max(1, Math.min(cena, Math.round(z)));
+};
+/** Splatnost zálohy převodem: za X dní (Previo / CMS), ale nejpozději den před příjezdem. null = na převod je pozdě (příjezd dnes/zítra). */
+const splatnostPrevodu = (dni, od) => {
+  const s = [plus(+dni || 3).toLocaleDateString('sv-SE', { timeZone: 'Europe/Prague' }), denPred(od, 1)].sort()[0];
   return s > dnes() ? s : null;
 };
 
@@ -62,19 +85,21 @@ async function zaplatKartou(o) {
 async function nova(req, d) {
   const r = resort(d.resort);
   const zpusob = d.zpusob === 'karta' ? 'karta' : d.zpusob === 'prevod' ? 'prevod' : null;
-  if (!zpusob || (zpusob === 'karta' && !kartaOk(r)) || (zpusob === 'prevod' && !prevodOk(r))) throw new Chyba('Tento způsob platby není dostupný');
-  if (zpusob === 'prevod' && /^\d{4}-\d{2}-\d{2}$/.test(d.od || '') && !splatnostPrevodu(r, d.od)) throw new Chyba('Do příjezdu je málo času na bankovní převod. Zaplaťte prosím kartou, nebo nám zavolejte.');
+  const datum = s => (/^\d{4}-\d{2}-\d{2}$/.test(s || '') ? s : null);
+  const pp = await podminkyPlatby(r, datum(d.od), datum(d.do));
+  if (!zpusob || (zpusob === 'karta' && !(kartaOk(r) && pp.karta)) || (zpusob === 'prevod' && !(prevodOk(r) && pp.prevod))) throw new Chyba('Tento způsob platby není dostupný');
+  if (zpusob === 'prevod' && datum(d.od) && !splatnostPrevodu(pp.prevod_splatnost_dni, d.od)) throw new Chyba('Do příjezdu je málo času na bankovní převod. Zaplaťte prosím kartou, nebo nám zavolejte.');
   const h = d.host || {};
   const host = Object.fromEntries(['jmeno', 'prijmeni', 'email', 'telefon', 'poznamka', 'firma', 'ico'].map(k => [k, String(h[k] || '').trim().slice(0, k === 'poznamka' ? 1000 : 120)]));
   if (!host.jmeno || !host.prijmeni || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(host.email) || !host.telefon) throw new Chyba('Vyplňte prosím jméno, příjmení, e-mail a telefon');
   if (!h.souhlas) throw new Chyba('Je potřeba souhlas s obchodními a storno podmínkami');
 
   const pobyt = await spocitejCenu(r, d);
-  const zaloha = Math.max(1, Math.round(pobyt.cena * Math.min(Math.max(+P(r).zaloha_procent || 100, 1), 100) / 100));
+  const zaloha = vyseZalohy(pp, zpusob, pobyt.cena, pobyt.nevratna);
   const o = {
     obj: await noveCislo(), t: token(), resort: r.id, stav: 'nova', zpusob, web: new URL(req.url).origin, vytvoreno: new Date().toISOString(),
     pobyt, zaloha, host, previo: null, platby: [], chyby: [], test: zpusob === 'karta' && test(),
-    splatnost: zpusob === 'prevod' ? splatnostPrevodu(r, pobyt.od) : undefined,
+    splatnost: zpusob === 'prevod' ? splatnostPrevodu(pp.prevod_splatnost_dni, pobyt.od) : undefined,
   };
   // wellness napojené na Reservio: zaplacené vstupy + časy, které host vybral už v kroku Doplňky
   const wd = pobyt.doplnky.filter(x => x.reservio || /wellness/.test(x.id)); // wellness evidujeme i bez Reservio (kvůli přání času)
@@ -110,7 +135,15 @@ export default async (req) => {
   try {
     if (req.method === 'GET') {
       const u = new URL(req.url).searchParams;
-      if (!u.get('obj')) { const r = resort(u.get('resort')), p = P(r); return json({ karta: kartaOk(r), prevod: prevodOk(r), prevod_min_dni: 2, prevod_splatnost_dni: +p.prevod_splatnost_dni || 3, zaloha_procent: +p.zaloha_procent || 100, test: test() && kartaOk(r), text_karta: p.text_karta, text_prevod: p.text_prevod }); }
+      if (!u.get('obj')) {
+        // ?od=&do= → podmínky pro konkrétní termín (z Previo), bez termínu obecné z CMS
+        const r = resort(u.get('resort')), d = s => (/^\d{4}-\d{2}-\d{2}$/.test(s || '') ? s : null);
+        const p = await podminkyPlatby(r, d(u.get('od')), d(u.get('do')));
+        const karta = kartaOk(r) && !!p.karta;
+        return json({ karta, prevod: prevodOk(r) && !!p.prevod, prevod_min_dni: 2, prevod_splatnost_dni: p.prevod_splatnost_dni,
+          zaloha_karta: p.zaloha_karta, zaloha_karta_kc: p.zaloha_karta_kc || null, zaloha_prevod: p.zaloha_prevod, zaloha_prevod_kc: p.zaloha_prevod_kc || null,
+          zaloha_procent: p.zaloha_prevod, zdroj: p.zdroj, test: test() && karta, text_karta: p.text_karta, text_prevod: p.text_prevod });
+      }
       const o = await nactiObjednavku(u.get('obj'));
       if (!o || o.t !== u.get('t')) return json({ chyba: 'Objednávka nenalezena' }, 404);
       if (u.get('doklad')) {

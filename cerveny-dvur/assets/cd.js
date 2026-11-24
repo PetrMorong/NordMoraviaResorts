@@ -92,20 +92,22 @@ const CD = {
     CD.legalLinks();
   },
   // jednoduchý lightbox: items [{src, alt}], kliknutí na [data-i] uvnitř root
+  // Okno je jedno pro celou stránku; šipky listují galerií, ze které se fotka otevřela (stránka může mít víc galerií).
   lightbox(items, root) {
     let d = document.getElementById('lb');
     if (!d) {
       document.body.insertAdjacentHTML('beforeend', `<dialog class="lb" id="lb" aria-label="Galerie"><button class="x" aria-label="Zavřít">×</button><button class="nav prev" aria-label="Předchozí">‹</button><img alt=""><button class="nav next" aria-label="Další">›</button><p></p></dialog>`);
       d = document.getElementById('lb');
+      const im = d.querySelector('img'), cap = d.querySelector('p');
+      d._show = () => { const {items: it, i} = d._g; im.src = CD.img(it[i].src, 1800); im.alt = it[i].alt; cap.textContent = `${it[i].alt} · ${i + 1} / ${it.length}`; };
+      const go = k => { const g = d._g; g.i = (g.i + k + g.items.length) % g.items.length; d._show(); };
+      d.querySelector('.x').onclick = () => d.close();
+      d.querySelector('.prev').onclick = () => go(-1);
+      d.querySelector('.next').onclick = () => go(1);
+      d.addEventListener('click', e => { if (e.target === d) d.close(); });
+      addEventListener('keydown', e => { if (!d.open) return; if (e.key === 'ArrowLeft') go(-1); if (e.key === 'ArrowRight') go(1); });
     }
-    const im = d.querySelector('img'), cap = d.querySelector('p'); let i = 0;
-    const show = () => { im.src = CD.img(items[i].src, 1800); im.alt = items[i].alt; cap.textContent = `${items[i].alt} · ${i + 1} / ${items.length}`; };
-    root.querySelectorAll('[data-i]').forEach(b => b.onclick = () => { i = +b.dataset.i; show(); d.showModal(); });
-    d.querySelector('.x').onclick = () => d.close();
-    d.querySelector('.prev').onclick = () => { i = (i - 1 + items.length) % items.length; show(); };
-    d.querySelector('.next').onclick = () => { i = (i + 1) % items.length; show(); };
-    d.addEventListener('click', e => { if (e.target === d) d.close(); });
-    addEventListener('keydown', e => { if (!d.open) return; if (e.key === 'ArrowLeft') d.querySelector('.prev').click(); if (e.key === 'ArrowRight') d.querySelector('.next').click(); });
+    root.querySelectorAll('[data-i]').forEach(b => b.onclick = () => { d._g = {items, i: +b.dataset.i}; d._show(); d.showModal(); });
   },
   // propojí dva date inputy (odjezd vždy po příjezdu)
   dates(od, dd) {

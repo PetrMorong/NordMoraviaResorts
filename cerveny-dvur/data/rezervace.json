@@ -28,48 +28,76 @@
       "plati_od": "2026-12-01",
       "nevratna": false,
       "strava": "polopenze"
+    },
+    {
+      "id": "nevratna-bez",
+      "nazev": "Nevratná −5 % · bez stravy",
+      "popis": "Nejnižší cena · bez možnosti storna",
+      "sleva": 5,
+      "strava_osoba_noc": 0,
+      "strava": "bez",
+      "nevratna": true
+    },
+    {
+      "id": "nevratna-snidane",
+      "nazev": "Nevratná −5 % · se snídaní",
+      "popis": "Snídaně každé ráno · bez možnosti storna",
+      "sleva": 5,
+      "snidane": true,
+      "strava": "snidane",
+      "nevratna": true
+    },
+    {
+      "id": "nevratna-polopenze",
+      "nazev": "Nevratná −5 % · s polopenzí",
+      "popis": "Snídaně a večeře v restauraci · bez možnosti storna",
+      "sleva": 5,
+      "strava_osoba_noc": 450,
+      "strava": "polopenze",
+      "nevratna": true,
+      "plati_od": "2026-12-01"
     }
   ],
   "souhrn_poznamka": "Parkování a Wi-Fi zdarma.",
   "typy": [
     {
       "nazev": "Apartmán pro dva",
-      "previo_id": "",
+      "previo_id": "984045",
       "cena_noc": 2490,
       "max_osob": 2,
       "pocet": 6
     },
     {
       "nazev": "Apartmán Komfort",
-      "previo_id": "",
+      "previo_id": "911691",
       "cena_noc": 2790,
       "max_osob": 4,
       "pocet": 6
     },
     {
       "nazev": "Apartmán Suite",
-      "previo_id": "",
+      "previo_id": "911687",
       "cena_noc": 3190,
       "max_osob": 4,
       "pocet": 3
     },
     {
       "nazev": "Rodinný apartmán komfort",
-      "previo_id": "",
+      "previo_id": "910227",
       "cena_noc": 4290,
       "max_osob": 6,
       "pocet": 2
     },
     {
       "nazev": "Rodinný apartmán superior 2+1",
-      "previo_id": "",
+      "previo_id": "1000691",
       "cena_noc": 4690,
       "max_osob": 8,
       "pocet": 1
     },
     {
       "nazev": "Rodinný apartmán superior",
-      "previo_id": "",
+      "previo_id": "909563",
       "cena_noc": 4990,
       "max_osob": 8,
       "pocet": 2
@@ -82,6 +110,7 @@
       "popis": "Finská sauna, ochlazovací bazének, vířivka a odpočinkový kout jen pro vás",
       "cena": 1490,
       "jednotka": "pobyt",
+      "previo_sluzba": "3182587",
       "max_ks": 4,
       "ks_label": "Počet vstupů",
       "reservio_sluzba": "82699fb6-859f-4957-9c9e-830ed2f9a0e2",
@@ -93,6 +122,7 @@
       "popis": "Finská sauna, ochlazovací bazének, vířivka a odpočinkový kout jen pro vás",
       "cena": 1790,
       "jednotka": "pobyt",
+      "previo_sluzba": "3240445",
       "max_ks": 4,
       "ks_label": "Počet vstupů",
       "reservio_sluzba": "eab0dae6-215c-4fd4-9ca3-86a62a6c8398",
@@ -104,6 +134,7 @@
       "popis": "Čerstvé pečivo, káva a klidné ráno přímo na pokoji",
       "cena": 200,
       "jednotka": "pobyt",
+      "previo_sluzba": "3223551",
       "max_ks": 6,
       "ks_label": "Počet snídaní"
     },
@@ -112,14 +143,16 @@
       "nazev": "Pozdní check-out do 12:00",
       "popis": "Ráno bez spěchu – a čas na wellness i v den odjezdu",
       "cena": 500,
-      "jednotka": "pobyt"
+      "jednotka": "pobyt",
+      "previo_sluzba": "3221937"
     },
     {
       "id": "pes",
       "nazev": "Pes",
       "popis": "Pejsek může s vámi",
       "cena": 290,
-      "jednotka": "pobyt"
+      "jednotka": "pobyt",
+      "previo_sluzba": "3216773"
     },
     {
       "id": "zupan",
@@ -127,6 +160,7 @@
       "popis": "Na celý pobyt",
       "cena": 100,
       "jednotka": "pobyt",
+      "previo_sluzba": "3226643",
       "max_ks": 8,
       "ks_label": "Počet županů"
     },
@@ -136,6 +170,7 @@
       "popis": "Vypereme vám oblečení během pobytu",
       "cena": 400,
       "jednotka": "pobyt",
+      "previo_sluzba": "3226645",
       "max_ks": 4,
       "ks_label": "Počet praní"
     }
@@ -160,5 +195,6 @@
     "Storno poplatky neúčtujeme při úmrtí v rodině, hospitalizaci zákazníka nebo člena rodiny, vážném onemocnění, povolávacím rozkazu nebo živelné pohromě – je potřeba doložit písemně do 3 dnů.",
     "Ubytovatel: Mori Reality s.r.o., Pernerova 697/35, 186 00 Praha 8, IČO 14426021."
   ],
-  "storno_kratce": "Zrušení zdarma do 1 dne před příjezdem"
+  "storno_kratce": "Zrušení zdarma do 1 dne před příjezdem",
+  "doporucena_strava": "polopenze"
 }

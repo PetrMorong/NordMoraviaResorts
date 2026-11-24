@@ -110,6 +110,16 @@ Rezervační formulář `cerveny-dvur/rezervace.html` nabízí v kroku 4 stejné
 | `CSOB_ENV` | `test` (integrační iBrána, žádné skutečné peníze), na ostrém provozu `prod` |
 | `PREVIO_LIVE`, `PREVIO_API_KEY`, `PREVIO_HOTEL_ID` | napojení na Previo, viz `netlify/lib/previo.mjs` |
 | `PREVIO_ZALOHOVY_LIST` | `1` = zálohový list k převodu vystaví API (nejdřív ověřit na testovacím hotelu Previo) |
+| `PREVIO_JEN_CIST` | `1` = živé ceny a obsazenost z Previo, ale rezervace a platby se do Previo nezapisují (jen do logu). Na testování proti ostrému hotelu |
+
+**Živé ceny z Previo** (`PREVIO_LIVE=1`, ověřeno na Červeném dvoře 11/2026)
+- Z Previo se bere cena ubytování podle obsazenosti (`Hotel.getRates`, základní sazba), příplatky za stravu (snídaně je v ceně, bez snídaně −100 Kč, polopenze +350 Kč za osobu a noc), minimální délka pobytu a zákazy příjezdu/odjezdu, volné apartmány (`calendar/availability`).
+- Z CMS zůstávají sazby (flexibilní/nevratná a jejich sleva), sleva za přímou rezervaci, doplňky a fotky. Typ apartmánu se páruje přes pole „Previo ID“ (obkId) v ceníku.
+- Děti se počítají jako kategorie 3–17 let (formulář věk nezjišťuje).
+- **Platba** (`Hotel.getPaymentMethods`, podle sezóny příjezdu): povolené způsoby (převod / online), výše zálohy a splatnost. U ČD je to 30 % kartou i převodem, splatnost 3 dny; zbytek se doplácí na místě. Nevratná sazba se platí vždy celá. V CMS zůstávají texty, číslo účtu a možnost způsob platby vypnout.
+- **Doplňky** (`Hotel.getPackages`): doplněk s vyplněným „Previo ID služby“ bere cenu i jednotku z Previo (např. pes 290 Kč za noc). Pořadí: Previo → Reservio → CMS.
+- **Hotel** (`Hotel.get`): čas příjezdu a odjezdu (zápis rezervace, časy wellness) a uzávěrka online rezervací s příjezdem na dnešek (u ČD 18:00).
+- Přehled ID a nastavení z Previo: `node scripts/previo-info.mjs [resort] [od] [do]`.
 
 **Testování**
 - `npm run test:platba`: celý tok proti simulované bráně (bez internetu a bez klíčů).
