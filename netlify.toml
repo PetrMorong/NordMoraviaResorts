@@ -25,6 +25,7 @@
 #   resortcervenydvur.cz   → obsah složky /cerveny-dvur/
 #   vila-republika.cz      → obsah složky /vila-republika/
 # Obě domény resortů musí být v Netlify přidané jako „domain alias“ tohoto projektu (i s www).
+# Cesty /.netlify/ (funkce) Netlify přesměrování neaplikuje, fungují na všech doménách samy.
 # Pořadí pravidel je důležité – platí první, které sedí. Odkazy, canonical a sitemapy pro domény
 # a přesměrování /cerveny-dvur/… z NMR řeší scripts/domeny.mjs při nasazení (proměnná DOMENY_RESORTU=1).
 # =====================================================================================================
@@ -285,12 +286,6 @@
   status = 200
   force = true
 
-[[redirects]]
-  from = "https://resortcervenydvur.cz/.netlify/*"
-  to = "/.netlify/:splat"
-  status = 200
-  force = true
-
 # resortcervenydvur.cz: vše ostatní ze složky /cerveny-dvur/
 [[redirects]]
   from = "https://resortcervenydvur.cz/*"
@@ -338,12 +333,6 @@
 [[redirects]]
   from = "https://vila-republika.cz/admin/*"
   to = "/admin/:splat"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "https://vila-republika.cz/.netlify/*"
-  to = "/.netlify/:splat"
   status = 200
   force = true
 
