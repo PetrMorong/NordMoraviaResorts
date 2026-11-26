@@ -4,7 +4,7 @@
 # Role se navazují na NÁZVY kolekcí níže (name:): nmr, nmr_tym, nmr_investice, soutok_web, soutok_apartmany, ...
 backend:
   name: turbo-github
-  turbo_site_id: DOPLNIT-SITE-ID   # zkopíruj z Turbo dashboardu po vytvoření webu
+  turbo_site_id: a09c0f7f-8fc4-4bbd-b65d-f336789b4269   # Decap Turbo → web „Nord Moravia Resorts web“ (větev main)
 
 # Záloha – původní přihlášení přes Netlify Identity (zastaralé, nepoužívat):
 # backend:
