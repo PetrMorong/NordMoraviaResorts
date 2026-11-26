@@ -1,0 +1,51 @@
+{
+  "hero": {
+    "nadpis1": "Tři místa v Jeseníkách.",
+    "nadpis2": "Jeden klid.",
+    "perex": "Historický dvůr v Rapotíně, prvorepubliková vila u lázní ve Velkých Losinách a nový wellness hotel v Koutech. Vyberte si místo, my se postaráme o zbytek."
+  },
+  "cisla": [
+    {
+      "cislo": "2020",
+      "popis": "začali jsme v Jeseníkách jako malý tým"
+    },
+    {
+      "cislo": "4,6★",
+      "popis": "hodnocení hostů na Googlu (Resort Červený dvůr)"
+    },
+    {
+      "cislo": "3",
+      "popis": "resorty, každý s vlastním charakterem"
+    }
+  ],
+  "o_nas": {
+    "nadpis": "Věříme, že nejlepší dovolená je ta doma.",
+    "text": "Tři resorty v Jeseníkách spojuje jedna filozofie – místa, kde se čas zastaví. Historická architektura i moderní design, příroda a péče o hosta na prvním místě. Rezervace, recepce i správa apartmánů běží pod jednou střechou."
+  },
+  "kontakt": {
+    "email": "petr@nordmoraviaresorts.cz",
+    "telefon": "+420 601 502 889",
+    "firma": "Mori Reality s.r.o.",
+    "ico": "14426021"
+  },
+  "mereni": {
+    "gtm_id": "",
+    "google_tag_id": "",
+    "meta_pixel_id": ""
+  },
+  "booking": {
+    "cerveny-dvur": {
+      "skore": "8,7",
+      "popis": "Skvělé",
+      "pocet": 215
+    },
+    "vila-republika": {
+      "skore": "8,8",
+      "popis": "Skvělé",
+      "pocet": 327
+    }
+  },
+  "rezervace": {
+    "vlastni_formular": false
+  }
+}

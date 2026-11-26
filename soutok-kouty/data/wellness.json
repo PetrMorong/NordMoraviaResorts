@@ -1,0 +1,28 @@
+{
+  "nadpis": "Po lyžování do sauny",
+  "text": "Wellness je jen pro vás. Rezervujete si ho k pobytu na 90 minut a dveře otevřete kódem – žádní cizí lidé, žádný spěch.",
+  "cena": "od 1 990 Kč / 90 min",
+  "polozky": [
+    {
+      "nazev": "Finská sauna",
+      "popis": "až pro 6 osob"
+    },
+    {
+      "nazev": "Vířivka",
+      "popis": "až pro 4 osoby"
+    },
+    {
+      "nazev": "Ochlazovací bazének",
+      "popis": "a zážitková sprcha"
+    },
+    {
+      "nazev": "Relax zóna",
+      "popis": "lehátka, čaj, výhled do lesa"
+    }
+  ],
+  "fotky": [
+    "images/wellness-sauna.webp",
+    "images/wellness-virivka.webp",
+    "images/wellness-bazenek.webp"
+  ]
+}

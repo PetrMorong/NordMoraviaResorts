@@ -1,0 +1,22 @@
+{
+  "aktivni": true,
+  "kicker": "Rezervujte napřímo",
+  "nadpis": "Přímo u nás vždy výhodněji",
+  "text": "Za rezervaci přes portály platíme provizi. Když rezervujete napřímo, ušetřené peníze dáváme vám.",
+  "pruh_nadpis": "Výhody přímé rezervace:",
+  "lista": "Napřímo levněji než na portálech · sleva na wellness",
+  "body": [
+    {
+      "nadpis": "Levněji než na portálech",
+      "text": "Stejný apartmán, stejný termín – přímo u nás levněji než na Bookingu a dalších portálech."
+    },
+    {
+      "nadpis": "Sleva na privátní wellness",
+      "text": "K pobytu rezervovanému napřímo máte zvýhodněnou cenu privátního wellness."
+    },
+    {
+      "nadpis": "Bez poplatků, s přímým kontaktem",
+      "text": "Žádné rezervační poplatky. Se změnou termínu nebo přáním vám poradí naše recepce, ne call centrum."
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "wellness": {
+    "nadpis": "Privátní wellness *jen pro vás*",
+    "text": "Celé wellness si zarezervujete jen pro sebe – nikdo cizí, žádné spěchání. Když ho nevyužívají ubytovaní hosté, je otevřené i veřejnosti, každý den včetně víkendů.",
+    "cena": "od 1 990 Kč / 90 min",
+    "vybaveni": [
+      "Finská a bio sauna",
+      "Whirlpool vana",
+      "Ochlazovací bazének",
+      "Ochlazovací vědro",
+      "Odpočinkový kout",
+      "Šatní skříňky"
+    ],
+    "fotky": [
+      "https://res.cloudinary.com/morireality/image/upload/f_auto,q_auto,c_fill,g_west,w_900,h_1100/vilaRepublikaFoto/wellness/DSC01791-HDR_xrkdf9",
+      "vilaRepublikaFoto/wellness/DSC01755-HDR_jf1qnz"
+    ],
+    "cenik": [
+      {
+        "nazev": "Standard · 90 min",
+        "cena": "1 990 Kč",
+        "cena_ubytovani": "1 690 Kč"
+      },
+      {
+        "nazev": "VIP · 120 min + víno, ovoce, svíčky",
+        "cena": "2 490 Kč",
+        "cena_ubytovani": "2 115 Kč"
+      }
+    ]
+  },
+  "spolecenska": {
+    "nadpis": "Společenská místnost *pro 20 hostů*",
+    "text": "V přízemí vily je odhlučněná společenská místnost s 20 místy k sezení, vinotékou, společenskými hrami a širokoúhlou TV na filmy i zápasy. Bavit se tu můžete i do pozdních nočních hodin.",
+    "fotky": [
+      "vilaRepublikaFoto/SpolecenskaMistnost/DSC01918-HDR_ltphob",
+      "vilaRepublikaFoto/SpolecenskaMistnost/DSC01924-HDR_zldqdu"
+    ]
+  },
+  "dalsi": [
+    {
+      "nazev": "Psi vítáni",
+      "text": "Pejsek může s vámi."
+    },
+    {
+      "nazev": "Lyžárna a kolárna",
+      "text": "Místo pro lyže i kola."
+    },
+    {
+      "nazev": "Elektrokola",
+      "text": "Na výlety po okolí."
+    },
+    {
+      "nazev": "Posezení ve sklepě",
+      "text": "Pro oslavy a delší večery."
+    },
+    {
+      "nazev": "Parkování",
+      "text": "Parkovací místo u vily."
+    },
+    {
+      "nazev": "Chytrá domácnost",
+      "text": "Self check-in kódem."
+    }
+  ],
+  "rapotin": {
+    "aktivni": true,
+    "kicker": "Nord Moravia Resorts · Rapotín",
+    "nadpis": "Večeře a masáže *v Červeném dvoře*",
+    "text": "Vila Republika patří do rodiny Nord Moravia Resorts. Deset minut autem, v sousedním Rapotíně, je náš Resort Červený dvůr s restaurací a masážemi. Jako host vily si tam můžete dopřát polopenzi i masáž – stačí říct při rezervaci nebo zavolat.",
+    "polozky": [
+      "Polopenze – večeře v Restauraci Červený dvůr",
+      "Masáže v Červeném dvoře",
+      "Domluvíte při rezervaci nebo telefonicky",
+      "10 minut autem z Velkých Losin"
+    ],
+    "foto": "Rapotin/web/vecere-losos",
+    "odkaz_restaurace": "../cerveny-dvur/restaurace.html",
+    "odkaz_masaze": "../cerveny-dvur/wellness.html#masaze"
+  }
+}

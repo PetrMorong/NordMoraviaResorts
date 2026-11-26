@@ -1,0 +1,87 @@
+{
+  "hero_foto": "Rapotin/DSC07020_1_xym9hm",
+  "nadpis": "Privátní wellness *jen pro vás*",
+  "perex": "Finská sauna, vířivka a odpočívárna – po dobu rezervace jen pro vás a vaše blízké. Denně od 8:00 do 23:15, i pro hosty, kteří u nás nebydlí.",
+  "cena": "od 1 990 Kč / 90 min",
+  "vybaveni": [
+    {
+      "nazev": "Finská sauna",
+      "foto": "Rapotin/web/sauna"
+    },
+    {
+      "nazev": "Vířivka",
+      "foto": "Rapotin/DSC07020_1_xym9hm"
+    },
+    {
+      "nazev": "Odpočívárna",
+      "foto": "Rapotin/DSC06991_1_moequq"
+    }
+  ],
+  "kroky": [
+    {
+      "nadpis": "Vyberete si termín",
+      "text": "Zvolíte den a čas, který vám vyhovuje – online nebo přes recepci."
+    },
+    {
+      "nadpis": "Zvolíte délku",
+      "text": "90 minut, 2 nebo 3 hodiny. Pro plnohodnotný odpočinek doporučujeme alespoň 90 minut."
+    },
+    {
+      "nadpis": "Přijdete – vše je připravené",
+      "text": "Wellness je vyhřáté, ručníky a prostěradla čekají. Stačí plavky."
+    },
+    {
+      "nadpis": "Odcházíte odpočatí",
+      "text": "Mezi rezervacemi je čas na přípravu, takže nikdo nespěchá."
+    }
+  ],
+  "masaze": [
+    {
+      "nazev": "Klasická masáž vonným olejem",
+      "cena": "1 590 Kč / 60 min",
+      "text": "Uvolní přetížené svaly, odbourá stres a vrátí tělu lehkost."
+    },
+    {
+      "nazev": "Masáž lávovými kameny",
+      "cena": "1 690 Kč / 60 min",
+      "text": "Hřejivé kameny uvolňují napětí a podporují prokrvení."
+    },
+    {
+      "nazev": "Breussova masáž",
+      "cena": "1 590 Kč / 60 min",
+      "text": "Jemná technika zaměřená na páteř a zádové svaly."
+    },
+    {
+      "nazev": "Masáž obličeje a dekoltu",
+      "cena": "1 490 Kč / 60 min",
+      "text": "Prokrví pleť a uvolní napětí mimických svalů."
+    },
+    {
+      "nazev": "Maderoterapie",
+      "cena": "1 490 Kč / 60 min",
+      "text": "Kolumbijská technika s dřevěnými pomůckami, zpevňuje a vyhlazuje pokožku."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Jak dlouho trvá privátní wellness?",
+      "a": "Standardně 90 minut, 2 nebo 3 hodiny. Na přání domluvíme i delší rezervaci."
+    },
+    {
+      "q": "Pro kolik osob je wellness?",
+      "a": "Pro páry i menší skupiny přátel, maximální kapacita je 8–10 osob."
+    },
+    {
+      "q": "Je wellness jen pro ubytované?",
+      "a": "Ne. Termín si může zarezervovat kdokoli přes náš rezervační systém."
+    },
+    {
+      "q": "Co si vzít s sebou?",
+      "a": "Ručníky, prostěradla i základní hygienické zázemí jsou součástí wellness. Stačí plavky a případně vlastní přezůvky."
+    },
+    {
+      "q": "Dá se wellness kombinovat s pobytem?",
+      "a": "Ano – zarezervujte si wellness k pobytu, nebo vyberte pobytový balíček s wellness v ceně."
+    }
+  ]
+}

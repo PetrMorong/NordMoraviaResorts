@@ -1,0 +1,165 @@
+/* Rezervační komponenta (assets/booking/booking.js) – sdílená pro všechny resorty.
+ * Barvy a písma bere z proměnných webu: --navy --navy-2 --paper --beige --red --red-2 --ink --muted --line --disp --body
+ * a tlačítka z jeho tříd .btn / .btn.red / .btns. */
+.bk{padding:24px 0 80px;background:var(--paper)}
+.bk-head{padding:clamp(28px,4vw,48px) 0 10px;background:var(--paper)}
+.bk-head .title{margin-top:18px}
+.bk-perks{color:var(--muted);margin-top:8px;font-size:15px}
+.bk-steps{list-style:none;display:flex;flex-wrap:wrap;gap:6px 22px;counter-reset:s;font-size:14px;font-weight:600;color:var(--muted)}
+.bk-steps li{counter-increment:s;display:flex;align-items:center;gap:8px}
+.bk-steps li::before{content:counter(s);display:grid;place-items:center;width:26px;height:26px;border:1.5px solid var(--line);font-size:13px}
+.bk-steps li.on{color:var(--navy)}.bk-steps li.on::before{background:var(--navy);border-color:var(--navy);color:var(--paper)}
+.bk-steps li.done{color:var(--navy);cursor:pointer}.bk-steps li.done::before{content:"✓";border-color:var(--navy)}
+.bk-grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:28px;align-items:start}
+.bk-main{display:grid;gap:18px}
+.bk-card{background:#fff;padding:clamp(20px,3vw,32px);border:1px solid var(--line);scroll-margin-top:96px}
+.bk-card h2{font-family:var(--body);font-size:19px;font-weight:700;margin-bottom:18px}
+.bk-card.past{opacity:.75}
+.bk-fields{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+.bk-fields.two{grid-template-columns:1fr 1fr}
+.bk-card label{display:grid;gap:6px;font-size:13px;font-weight:600;color:var(--muted)}
+.bk-card input:not([type=checkbox]),.bk-card select,.bk-card textarea{font:inherit;font-size:16px;color:var(--ink);border:1px solid var(--line);background:var(--paper);padding:12px 14px;min-height:50px;width:100%}
+.bk-card input:focus,.bk-card select:focus,.bk-card textarea:focus{outline:2px solid var(--navy);outline-offset:-1px}
+.bk-wide{margin-bottom:14px}
+.bk-check{display:flex!important;align-items:flex-start;gap:10px!important;font-weight:500!important;color:var(--ink)!important;margin:10px 0;line-height:1.45}
+.bk-check input{margin-top:3px;width:18px;height:18px;flex:none;accent-color:var(--navy)}
+.bk-firm{margin:4px 0 12px}.bk-firm summary{cursor:pointer;font-weight:600;font-size:14px;margin-bottom:12px}
+.bk-err{color:#A02020;font-weight:600;margin:0 0 14px}
+.bk-note{color:var(--muted);font-size:14px;margin:6px 0 0}
+.bk-pkg{display:flex;align-items:center;gap:16px;background:var(--navy);color:var(--paper);padding:14px}
+.bk-pkg img{width:96px;height:72px;object-fit:cover}
+.bk-pkg div{display:grid;flex:1;gap:2px}.bk-pkg small{opacity:.7;font-size:12px;text-transform:uppercase;letter-spacing:.08em}.bk-pkg span{font-size:13px;opacity:.85}
+.bk-pkg a{color:var(--paper);font-size:13px;text-decoration:underline;white-space:nowrap}
+.bk-rooms{display:grid;gap:16px}
+.bk-room{display:grid;grid-template-columns:230px 1fr;gap:20px;border-top:1px solid var(--line);padding-top:18px}
+.bk-room-img{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--line)}
+.bk-room-img img{width:100%;height:100%;object-fit:cover}
+.bk-room-img span{position:absolute;left:8px;top:8px;background:var(--red);color:#fff;font-size:12px;font-weight:700;padding:4px 9px}
+.bk-room h3{font-family:var(--disp);font-size:24px;font-weight:400}
+.bk-room-meta{font-size:13px;font-weight:600;color:var(--muted);margin:2px 0 6px}
+.bk-room-txt{font-size:14px;color:var(--muted);margin-bottom:6px}
+.bk-rate{display:grid;grid-template-columns:1fr auto auto;gap:14px;align-items:center;padding:12px 0;border-top:1px dashed var(--line)}
+.bk-rate>div:first-child{display:grid}.bk-rate small{font-size:12px;color:var(--muted)}
+.bk-rate-p{display:grid;text-align:right;line-height:1.2}.bk-rate-p s{font-size:13px;color:var(--muted)}.bk-rate-p b{font-size:19px;white-space:nowrap}
+.bk-rate .btn{min-height:44px;padding:0 20px}
+.bk-extras{display:grid;gap:10px;margin-bottom:20px}
+.bk-x{display:grid!important;grid-template-columns:auto 1fr auto;align-items:center;gap:14px!important;border:1px solid var(--line);padding:14px 16px;cursor:pointer;color:var(--ink)!important;font-weight:500!important}
+.bk-x:has(input:checked){border-color:var(--navy);background:var(--paper)}
+.bk-x input{width:20px;height:20px;accent-color:var(--navy)}
+.bk-x span{display:grid}.bk-x b{font-size:15px}.bk-x small{color:var(--muted);font-size:13px}
+.bk-x em{font-style:normal;font-weight:700;white-space:nowrap}
+.bk-sum{position:sticky;top:96px;background:#fff;border:1px solid var(--line);padding:24px}
+.bk-sum h3{font-family:var(--disp);font-size:24px;font-weight:400;margin-bottom:14px}
+.bk-s-pkg{background:var(--paper);padding:8px 12px;font-weight:700;font-size:14px;margin-bottom:10px}
+.bk-s-row{display:flex;justify-content:space-between;gap:12px;font-size:14px;padding:6px 0}
+.bk-s-row span{display:grid}.bk-s-row small{color:var(--muted);font-size:12px}
+.bk-s-row.strong{border-top:1px solid var(--line);margin-top:8px;padding-top:12px;font-weight:600}
+.bk-s-total{display:flex;justify-content:space-between;align-items:baseline;border-top:2px solid var(--navy);margin-top:10px;padding-top:12px;font-weight:700}
+.bk-s-total b{font-size:24px}
+.bk-s-save{color:#2E7D32;font-weight:600;font-size:14px;margin:8px 0 0}
+.bk-help{margin-top:18px;padding-top:14px;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}.bk-help a{color:var(--navy);font-weight:700}
+.bk-done h2{font-family:var(--disp);font-size:32px;font-weight:400}.bk-done p{margin-top:12px}.bk-done a{text-decoration:underline}
+.bk-wlist span.bk-wtest{color:#9A6B00}
+.bk-room.hl{outline:2px solid var(--red);outline-offset:10px}
+.dp-show{cursor:pointer}.dp-show:disabled{cursor:default;opacity:.8}
+.bk-xw{display:grid;gap:0}
+.bk-wslot{display:grid;gap:6px;flex:1 1 100%}.bk-wslot b{font-size:13px;color:var(--muted)}
+.bk-wpk{display:flex;flex-wrap:wrap;gap:10px;flex:1 1 320px}.bk-wpk select{flex:1 1 150px;width:auto!important;font:inherit;font-size:16px;border:1px solid var(--line);background:#fff;padding:10px 12px;min-height:48px;color:var(--ink)}
+.bk-wpref{color:var(--ink)!important}.bk-wpref input{background:#fff!important}
+.bk-xmore{border:1px solid var(--navy);border-top:0;padding:4px 16px 14px;background:var(--paper);display:grid;gap:10px}
+.bk-ks{display:flex!important;align-items:center;gap:10px!important;color:var(--ink)!important}.bk-ks select{width:auto!important;min-height:40px!important;padding:6px 10px!important}
+.bk-wcas{display:flex;flex-wrap:wrap;gap:10px;align-items:end}.bk-wcas label{flex:1 1 180px}.bk-wcas select{min-width:180px}
+.bk-done .bk-wcas select{font:inherit;font-size:16px;border:1px solid var(--line);background:#fff;padding:10px 12px;min-height:48px;flex:1 1 200px}
+.bk-wlist{list-style:none;padding:0;margin:8px 0;display:grid;gap:4px;font-weight:600}.bk-wlist span{font-weight:400;color:#2E7D32;font-size:14px}
+.bk-tip{border-left:3px solid var(--red);background:var(--paper);padding:16px 18px;margin-top:18px}
+.bk-tip b{font-size:16px}.bk-tip p{margin:6px 0 14px!important;font-size:15px}.bk-tip .btn{text-decoration:none!important}
+.bk-pay{border:0;padding:0;margin:6px 0 16px;display:grid;gap:10px;min-width:0}
+.bk-pay legend{font-weight:700;font-size:15px;margin-bottom:10px;padding:0}
+.bk-pay .bk-x input[type=radio]{width:20px;height:20px;min-height:0;padding:0;border:0;background:none}
+.bk-test{background:#FFF6D6;border:1px solid #E8C860;padding:10px 14px;font-size:13px;line-height:1.5}
+.bk-done .bk-pay-info{display:grid;grid-template-columns:auto 1fr;gap:4px 16px;background:var(--paper);padding:16px;margin-top:16px;font-size:15px}
+.bk-done .bk-pay-info dt{color:var(--muted)}.bk-done .bk-pay-info dd{font-weight:700;margin:0}
+.bk-done .btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}.bk-done .btns a.btn,.bk-done .btns button{text-decoration:none}
+.bk-cond{background:#fff;border:1px solid var(--line);padding:24px;font-size:14px}.bk-cond h3{font-size:17px;margin-bottom:10px}.bk-cond ul{display:grid;gap:8px;padding-left:18px}
+@media(max-width:980px){.bk-grid{grid-template-columns:1fr}.bk-sum{position:static;order:-1}}
+@media(max-width:700px){.bk-fields{grid-template-columns:1fr 1fr}.bk-room{grid-template-columns:1fr}.bk-rate{grid-template-columns:1fr auto}.bk-rate .btn{grid-column:1/-1}}
+.bk [hidden],.bk-card[hidden]{display:none!important}
+@media(max-width:700px){.bk-room-img{aspect-ratio:16/9}}
+
+/* okno s podmínkami */
+.bk-modal{position:fixed;inset:0;margin:auto;height:fit-content;border:0;padding:0;max-width:760px;width:calc(100% - 32px);max-height:calc(100dvh - 48px);background:#fff;color:var(--ink);box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.bk-modal::backdrop{background:rgba(20,10,4,.55)}
+.bk-modal-box{display:flex;flex-direction:column;max-height:calc(100dvh - 48px)}
+.bk-modal header,.bk-modal footer{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 24px;border-bottom:1px solid var(--line)}
+.bk-modal footer{border-top:1px solid var(--line);border-bottom:0;justify-content:flex-end}
+.bk-modal h2{font-family:var(--disp);font-weight:400;font-size:24px}.bk-modal header button{background:none;border:0;font-size:28px;line-height:1;cursor:pointer;color:var(--muted)}
+.bk-modal-body{overflow:auto;padding:20px 24px;font-size:15px;line-height:1.6}
+.bk-modal-body h3{font-family:var(--disp);font-weight:400;font-size:21px;margin:18px 0 8px}.bk-modal-body h3:first-child{margin-top:0}
+.bk-modal-body ul{padding-left:20px;display:grid;gap:4px}.bk-modal-body p{margin:0 0 10px}
+
+/* sazby jako tabulka (podle Previa): podmínky zrušení | cena | strava | tlačítko */
+.bk-ico{width:22px;height:22px;flex:none;color:var(--navy)}
+.bk-chip{display:inline-block;vertical-align:middle;font:600 12px/1 var(--body);font-style:normal;color:#2E7D32;background:#E8F3EA;padding:5px 8px;margin-left:8px;border-radius:999px;letter-spacing:0}
+.bk-rtable{grid-column:1/-1;border:1px solid var(--line);margin-top:4px}
+.bk-rth,.bk-rate{display:grid;grid-template-columns:minmax(120px,1fr) minmax(150px,1fr) auto;gap:16px;align-items:center}
+.bk-rth{grid-template-columns:220px minmax(110px,1fr) minmax(140px,1fr) 110px;background:var(--paper);padding:9px 16px;font-size:12px;font-weight:700;color:var(--muted);border-bottom:1px solid var(--line)}
+.bk-rgroup{display:grid;grid-template-columns:220px 1fr;border-top:1px solid var(--line)}
+.bk-rgroup:first-of-type{border-top:0}
+.bk-rpol{display:flex;gap:10px;align-items:center;padding:12px 16px;border-right:1px solid var(--line)}
+.bk-rpol span{display:grid}.bk-rpol b{font-size:14px}.bk-rpol small{font-size:12px;color:var(--muted)}
+.bk-rgroup.nevr .bk-rpol .bk-ico,.bk-rgroup.nevr .bk-rate-p b{color:var(--red)}
+.bk-rgroup.nevr .bk-rpol .bk-ico{color:var(--red)}
+.bk-rgroup .bk-rate{padding:10px 16px;border-top:1px dashed var(--line);grid-template-columns:minmax(120px,1fr) minmax(150px,1fr) 110px}
+.bk-rrows .bk-rate:first-child{border-top:0}
+.bk-rate-p b{font-size:18px;white-space:nowrap}
+.bk-rate-l{display:flex!important;align-items:center;gap:10px;min-width:0;font-size:14px}.bk-rate-l .bk-ico{width:20px;height:20px;color:var(--muted)}
+.bk-rgroup .bk-rate .btn{min-height:40px;padding:0 16px;width:100%}
+.bk-room .bk-rtable{grid-column:1/-1}
+@media(max-width:760px){.bk-rth{display:none}.bk-rgroup{grid-template-columns:1fr}.bk-rpol{border-right:0;border-bottom:1px dashed var(--line);background:var(--paper)}
+  .bk-rgroup .bk-rate{grid-template-columns:1fr auto auto;padding:10px 12px}.bk-rgroup .bk-rate .btn{width:auto;grid-column:auto}}
+.bk-warn{background:#FFF6D6;border-left:3px solid #E8C860;padding:10px 14px;font-size:15px}
+.bk-rate-l.jidlo,.bk-rate-l.jidlo .bk-ico{color:#2E7D32;font-weight:600}
+.bk-rpol b,.bk-rate-l span,.bk-rth span{white-space:nowrap}
+.bk-rgroup .bk-rate-p{text-align:left}
+.btn.bk-btn2{background:transparent;color:var(--navy);box-shadow:inset 0 0 0 1.5px var(--line)}.btn.bk-btn2:hover{box-shadow:inset 0 0 0 1.5px var(--navy);background:transparent;color:var(--navy)}
+.bk-tag{font-style:normal;font-size:11px;font-weight:700;letter-spacing:.02em;color:#fff;background:#2E7D32;padding:3px 7px;border-radius:999px;white-space:nowrap}
+.bk-rgroup .bk-rate-l{flex-wrap:wrap;row-gap:3px}.bk-rgroup .bk-rate-l .bk-tag{flex-basis:auto}
+
+/* dva apartmány pro větší skupiny */
+.bk-komb-h{font-family:var(--disp);font-weight:400;font-size:22px;margin-top:18px;display:grid;gap:2px}.bk-komb-h small{font:14px/1.4 var(--body);color:var(--muted)}
+.bk-room-img .bk-img2{position:absolute;right:8px;bottom:8px;width:42%;height:auto;aspect-ratio:4/3;object-fit:cover;border:3px solid #fff;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.bk-room-img span.bk-2apt{left:auto;right:8px;top:8px;background:var(--navy)}
+/* křížový prodej – druhý resort */
+.bk-cross{border:1px solid var(--line);padding:16px;margin-top:14px;display:grid;gap:12px;background:var(--paper)}
+.bk-cross-h{display:grid}.bk-cross-h b{font-family:var(--disp);font-weight:400;font-size:22px}.bk-cross-h small{color:var(--muted);font-size:14px}
+.bk-cross-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.bk-cross-apt{display:flex;gap:10px;align-items:center;background:#fff;border:1px solid var(--line);padding:8px;color:inherit;text-decoration:none}
+.bk-cross-apt img{width:96px;height:66px;object-fit:cover;flex:none}.bk-cross-apt span{display:grid}.bk-cross-apt small{color:var(--muted);font-size:13px}
+.bk-cross .btn{justify-self:start}
+/* obsazené apartmány – zkrácený výpis bez cen */
+.bk-full{margin-top:22px;display:grid;gap:8px}
+.bk-full-h{font-family:var(--body);font-size:15px;font-weight:600;margin:0 0 2px;color:var(--muted)}
+.bk-full-r{display:flex;align-items:center;gap:12px;border:1px solid var(--line);padding:8px 12px 8px 8px;background:#fff}
+.bk-full-r img{width:72px;height:50px;object-fit:cover;flex:none;filter:grayscale(.85);opacity:.7}
+.bk-full-r span{display:grid;flex:1;min-width:0;color:var(--muted)}.bk-full-r b{font-weight:600;color:inherit}.bk-full-r small{font-size:13px}
+.bk-full-r em{font-style:normal;font-size:12px;font-weight:600;letter-spacing:.02em;color:var(--muted);border:1px solid var(--line);padding:3px 9px;border-radius:99px;white-space:nowrap}
+/* wellness v jiném resortu */
+.bk-alt{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;background:#fff;border:1px solid var(--line);padding:12px 14px;margin-top:8px}
+.bk-alt span{display:grid}.bk-alt small{color:var(--muted);font-size:13px}
+
+/* úzká tabulka sazeb (vedle souhrnu na menších noteboocích) – skládá se pod sebe podle šířky tabulky, ne okna */
+.bk-rtable{container-type:inline-size}
+@container (max-width:680px){
+  .bk-rth{display:none}
+  .bk-rgroup{grid-template-columns:1fr}
+  .bk-rpol{border-right:0;border-bottom:1px dashed var(--line);background:var(--paper)}
+  .bk-rgroup .bk-rate{grid-template-columns:minmax(0,1fr) minmax(0,1.3fr) auto;gap:12px;padding:10px 12px}
+  .bk-rgroup .bk-rate .btn{width:auto;grid-column:auto;padding:0 18px}
+}
+
+/* původní formulář Previo (iframe) – dokud není zapnutý vlastní formulář */
+.bk-previo-wrap{padding:10px 0 clamp(40px,6vw,72px);background:var(--paper)}
+.bk-previo{display:block;width:100%;border:0;background:transparent} /* výšku nastavuje skript Previo atributem height – CSS výška by ho přebila */
+.bk-previo-wrap .bk-note{margin-top:14px}
+.bk-head .bk-pkg{margin-top:18px;max-width:720px}
+@media (max-width:600px){.bk-head .bk-pkg{flex-wrap:wrap}.bk-head .bk-pkg img{width:72px;height:56px}}

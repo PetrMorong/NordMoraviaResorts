@@ -1,0 +1,28 @@
+{
+  "plany": [
+    {
+      "id": "flex",
+      "nazev": "Flexibilní · se snídaní",
+      "popis": "Snídaně v bistru, platba nyní nebo na místě",
+      "storno": "Zdarma zrušení do 7 dní před příjezdem",
+      "koeficient": 1,
+      "doporuceno": true
+    },
+    {
+      "id": "nevratna",
+      "nazev": "Nevratná · se snídaní",
+      "popis": "Nejlepší cena, platba při rezervaci",
+      "storno": "Nelze zrušit ani změnit",
+      "koeficient": 0.9,
+      "doporuceno": false
+    },
+    {
+      "id": "polopenze",
+      "nazev": "Polopenze",
+      "popis": "Snídaně + večeře o třech chodech v bistru",
+      "storno": "Zdarma zrušení do 7 dní před příjezdem",
+      "koeficient": 1.25,
+      "doporuceno": false
+    }
+  ]
+}

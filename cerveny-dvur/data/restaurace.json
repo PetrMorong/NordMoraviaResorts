@@ -1,0 +1,228 @@
+{
+  "hero_foto": "images/restaurace-interier.webp",
+  "hero_vizualizace": false,
+  "hero_nadpis": "Restaurace *Červený dvůr*",
+  "hero_perex": "Z kavárny je restaurace, která vaří celý den. Ve všední dny polední menu od 169 Kč, večer posezení u jídla a vína, o víkendu brunch.",
+  "menu_url": "https://restaurace.resortcervenydvur.cz/menu/section:jidelni-listek/hlavni-chody-666",
+  "rezervace_url": "https://restaurace.resortcervenydvur.cz/booking",
+  "rozvoz_url": "https://restaurace.resortcervenydvur.cz/",
+  "duvody": [
+    {
+      "nadpis": "Polední menu od 169 Kč",
+      "text": "Ve všední dny polévka a hlavní jídlo."
+    },
+    {
+      "nadpis": "Vaříme celý den",
+      "text": "Od snídaně přes oběd a odpolední kávu po večeři. V pátek a sobotu do 22:00."
+    },
+    {
+      "nadpis": "Rozvoz i s sebou",
+      "text": "Objednávku vám dovezeme, nebo si ji vyzvedněte cestou z práce."
+    }
+  ],
+  "kuchyne": {
+    "nadpis": "Co *vaříme*",
+    "text": "Polední menu ve všední dny, stálý lístek, víkendový brunch a sezonní hody. Aktuální nabídku s cenami najdete v digitálním menu.",
+    "fotky": [
+      "images/jidlo-salat.webp",
+      "images/jidlo-wrap.webp",
+      "images/jidlo-crumble.webp"
+    ]
+  },
+  "tym": [
+    {
+      "jmeno": "Doplnit jméno",
+      "role": "Šéfkuchař",
+      "text": "Doplnit: odkud přichází, kde vařil a co rád vaří – dvě tři věty v první osobě.",
+      "foto": "",
+      "zobrazit": false
+    },
+    {
+      "jmeno": "Kateřina Fejlková",
+      "role": "Vedoucí restaurace & event manager",
+      "text": "Stará se o to, aby se u nás hosté cítili dobře – od poledního menu po rodinné oslavy, svatby a firemní akce. Ozvěte se jí s rezervací i s plánováním akce.",
+      "foto": "",
+      "zobrazit": true
+    }
+  ],
+  "akce": [
+    {
+      "nazev": "Kachní hody",
+      "datum": "20.–22. 11.",
+      "cas": "",
+      "konec": "2026-11-22",
+      "text": "Kachní prso s dýňovým pyré, stehno s brusinkovým zelím a bramborovými noky. Tříchodové menu nebo jednotlivé chody.",
+      "rezervace": true
+    },
+    {
+      "nazev": "Adventní minitrh",
+      "datum": "28. 11.",
+      "cas": "",
+      "konec": "2026-11-28",
+      "text": "Malý adventní trh v areálu Červeného dvora.",
+      "rezervace": false
+    }
+  ],
+  "prostory": [
+    {
+      "nazev": "Restaurace",
+      "text": "Světlý sál s parketami – na oběd, schůzku i večer u vína. Sedět můžete u stolu, na pohovce nebo u baru.",
+      "foto": "images/restaurace-sal-okno.webp",
+      "vizualizace": false
+    },
+    {
+      "nazev": "Salonek",
+      "text": "Soukromý salonek pro rodinné oslavy, firemní večeře a degustace. Rezervujte předem.",
+      "foto": "images/salonek.webp",
+      "vizualizace": true
+    },
+    {
+      "nazev": "Poker room",
+      "text": "Samostatná místnost s pokerovým stolem – na turnaj s přáteli i firemní večer.",
+      "foto": "images/poker-room.webp",
+      "vizualizace": false
+    },
+    {
+      "nazev": "Herna",
+      "text": "Ping-pong a šipky – po jídle můžete zůstat na hru.",
+      "foto": "Rapotin/web/herna"
+    },
+    {
+      "nazev": "Zahrada",
+      "text": "Od jara do podzimu se sedí venku, v sezóně grilujeme.",
+      "foto": "images/zahrada.webp",
+      "vizualizace": false
+    },
+    {
+      "nazev": "Dětský koutek",
+      "text": "Teepee, hračky a stolek na kreslení hned vedle restaurace. Venku dětské hřiště.",
+      "foto": "images/detsky-koutek.webp"
+    }
+  ],
+  "interier": {
+    "nadpis": "Jak to u nás *vypadá*",
+    "fotky": [
+      {
+        "foto": "images/restaurace-sal-celek.webp",
+        "popis": "Sál restaurace"
+      },
+      {
+        "foto": "images/restaurace-stoly.webp",
+        "popis": "Restaurace"
+      },
+      {
+        "foto": "images/restaurace-bar.webp",
+        "popis": "Bar a kavárna"
+      },
+      {
+        "foto": "images/restaurace-lounge.webp",
+        "popis": "Posezení na pohovce"
+      },
+      {
+        "foto": "images/restaurace-kresla.webp",
+        "popis": "Křesla u okna"
+      },
+      {
+        "foto": "images/restaurace-detail-stul.webp",
+        "popis": "Prostřený stůl"
+      },
+      {
+        "foto": "images/restaurace-bar-pult.webp",
+        "popis": "Barový pult"
+      },
+      {
+        "foto": "images/restaurace-fotbalek.webp",
+        "popis": "Fotbálek pro děti i dospělé"
+      },
+      {
+        "foto": "images/restaurace-detail-stolek.webp",
+        "popis": "Detail interiéru"
+      }
+    ]
+  },
+  "prakticke": [
+    "Parkování zdarma přímo v areálu",
+    "Bezbariérový vstup – i s vozíkem nebo kočárkem",
+    "Platba kartou",
+    "Dětský koutek a venkovní hřiště",
+    "Salonek pro soukromé akce"
+  ],
+  "oteviraci_doba": [
+    {
+      "dny": "Po–Čt",
+      "cas": "8:00–18:00"
+    },
+    {
+      "dny": "Pá–So",
+      "cas": "8:00–22:00"
+    },
+    {
+      "dny": "Ne",
+      "cas": "8:00–17:00"
+    }
+  ],
+  "poukazy": {
+    "nadpis": "Dárkový poukaz *pod stromeček*",
+    "text": "Poukaz na jídlo v restauraci, privátní wellness nebo pobyt. Objednáte e-mailem, vyzvednete na baru nebo pošleme poštou."
+  },
+  "firmy": {
+    "nadpis": "Firemní obědy, večírky *a akce*",
+    "text": "Firmám ze Šumperka a okolí vozíme obědy, pořádáme vánoční večírky a firemní akce v sále pro 60 hostů nebo v salonku. Připravíme nabídku na míru.",
+    "foto": "images/raut-firemni-akce.webp"
+  },
+  "google": {
+    "znamka": "",
+    "pocet": "",
+    "odkaz": "https://share.google/Pqy9ceISjOmM3nHEH"
+  },
+  "jidla": {
+    "nadpis": "Z naší *kuchyně*",
+    "fotky": [
+      {
+        "foto": "images/jidlo-losos.webp",
+        "popis": "Pečený losos s kuskusem",
+        "text": "Kuskus se zeleninou, pečená rajčata, citron"
+      },
+      {
+        "foto": "images/jidlo-zebra.webp",
+        "popis": "Pečená žebra s křenem a hořčicí",
+        "text": "Domácí chléb, okurka, křen a hořčice"
+      },
+      {
+        "foto": "images/jidlo-kozi-syr.webp",
+        "popis": "Salát s grilovaným kozím sýrem",
+        "text": "Mix salátů, červená cibule, medový dresink"
+      },
+      {
+        "foto": "images/jidlo-palacinka-cervena-repa.webp",
+        "popis": "Slaná palačinka s červenou řepou",
+        "text": "Řepa, čerstvý sýr, polníček"
+      },
+      {
+        "foto": "images/jidlo-kure-orzo.webp",
+        "popis": "Kuřecí prsa s orzem",
+        "text": "Krémové orzo, hrachové výhonky"
+      },
+      {
+        "foto": "images/jidlo-palacinka-ovoce.webp",
+        "popis": "Palačinka s lesním ovocem",
+        "text": "Lesní ovoce, vanilková zmrzlina, šlehačka"
+      },
+      {
+        "foto": "images/jidlo-salat.webp",
+        "popis": "Salát s chorizem a krutony",
+        "text": "Cherry rajčata, rukola, sušená rajčata"
+      },
+      {
+        "foto": "images/jidlo-palacinka.webp",
+        "popis": "Palačinka s banánem a šlehačkou",
+        "text": "Banán, šlehačka, máta"
+      },
+      {
+        "foto": "images/jidlo-crumble.webp",
+        "popis": "Ovocný crumble se zmrzlinou",
+        "text": "Sezonní ovoce, křupavá drobenka, sorbet"
+      }
+    ]
+  }
+}

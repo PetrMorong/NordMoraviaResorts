@@ -1,0 +1,59 @@
+{
+  "lide": [
+    {
+      "jmeno": "Petr Morong ml.",
+      "role": "Zakladatel & strategie",
+      "bio": "Stojí za vizí a rozvojem portfolia. Řídí investiční strategii a nastavuje koncepci resortů po ekonomické i provozní stránce.",
+      "foto": "",
+      "na_uvodu": true,
+      "uvod_role": "Majitel",
+      "uvod_text": "Resorty jsem budoval od první rekonstrukce. Rád slyším, co se vám líbilo – i co máme zlepšit."
+    },
+    {
+      "jmeno": "Andrea Kuttlerová",
+      "role": "Provozní Resortu Červený dvůr",
+      "bio": "Vede provoz Resortu Červený dvůr v Rapotíně. Přináší zkušenosti z hotelu Kolštejn a dbá na kvalitu služeb a standardy pohostinství.",
+      "foto": "",
+      "na_uvodu": true,
+      "uvod_role": "Provozní Resortu Červený dvůr",
+      "uvod_text": "Postará se o váš pobyt v Rapotíně od rezervace po odjezd. Přináší zkušenosti z hotelu Kolštejn."
+    },
+    {
+      "jmeno": "Kateřina Fejlková",
+      "role": "Vedoucí restaurace & event manager",
+      "bio": "Vede Restauraci Červený dvůr a připravuje svatby, oslavy i firemní akce – od první poptávky po poslední přípitek.",
+      "foto": "",
+      "na_uvodu": true,
+      "uvod_role": "Vedoucí restaurace & event manager",
+      "uvod_text": "Vede Restauraci Červený dvůr a stará se o svatby, oslavy i firemní akce. Ozvěte se jí s jakoukoli akcí."
+    },
+    {
+      "jmeno": "Markéta Morongová",
+      "role": "Prodej & zákaznická péče",
+      "bio": "Zajišťuje prodej a komunikaci s majiteli. Provází investory od výběru jednotky až po její uvedení do provozu.",
+      "foto": "",
+      "na_uvodu": false
+    },
+    {
+      "jmeno": "Pavel Souček",
+      "role": "Provoz & guest experience",
+      "bio": "Zkušenosti z hotelové sítě Orea. Zaměřuje se na zážitek hosta a efektivitu provozu.",
+      "foto": "",
+      "na_uvodu": false
+    },
+    {
+      "jmeno": "Tomáš Křen",
+      "role": "Revenue & marketing",
+      "bio": "Řídí cenovou strategii, dynamické nacenění a marketing s ohledem na sezónnost.",
+      "foto": "",
+      "na_uvodu": false
+    },
+    {
+      "jmeno": "Petr Morong st.",
+      "role": "Technická správa & stavby",
+      "bio": "Odpovídá za technickou správu budov, rekonstrukce a dohled nad řemeslníky.",
+      "foto": "",
+      "na_uvodu": false
+    }
+  ]
+}

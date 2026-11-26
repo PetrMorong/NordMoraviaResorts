@@ -1,0 +1,50 @@
+{
+  "svatby": {
+    "nadpis": "Svatba, *na kterou se nezapomíná*",
+    "text": "Obřad pod širým nebem v zahradě nebo v altánu, hostina a zábava v sále až pro 60 hostů, ubytování pro zhruba 50 svatebčanů a ranní snídaně – vše na jednom místě, bez přejezdů a shánění taxíků. Novomanželské apartmá s wellness dostanete v den svatby jako dárek.",
+    "body": [
+      "Obřad v zahradě nebo v altánu",
+      "Sál až pro 60 hostů vč. inventáře",
+      "Bezbariérový vstup do sálu – i pro hosty na vozíku",
+      "Vlastní catering nebo bar s obsluhou",
+      "Ubytování cca 50 osob za zvýhodněnou cenu",
+      "Novomanželské apartmá s wellness zdarma"
+    ],
+    "fotky": [
+      "Rapotin/web/svatba-01",
+      "Rapotin/web/svatba-03",
+      "Rapotin/web/svatba-02"
+    ]
+  },
+  "firmy": {
+    "nadpis": "Firemní akce *a teambuilding*",
+    "text": "Sál s moderním zázemím pro školení, prezentace i večerní program, ubytování pro celý tým a privátní wellness na zakončení dne.",
+    "parametry": [
+      {
+        "k": "Sál",
+        "v": "až 60 osob · 12 × 8 m (96 m²)"
+      },
+      {
+        "k": "Uspořádání",
+        "v": "divadelní, školní, U"
+      },
+      {
+        "k": "Technika",
+        "v": "dataprojektor, plátno, flipchart, ozvučení"
+      },
+      {
+        "k": "Ubytování",
+        "v": "50 lůžek ve 20 apartmánech"
+      },
+      {
+        "k": "Dostupnost",
+        "v": "Šumperk 7 min · Olomouc 1 h · Ostrava 2 h"
+      },
+      {
+        "k": "Bezbariérovost",
+        "v": "bezbariérový vstup do sálu a restaurace"
+      }
+    ],
+    "foto": "Rapotin/nadvori_qmoqtm"
+  }
+}

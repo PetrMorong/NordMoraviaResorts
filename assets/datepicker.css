@@ -1,0 +1,32 @@
+/* Vzhled kalendáře easepick (vkládá se do jeho shadow DOM) – barvy sítě Nord Moravia / Červený dvůr */
+:host {
+  --color-fg-default: #231204;
+  --color-fg-muted: #9a8c80;
+  --color-fg-accent: #8E2429;
+  --color-fg-primary: #231204;
+  --color-fg-selected: #fff;
+  --color-bg-default: #fff;
+  --color-bg-secondary: #FBF7F2;
+  --color-bg-inrange: #F3E6DA;
+  --color-bg-tooltip: #231204;
+  --color-fg-tooltip: #fff;
+  --color-bg-locked: #fff;
+  --color-fg-locked: #cfc5bb;
+  --color-border-default: #E3D7C9;
+  --color-btn-primary-bg: #8E2429;
+  --color-btn-primary-border: #8E2429;
+  --color-btn-primary-hover-bg: #741C20;
+  --color-btn-primary-hover-border: #741C20;
+  --border-radius: 6px;
+  --day-width: 44px;
+  --day-height: 40px;
+  font-family: Poppins, system-ui, sans-serif;
+}
+.container { box-shadow: 0 18px 50px rgba(35, 18, 4, .22); border: 1px solid #E3D7C9; }
+.calendar > .header .month-name { font-weight: 700; font-size: 15px; text-transform: capitalize; }
+.calendar > .daynames-row > .dayname { color: #6E6157; font-size: 12px; font-weight: 600; text-transform: uppercase; }
+.calendar > .days-grid > .day { font-size: 14px; font-weight: 500; }
+.calendar > .days-grid > .day.start, .calendar > .days-grid > .day.end { background-color: #8E2429; color: #fff; font-weight: 700; }
+.calendar > .days-grid > .day.today { color: #8E2429; font-weight: 700; }
+.calendar > .days-grid > .day:hover { border-color: #8E2429; color: #8E2429; }
+.range-plugin-tooltip { font-weight: 600; }

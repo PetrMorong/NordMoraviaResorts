@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rezervace – Vila Republika, Velké Losiny</title>
+<meta name="description" content="Rezervujte si apartmán ve Vile Republika napřímo – levněji než na portálech, s privátním wellness a bez poplatků.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/vr.css">
+<link rel="stylesheet" href="../assets/booking/booking.css">
+
+<link rel="canonical" href="https://nordmoraviaresorts.cz/vila-republika/rezervace.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#252B3B">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="cs_CZ">
+<meta property="og:site_name" content="Vila Republika">
+<meta property="og:url" content="https://nordmoraviaresorts.cz/vila-republika/rezervace.html">
+<meta property="og:title" content="Rezervace – Vila Republika, Velké Losiny">
+<meta property="og:description" content="Rezervujte si apartmán ve Vile Republika napřímo – nejlepší cena, bez poplatků.">
+<meta property="og:image" content="https://nordmoraviaresorts.cz/vila-republika/images/og-vr.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Vila Republika">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body class="page-book" data-nmr-resort="vila-republika">
+
+<header class="hdr always" id="hdr">
+  <div class="wrap">
+    <a class="logo" href="index.html" aria-label="Vila Republika – úvod"><img src="images/logo-light.svg" alt="Vila Republika" width="120" height="42"></a>
+    <nav id="nav"><a href="index.html#apartmany">Apartmány</a><a href="wellness.html">Wellness</a><a href="index.html#kontakt">Kontakt</a></nav>
+    <div class="tools">
+      <details class="net">
+        <summary><b>NORD MORAVIA</b> resorty ▾</summary>
+        <div class="menu">
+          <a href="../cerveny-dvur/"><i style="background:#5B2E1C"></i><span>Resort Červený dvůr<small>Rapotín</small></span></a>
+          <a href="index.html"><i style="background:#BF5756"></i><span>Vila Republika<small>Velké Losiny · jste tady</small></span></a>
+          <a href="../soutok-kouty/"><i style="background:#141117"></i><span>Wellness Hotel Soutok Kouty<small>Kouty nad Desnou · od 2028</small></span></a>
+          <a class="all" href="/">Celá síť Nord Moravia Resorts →</a>
+        </div>
+      </details>
+      <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">≡</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- rezervační komponenta (assets/booking/) – stejná jako u Červeného dvora; data v data/rezervace.json (CMS) -->
+  <div id="nmr-booking" data-resort="vila-republika"></div>
+  <template id="nmr-booking-mezitim">Mezitím: <a href="wellness.html">privátní wellness</a> · <a href="index.html#apartmany">apartmány</a> · <a href="index.html#kontakt">jak k nám</a></template>
+  <!-- Netlify formuláře musí být ve statickém HTML, aby je Netlify našlo (e-maily recepci) -->
+  <form name="rezervace-vila-republika" data-netlify="true" netlify-honeypot="bot" hidden><input name="bot"><input name="souhrn"><input name="cena"><input name="objednavka"><input name="jmeno"><input name="prijmeni"><input name="email"><input name="telefon"><textarea name="poznamka"></textarea><input name="firma"><input name="ico"><input name="zpusob"><input name="souhlas"><input name="newsletter"></form>
+  <form name="platba-vila-republika" data-netlify="true" hidden><input name="objednavka"><input name="resort"><input name="udalost"><input name="stav"><input name="zpusob"><input name="castka"><input name="host"><input name="email"><input name="telefon"><input name="pobyt"><input name="previo"><input name="wellness"><input name="chyby"><input name="test"></form>
+</main>
+
+<footer class="ftr">
+  <div class="wrap">
+    <img src="images/logo-light.svg" alt="Vila Republika" width="104" height="36">
+    <p>Vila Republika · součást <a href="/">Nord Moravia Resorts</a></p>
+    <nav><a href="index.html">Úvod</a></nav>
+  </div>
+</footer>
+
+<script src="assets/vr.js"></script>
+<script src="../assets/datepicker.js"></script>
+<script src="../assets/booking/booking.js"></script>
+<script>VR.header();</script>
+<script src="../assets/nmr-common.js" defer></script>
+</body>
+</html>

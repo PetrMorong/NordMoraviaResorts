@@ -1,0 +1,154 @@
+{
+  "hero_foto": "Rapotin/web/exterier-vecer",
+  "hero_nadpis": "Klid v Jeseníkách, *dobré jídlo za dveřmi*",
+  "hero_perex": "Apartmány až pro 8 hostů v historickém areálu Červeného dvora v Rapotíně. Snídaně v ceně, privátní wellness a nově restaurace, která vaří celý den.",
+  "pruh": {
+    "text": "Nově Restaurace Červený dvůr · polední menu od 169 Kč",
+    "odkaz": "restaurace.html"
+  },
+  "fakta": [
+    {
+      "cislo": "4,6 ★",
+      "text": "48 recenzí na Googlu"
+    },
+    {
+      "cislo": "až 8",
+      "text": "hostů v apartmánu"
+    },
+    {
+      "cislo": "7 min",
+      "text": "do Šumperku"
+    },
+    {
+      "cislo": "snídaně",
+      "text": "v ceně pobytu"
+    }
+  ],
+  "intro_nadpis": "Historický dvůr, *kam se jezdí zpomalit*",
+  "intro_text": "Proměnili jsme historický areál Červeného dvora v místo pro klidný pobyt v podhůří Jeseníků. Prostorné apartmány s plně vybavenou kuchyní, privátní wellness, restaurace, poker room, ping-pong, šipky a dětský koutek – a kolem příroda Jeseníků.",
+  "intro_foto": "Rapotin/nadvori_qmoqtm",
+  "previo_hotel_id": "769376",
+  "previo_theme": "bordo",
+  "reservio_url": "https://resort-cerveny-dvur.reservio.com",
+  "google_hodnoceni": {
+    "znamka": "4,6",
+    "pocet": "48",
+    "odkaz": "https://www.google.com/maps/place/?q=Resort+%C4%8Cerven%C3%BD+dv%C5%AFr+Rapot%C3%ADn"
+  },
+  "kontakt": {
+    "email": "info@resortcervenydvur.cz",
+    "email_akce": "sales@resortcervenydvur.cz",
+    "telefon": "+420 601 388 985",
+    "adresa": "Výzkumníků 267, 788 13 Rapotín",
+    "mapa": "https://maps.google.com/?q=V%C3%BDzkumn%C3%ADk%C5%AF%20267,%20788%2013%20Rapot%C3%ADn",
+    "provozovatel": "Mori Reality s.r.o., IČO 14426021",
+    "facebook": "https://www.facebook.com/restauracecervenydvur",
+    "instagram": "https://www.instagram.com/resortcervenydvur",
+    "lide": [
+      {
+        "role": "Provozní resortu",
+        "jmeno": "Andrea Kuttlerová",
+        "telefon": "+420 702 161 230",
+        "email": "andrea.kuttlerova@nordmoraviaresorts.cz"
+      },
+      {
+        "role": "Restaurace, svatby a akce",
+        "jmeno": "Kateřina Fejlková",
+        "telefon": "",
+        "email": "katerina.fejlkova@nordmoraviaresorts.cz"
+      }
+    ]
+  },
+  "recenze": [
+    {
+      "text": "Úžasné prostředí, vše čisté a vkusně zařízené, skvělé snídaně a ochotný personál – doporučujeme!",
+      "autor": "Marcel Nakládal"
+    }
+  ],
+  "historie": {
+    "nadpis": "Od zámku *po Rothenhof*",
+    "text": "Dvůr v Rapotíně je doložen už roku 1591, malý zámek tu pravděpodobně postavil Přemek ze Žerotína. Ve 30. letech 20. století nechal podnikatel Gustav Oberleithner přestavět bývalé bělidlo na panské sídlo Rothenhof – Červený dvůr, pojmenované podle červené fasády. Po válce tu sídlil výzkumný ústav, pak budova chátrala. Od roku 2023 ji obnovujeme.",
+    "foto": "Rapotin/web/historie"
+  },
+  "hero_fotky": [
+    "Rapotin/web/exterier-vecer",
+    "Rapotin/web/exterier-soumrak"
+  ],
+  "galerie": [
+    {
+      "foto": "Rapotin/nadvori_qmoqtm",
+      "popis": "Nádvoří"
+    },
+    {
+      "foto": "Rapotin/web/apt-superior",
+      "popis": "Rodinný apartmán superior"
+    },
+    {
+      "foto": "Rapotin/DSC07020_1_xym9hm",
+      "popis": "Privátní wellness – vířivka"
+    },
+    {
+      "foto": "images/restaurace-interier.webp",
+      "popis": "Restaurace Červený dvůr"
+    },
+    {
+      "foto": "Rapotin/Dron_nahon_x079my",
+      "popis": "Areál z výšky"
+    },
+    {
+      "foto": "Rapotin/web/apt-komfort",
+      "popis": "Apartmán Komfort"
+    },
+    {
+      "foto": "Rapotin/web/sauna",
+      "popis": "Finská sauna"
+    },
+    {
+      "foto": "images/restaurace-bar.webp",
+      "popis": "Bar restaurace"
+    },
+    {
+      "foto": "Rapotin/zahrada_pohled_bkxpez",
+      "popis": "Zahrada"
+    },
+    {
+      "foto": "Rapotin/web/apt-suite",
+      "popis": "Apartmán Suite"
+    },
+    {
+      "foto": "Rapotin/web/herna",
+      "popis": "Herna – ping-pong a šipky"
+    },
+    {
+      "foto": "images/detsky-koutek.webp",
+      "popis": "Dětský koutek"
+    },
+    {
+      "foto": "Rapotin/web/svatba-01",
+      "popis": "Svatba v Červeném dvoře"
+    },
+    {
+      "foto": "Rapotin/web/exterier-vecer",
+      "popis": "Červený dvůr večer"
+    }
+  ],
+  "zabava": {
+    "nadpis": "Poker room, ping-pong *a šipky*",
+    "text": "Po večeři nemusíte nikam jezdit. V areálu je poker room, herna s ping-pongem a šipkami a stolní fotbal. Děti mají vlastní koutek uvnitř a venku dětské hřiště, v létě se sedí na zahradě.",
+    "polozky": [
+      "Poker room",
+      "Ping-pong",
+      "Šipky",
+      "Stolní fotbal",
+      "Dětský koutek",
+      "Dětské hřiště venku",
+      "Zahrada"
+    ],
+    "foto": "Rapotin/web/herna",
+    "fotky": [
+      "images/poker-room.webp",
+      "Rapotin/web/herna",
+      "images/fotbalek.webp"
+    ]
+  }
+}

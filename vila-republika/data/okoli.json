@@ -1,0 +1,36 @@
+{
+  "mista": [
+    {
+      "nazev": "Termální lázně Velké Losiny",
+      "text": "Unikátní termální lázně a lázeňský park – pár minut pěšky.",
+      "vzdalenost": "pár minut pěšky"
+    },
+    {
+      "nazev": "Zámek Velké Losiny",
+      "text": "Pozdně renesanční zámek s prohlídkovými okruhy.",
+      "vzdalenost": "ve vsi"
+    },
+    {
+      "nazev": "Ruční papírna",
+      "text": "Jedna z nejstarších papíren ve střední Evropě, s muzeem papíru.",
+      "vzdalenost": "ve vsi"
+    },
+    {
+      "nazev": "Ski areál Kouty",
+      "text": "Sjezdovky, lanovka a v létě bike park.",
+      "vzdalenost": "cca 15 min autem"
+    },
+    {
+      "nazev": "Červenohorské sedlo a Praděd",
+      "text": "Hřebenovky Hrubého Jeseníku, běžky i turistika.",
+      "vzdalenost": "cca 25 min autem"
+    },
+    {
+      "nazev": "Resort Červený dvůr",
+      "text": "Sesterský resort s restaurací a wellness v Rapotíně.",
+      "vzdalenost": "cca 15 min autem"
+    }
+  ],
+  "text": "Velké Losiny patří k nejstarším moravským lázním a jsou vstupní branou Hrubého Jeseníku – druhého nejvyššího pohoří v Česku, které ale zůstalo tišší než Krkonoše nebo Šumava. Pěšky, na kole i na lyžích.",
+  "foto": "vilaRepublikaFoto/DJI_20241009130346_0911_D-HDR-min_suzy1y"
+}

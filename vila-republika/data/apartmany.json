@@ -1,0 +1,139 @@
+{
+  "apartmany": [
+    {
+      "id": "lazensky",
+      "aktivni": true,
+      "nazev": "Lázeňský",
+      "podtitul": "s přímým vstupem do wellness",
+      "osoby": "2–6",
+      "plocha": "40 m²",
+      "luzka": "manželská postel, patrová postel, rozkládací pohovka",
+      "popis": "Oblékněte župan, nazujte pantofle a vydejte se do spa – do sauny nemusíte přes chodbu, ale přímo z bytu. Interiér s poctou minimalismu a severské architektuře, se zachovanými prvorepublikovými prvky. Ideální pro páry.",
+      "fotky": [
+        "images/lazensky-01.webp",
+        "images/lazensky-02.webp",
+        "images/lazensky-03.webp",
+        "images/lazensky-04.webp"
+      ]
+    },
+    {
+      "id": "losinsky",
+      "aktivni": true,
+      "nazev": "Losinský",
+      "podtitul": "s balkonem a výhledem na kostel",
+      "osoby": "2–6",
+      "plocha": "45 m²",
+      "luzka": "manželská postel, patrová postel, rozkládací pohovka",
+      "popis": "Vzdušný apartmán s dřevěnými parketami a bílým obložením stěn, olivově zelenými akcenty a designovým osvětlením. Ložnice je orientovaná na východ, z balkonu je vidět na hory a místní kostel.",
+      "fotky": [
+        "vilaRepublikaFoto/byt5/LL406469-HDR-min_ks7xwb",
+        "vilaRepublikaFoto/byt5/LL406448-HDR-min_e8ukhy",
+        "vilaRepublikaFoto/byt5/DSC08405-HDR_xba91c",
+        "vilaRepublikaFoto/byt5/DSC00421-HDR-min_hisqo1"
+      ]
+    },
+    {
+      "id": "jesenicky",
+      "aktivni": true,
+      "nazev": "Jesenický",
+      "podtitul": "s vlastní saunou a koupacím sudem",
+      "osoby": "2–8",
+      "plocha": "60 m² · 2 ložnice",
+      "luzka": "2 manželské postele, 2 samostatná lůžka, rozkládací pohovka",
+      "popis": "Největší poklad: privátní venkovní wellness na zahradě – srub s finskou saunou, vyhřátý koupací sud a ochlazovací sud. Při pobytu na 2 a více nocí máte 2,5 hodiny wellness v ceně. Uvnitř klenbové stropy, oblé tvary a secesní zelená.",
+      "fotky": [
+        "vilaRepublikaFoto/byt3/DSC08806-HDR_ped1k7",
+        "vilaRepublikaFoto/byt3/DSC08881-HDR_m6szij",
+        "vilaRepublikaFoto/byt3/DSC08800-HDR_ek4sjr",
+        "vilaRepublikaFoto/byt3/DSC08867-HDR_mtgqmv"
+      ]
+    },
+    {
+      "id": "prvorepublikovy",
+      "aktivni": true,
+      "nazev": "Prvorepublikový",
+      "podtitul": "s útulným podkrovím a vanou",
+      "osoby": "2–8",
+      "plocha": "2 ložnice v podkroví",
+      "luzka": "",
+      "popis": "Pro rodinu i partu přátel. Dvě tiché ložnice v dřevěném podkroví, obytná část pro společné vaření a stolování. Po dni na svahu vás čeká horká koupel ve vaně a keramická dlažba s prvorepublikovým dekorem.",
+      "fotky": [
+        "vilaRepublikaFoto/byt6/DSC08322-HDR_gd7djq",
+        "vilaRepublikaFoto/byt6/DSC08301-HDR_mfiyhx",
+        "vilaRepublikaFoto/byt6/DSC08310-HDR_dccwul",
+        "vilaRepublikaFoto/byt6/DSC08316-HDR_jgxs2h"
+      ]
+    },
+    {
+      "id": "prezidentsky",
+      "aktivni": true,
+      "nazev": "Prezidentský",
+      "podtitul": "s krásou původního krovu",
+      "osoby": "2–9",
+      "plocha": "120 m² · 3 ložnice",
+      "luzka": "3 manželské postele, samostatná postel, rozkládací pohovka",
+      "popis": "Klenot vily. Panoramatická dispozice s výhledy z každé místnosti, tři ložnice, velký obývací prostor s kuchyní a jídelnou. Přiznané původní trámoví a kruhová okna do krajiny – vše tu voní dřevem.",
+      "fotky": [
+        "vilaRepublikaFoto/byt7/DSC08460-HDR_cinhnp",
+        "vilaRepublikaFoto/byt7/DSC08421-HDR_dfz6rg",
+        "vilaRepublikaFoto/byt7/DSC08469-HDR_elf6fr",
+        "vilaRepublikaFoto/byt7/DSC08432-HDR_hxsdth"
+      ]
+    },
+    {
+      "id": "zahradni",
+      "aktivni": true,
+      "nazev": "Zahradní",
+      "podtitul": "samostatný domek v zahradě",
+      "osoby": "2–6",
+      "plocha": "80 m² · 2 ložnice",
+      "luzka": "2 manželské postele",
+      "popis": "Vlastní dům v zahradě vily se dvěma ložnicemi, velkým obývacím prostorem s kuchyní a jídelnou a výhledem do zeleně. Soukromí jako na chalupě, servis vily za dveřmi.",
+      "fotky": [
+        "vilaRepublikaFoto/zahradniDomek/LL408092-HDR_n9fcib",
+        "vilaRepublikaFoto/zahradniDomek/LL408068-HDR_gcvuad",
+        "vilaRepublikaFoto/zahradniDomek/LL408128-HDR_faeoer",
+        "vilaRepublikaFoto/zahradniDomek/LL406604-min_drw5dr"
+      ]
+    },
+    {
+      "id": "pradeduv",
+      "aktivni": false,
+      "nazev": "Pradědův",
+      "podtitul": "s terasou a výhledem na hory",
+      "osoby": "2–4",
+      "plocha": "",
+      "luzka": "",
+      "popis": "Z vlastní terasy budete mít Jeseníky jako na dlani. Dřevěné obložení, zrenovované parkety, nadstandardně velká obývací část.",
+      "fotky": [
+        "vilaRepublikaFoto/byt4/DSC08238-HDR_mzdbyr",
+        "vilaRepublikaFoto/byt4/DSC07527-HDR_qq1xqb",
+        "vilaRepublikaFoto/byt4/DSC08259-HDR_asblp3",
+        "vilaRepublikaFoto/byt4/DSC08274-HDR_hmhsy0"
+      ]
+    },
+    {
+      "id": "slunecny",
+      "aktivni": false,
+      "nazev": "Slunečný",
+      "podtitul": "s terasou a vstupem na zahradu",
+      "osoby": "6",
+      "plocha": "2 ložnice",
+      "luzka": "",
+      "popis": "Jižně orientovaný apartmán plný světla, s vlastní terasou a samostatným vstupem na zahradu. Přírodní materiály, zrenovované parkety a italské designové osvětlení.",
+      "fotky": [
+        "vilaRepublikaFoto/byt1/DSC07421-HDR_cqlm0x",
+        "vilaRepublikaFoto/byt1/DSC07382-HDR_x8twfm",
+        "vilaRepublikaFoto/byt1/DSC07418-HDR_oxlcy5",
+        "vilaRepublikaFoto/byt1/DSC07388-HDR_hc02vu"
+      ]
+    }
+  ],
+  "vybaveni": [
+    "Kuchyň: sporák s troubou, mikrovlnka, konvice, kávovar, lednice s mrazákem",
+    "TV, Netflix, Wi-Fi",
+    "Koupelna s fénem",
+    "Přistýlky až pro dvě osoby",
+    "Chytrý zámek"
+  ]
+}
