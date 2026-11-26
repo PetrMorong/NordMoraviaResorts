@@ -1,5 +1,5 @@
 // Co se stane, když se změní stav platby: zápis do Previo + upozornění recepci (Netlify formulář „platba“).
-import { ZAPLACENO, NEZDARENO, VRACENO } from './csob.mjs';
+import { ZAPLACENO, NEZDARENO, VRACENO, NAZEV_BRANY } from './csob.mjs';
 import { previoLive, zmenStav, zapisPlatbu, POTVRZENO } from './previo.mjs';
 import { ulozObjednavku } from './objednavky.mjs';
 import { resort } from './resorty.mjs';
@@ -62,7 +62,9 @@ export async function upozorni(o, udalost) {
     'form-name': !o.resort || o.resort === 'cerveny-dvur' ? 'platba' : `platba-${o.resort}`, objednavka: o.obj, resort: resort(o.resort).nazev, udalost, stav: o.stav, zpusob: o.zpusob === 'karta' ? 'kartou online' : 'převodem',
     castka: kc(o.zaloha), host: `${h.jmeno} ${h.prijmeni}`, email: h.email, telefon: h.telefon,
     pobyt: `${p.od} – ${p.do} (${p.noci} nocí) · ${p.apartman} · ${p.sazbaNazev} · ${p.dospeli} dosp. + ${p.deti} dětí · celkem ${kc(p.cena)}`,
-    previo: o.previo ? `rezervace ${o.previo.voucher || o.previo.resId}` : 'nezapsáno – zapsat ručně',
+    previo: !o.previo ? 'nezapsáno – zapsat ručně'
+      : `rezervace ${o.previo.voucher || o.previo.resId}` + (o.previo.platba === 'poznamka' ? ` – ZAÚČTOVAT ZÁLOHU ${kc(o.zaloha)} (kartou online), doplatek ${kc(o.pobyt.cena - o.zaloha)} na místě`
+        : o.previo.platba === 'doklad' ? ' – zaplaceno celé, doklad vystaven v Previo' : ''),
     wellness: wellnessText(o),
     chyby: (o.chyby || []).slice(-3).join(' | '), test: o.test ? 'TESTOVACÍ PLATBA' : '',
   };
@@ -84,7 +86,10 @@ export async function vyrid(o, paymentStatus, authCode) {
     const r = resort(o.resort);
     if (o.previo && previoLive(r)) {
       try { await zmenStav(r, o.previo.resId, POTVRZENO); o.previo.potvrzeno = true; } catch (e) { (o.chyby ||= []).push('Previo potvrzení: ' + e.message); }
-      try { await zapisPlatbu(r, o.previo.resId); o.previo.platba = true; } catch (e) { (o.chyby ||= []).push('Previo platba: ' + e.message); }
+      try {
+        const z = await zapisPlatbu(r, { resId: o.previo.resId, castka: o.zaloha, cena: o.pobyt.cena, obj: o.obj, brana: NAZEV_BRANY });
+        o.previo.platba = z.zpusob; if (z.invId) o.previo.invId = z.invId;
+      } catch (e) { (o.chyby ||= []).push('Previo platba: ' + e.message); }
     }
     await rezervujWellness(o); // vybrané časy wellness až po zaplacení
   }

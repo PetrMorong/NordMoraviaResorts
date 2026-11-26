@@ -24,7 +24,7 @@
     const pre = new URLSearchParams(location.search).get('resort') || (res.find(r => r.stav !== 'pripravujeme') || {}).id;
     if (pre) $('#kde').value = pre;
     const hv = N.cisla.find(c => /★/.test(c.cislo));
-    $('#trust').innerHTML = [hv ? `<b>${esc(hv.cislo)}</b> ${esc(hv.popis)}` : '', '<b>−5 %</b> napřímo oproti portálům', '<b>sleva</b> na privátní wellness'].filter(Boolean).join('<i>·</i>');
+    $('#trust').innerHTML = [hv ? `<b>${esc(hv.cislo)}</b> ${esc(hv.popis)}` : '', '<b>levněji</b> napřímo než na portálech', '<b>sleva</b> na privátní wellness'].filter(Boolean).join('<i>·</i>');
     if (/odebirate=1/.test(location.search)) { const ok = $('#nl-ok'); if (ok) ok.hidden = false; }
     const iso = d => d.toISOString().slice(0, 10), t = new Date(); const fri = new Date(t); fri.setDate(t.getDate() + ((5 - t.getDay() + 7) % 7 || 7));
     const sun = new Date(fri); sun.setDate(fri.getDate() + 2);

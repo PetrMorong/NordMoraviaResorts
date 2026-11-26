@@ -228,3 +228,6 @@ h2.t em,h1 em{font-style:italic;font-weight:400}
 @media(max-width:700px){.rbs{grid-template-columns:1fr;gap:8px}.rb>div{margin-bottom:10px}}
 
 .dp-show{cursor:pointer}
+
+/* mobil: e-mail v patičce se zalomí */
+.foot .cols>*{min-width:0}

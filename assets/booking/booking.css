@@ -146,3 +146,20 @@
 /* wellness v jiném resortu */
 .bk-alt{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;background:#fff;border:1px solid var(--line);padding:12px 14px;margin-top:8px}
 .bk-alt span{display:grid}.bk-alt small{color:var(--muted);font-size:13px}
+
+/* úzká tabulka sazeb (vedle souhrnu na menších noteboocích) – skládá se pod sebe podle šířky tabulky, ne okna */
+.bk-rtable{container-type:inline-size}
+@container (max-width:680px){
+  .bk-rth{display:none}
+  .bk-rgroup{grid-template-columns:1fr}
+  .bk-rpol{border-right:0;border-bottom:1px dashed var(--line);background:var(--paper)}
+  .bk-rgroup .bk-rate{grid-template-columns:minmax(0,1fr) minmax(0,1.3fr) auto;gap:12px;padding:10px 12px}
+  .bk-rgroup .bk-rate .btn{width:auto;grid-column:auto;padding:0 18px}
+}
+
+/* původní formulář Previo (iframe) – dokud není zapnutý vlastní formulář */
+.bk-previo-wrap{padding:10px 0 clamp(40px,6vw,72px);background:var(--paper)}
+.bk-previo{display:block;width:100%;border:0;background:transparent} /* výšku nastavuje skript Previo atributem height – CSS výška by ho přebila */
+.bk-previo-wrap .bk-note{margin-top:14px}
+.bk-head .bk-pkg{margin-top:18px;max-width:720px}
+@media (max-width:600px){.bk-head .bk-pkg{flex-wrap:wrap}.bk-head .bk-pkg img{width:72px;height:56px}}

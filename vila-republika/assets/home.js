@@ -59,6 +59,18 @@
   $('spol-title').innerHTML = em(S.spolecenska.nadpis);
   $('spol-text').textContent = S.spolecenska.text;
   $('spol-pics').innerHTML = S.spolecenska.fotky.map((f, i) => `<img src="${img(f, i ? 600 : 900, i ? 700 : 1100)}" alt="Společenská místnost" loading="lazy">`).join('');
+  // polopenze a masáže v Červeném dvoře (síť Nord Moravia Resorts)
+  const RP = S.rapotin;
+  if (RP && RP.aktivni !== false) {
+    $('rap-foto').innerHTML = `<img src="${img(RP.foto, 900, 1100)}" alt="Restaurace Červený dvůr" loading="lazy">`;
+    $('rap-kicker').textContent = RP.kicker || 'Nord Moravia Resorts';
+    $('rap-title').innerHTML = em(RP.nadpis);
+    $('rap-text').textContent = RP.text;
+    $('rap-items').innerHTML = (RP.polozky || []).map(v => `<li>${esc(v)}</li>`).join('');
+    $('rap-rest').href = RP.odkaz_restaurace || '../cerveny-dvur/restaurace.html';
+    $('rap-mas').href = RP.odkaz_masaze || '../cerveny-dvur/wellness.html';
+    $('cerveny-dvur').hidden = false;
+  }
   $('extras').innerHTML = S.dalsi.map(d => `<div><b>${esc(d.nazev)}</b><span>${esc(d.text)}</span></div>`).join('');
 
   // okolí

@@ -117,3 +117,37 @@ const CD = {
     od.addEventListener('change', sync); sync();
   }
 };
+
+// Pobytové balíčky – společné pro úvod a stránku Balíčky (data/balicky.json + ceník z data/rezervace.json)
+CD.balicky = {
+  kc: n => Math.round(n).toLocaleString('cs-CZ') + ' Kč',
+  dnes: () => new Date().toISOString().slice(0, 10),
+  /** aktivní a ještě platné, hlavní balíček první, sezónní poslední */
+  aktivni: B => (B.balicky || []).filter(b => b.aktivni && (!b.platnost_do || String(b.platnost_do).slice(0, 10) >= CD.balicky.dnes()))
+    .sort((a, b) => (b.hlavni ? 1 : 0) - (a.hlavni ? 1 : 0) || (a.sezonni ? 1 : 0) - (b.sezonni ? 1 : 0)),
+  noci: b => b.noci_min === b.noci_max ? `${b.noci_min} ${b.noci_min < 5 ? 'noci' : 'nocí'}` : `${b.noci_min}–${b.noci_max} nocí`,
+  strava: b => ({polopenze: 'polopenze', snidane: 'snídaně v ceně', bez: 'bez stravy'})[b.strava || 'snidane'],
+  meta: b => `${CD.balicky.noci(b)} · pro ${b.osoby} osoby · ${CD.balicky.strava(b)}`,
+  /** ceny „od“ z Previo, které stáhne build (scripts/balicky-ceny.mjs); když nejsou, null */
+  ceny: () => fetch('data/balicky-ceny.json', {cache: 'no-cache'}).then(r => r.ok ? r.json() : null).catch(() => null),
+  /** cena „od“ pro 2 osoby: z Previo (C = balicky-ceny.json), jinak orientačně z ceníku v CMS */
+  cenaOd(b, R, C) {
+    const p = C && C.zdroj === 'previo' && C.ceny && C.ceny[b.id];
+    if (p && p.cena > 0) return p.cena;
+    const noc = (R.typy || []).filter(t => (t.max_osob || 2) >= 2).map(t => +t.cena_noc || Math.min(...(t.ceny_osoby || []).map(c => +c.cena).filter(Boolean))).filter(c => c > 0);
+    if (!noc.length) return null;
+    const typ = b.strava || 'snidane';
+    const s = (R.sazby || []).find(x => !x.nevratna && (x.strava || '') === typ);
+    const strava = typ === 'bez' ? 0 : s ? (+s.strava_osoba_noc || (s.snidane ? +R.snidane_osoba_noc || 0 : 0)) : typ === 'snidane' ? +R.snidane_osoba_noc || 0 : 0;
+    return (Math.min(...noc) * b.noci_min + strava * 2 * b.noci_min + (+b.priplatek || 0)) * (1 - (+R.sleva_primo || 0) / 100);
+  },
+  odkaz(b) {
+    const t = /^\d{4}-\d{2}-\d{2}\/\d{4}-\d{2}-\d{2}$/.test(b.termin || '') ? b.termin.split('/') : null;
+    return `rezervace.html?balicek=${encodeURIComponent(b.id)}` + (t ? `&od=${t[0]}&do=${t[1]}` : '');
+  },
+  platnost(b) {
+    const f = d => new Date(String(d).slice(0, 10) + 'T12:00').toLocaleDateString('cs-CZ', {day: 'numeric', month: 'numeric', year: 'numeric'});
+    const od = b.platnost_od && String(b.platnost_od).slice(0, 10) > CD.balicky.dnes() ? `od ${f(b.platnost_od)} ` : '';
+    return b.platnost_do ? `Příjezd ${od}do ${f(b.platnost_do)}` : od ? `Příjezd ${od}` : '';
+  },
+};

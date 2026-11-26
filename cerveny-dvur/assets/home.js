@@ -29,6 +29,27 @@
   });
   $('facts').innerHTML = N.fakta.map(f => `<div><b>${esc(f.cislo)}</b><span>${esc(f.text)}</span></div>`).join('');
 
+  // pobytové balíčky – hlavní (polopenze) zvýrazněný, max. 3
+  Promise.all([CD.load('balicky'), CD.load('rezervace'), CD.balicky.ceny()]).then(([B, RZ, C]) => {
+    const P = CD.balicky.aktivni(B).slice(0, 3);
+    if (!P.length) return;
+    $('pk-cards').innerHTML = P.map(b => {
+      const od = CD.balicky.cenaOd(b, RZ, C);
+      return `<article class="pkc${b.hlavni ? ' main' : ''}">
+        <a class="pkc-img" href="balicky.html#${esc(b.id)}"><img src="${img(b.foto, b.hlavni ? 900 : 640, b.hlavni ? 640 : 460)}" alt="${esc(b.nazev)}" loading="lazy">${b.stitek ? `<span class="pk-tag">${esc(b.stitek)}</span>` : ''}</a>
+        <div class="pkc-body">
+          <p class="pk-meta">${CD.balicky.meta(b)}</p>
+          <h3>${esc(b.nazev)}</h3>
+          <p class="pkc-sub">${esc(b.podnadpis)}</p>
+          <ul class="ticks">${b.obsahuje.slice(b.hlavni ? 0 : 1, b.hlavni ? 4 : 4).map(o => `<li>${esc(o)}</li>`).join('')}</ul>
+          <div class="pkc-foot">${od ? `<p class="pk-price"><small>${b.noci_min} noci pro dva</small><b>od ${CD.balicky.kc(od)}</b></p>` : ''}<a class="btn ${b.hlavni ? 'red' : 'line'} arrow" href="${CD.balicky.odkaz(b)}" data-ev="zacatek_rezervace">${b.hlavni ? 'Rezervovat' : 'Vybrat termín'}</a></div>
+        </div>
+      </article>`;
+    }).join('');
+    $('balicky').hidden = false;
+    CD.reveal();
+  }).catch(() => {});
+
   $('intro-title').innerHTML = em(N.intro_nadpis);
   $('intro-text').textContent = N.intro_text;
   $('intro-foto').innerHTML = `<img src="${img(N.intro_foto, 1400, 788)}" alt="Nádvoří Červeného dvora v létě" loading="lazy">`;

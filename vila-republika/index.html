@@ -5,7 +5,7 @@
 <script>if(/\/vila-republika$/.test(location.pathname))location.replace(location.pathname+"/"+location.search+location.hash)</script>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Vila Republika Velké Losiny – wellness apartmány u lázní</title>
-<meta name="description" content="Šest wellness apartmánů v prvorepublikové vile ve Velkých Losinách, pár kroků od termálních lázní. Privátní sauna a vířivka, rezervace napřímo o 5 % levněji.">
+<meta name="description" content="Šest wellness apartmánů v prvorepublikové vile ve Velkých Losinách, pár kroků od termálních lázní. Privátní sauna a vířivka, rezervace napřímo levněji než na portálech.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://res.cloudinary.com">
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="Vila Republika">
 <meta property="og:url" content="https://nordmoraviaresorts.cz/vila-republika/">
 <meta property="og:title" content="Vila Republika Velké Losiny – wellness apartmány u lázní">
-<meta property="og:description" content="Šest wellness apartmánů v prvorepublikové vile ve Velkých Losinách, pár kroků od termálních lázní. Privátní sauna a vířivka, rezervace napřímo o 5 % levněji.">
+<meta property="og:description" content="Šest wellness apartmánů v prvorepublikové vile ve Velkých Losinách, pár kroků od termálních lázní. Privátní sauna a vířivka, rezervace napřímo levněji než na portálech.">
 <meta property="og:image" content="https://nordmoraviaresorts.cz/vila-republika/images/og-vr.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -167,7 +167,7 @@
         <label>Příjezd<input type="date" name="od" id="q-od" required></label>
         <label>Odjezd<input type="date" name="do" id="q-do" required></label>
         <button type="submit" class="btn red">Ověřit volné apartmány →</button>
-        <p class="bbar-note">Napřímo o 5 % levněji než na portálech · sleva na wellness</p>
+        <p class="bbar-note">Napřímo levněji než na portálech · sleva na wellness</p>
       </form>
     </div>
   </section>
@@ -225,6 +225,20 @@
     <div class="wrap"><div class="extras rv" id="extras"></div></div>
   </section>
 
+  <section class="intro rapotin" id="cerveny-dvur" hidden>
+    <div class="wrap two">
+      <figure class="arch rv" id="rap-foto"></figure>
+      <div class="rv">
+        <p class="kicker" id="rap-kicker"></p>
+        <h2 class="title" id="rap-title"></h2>
+        <p class="lead" id="rap-text"></p>
+        <ul class="ticks" id="rap-items"></ul>
+        <div class="rap-btns"><a class="btn red arrow" id="rap-rest">Restaurace a menu</a><a class="btn" id="rap-mas">Masáže</a></div>
+        <p class="rap-net">Další místa sítě: <a href="../cerveny-dvur/">Resort Červený dvůr</a> · <a href="../soutok-kouty/">Wellness Hotel Soutok Kouty</a> · <a href="/">Nord Moravia Resorts</a></p>
+      </div>
+    </div>
+  </section>
+
   <section id="galerie">
     <div class="wrap">
       <div class="head rv"><div><p class="kicker">Galerie · společné prostory</p><h2 class="title">Místa, kde se <em>potkáte</em></h2></div><p class="lead">Společenská místnost, zahrada s altánem a grilem i privátní wellness. Ideální pro oslavy a skupiny, které si pronajmou celou vilu.</p></div>
@@ -246,6 +260,8 @@
   </section>
 
   <section class="quote" id="recenze"><div class="wrap rv" id="quote"></div></section>
+
+  <section data-nmr-sit data-nmr-sit-text="Deset minut od vily je Resort Červený dvůr s restaurací a masážemi, v Koutech nad Desnou stavíme nový wellness hotel." hidden></section>
 
   <section class="voucher" id="poukazy">
     <div class="wrap two">

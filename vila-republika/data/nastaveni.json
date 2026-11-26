@@ -25,6 +25,7 @@
   "intro_text": "Apartmánový dům Vila Republika leží pod svahy Hrubého Jeseníku v lázeňské obci Velké Losiny. Původní stavbu z 30. let minulého století jsme citlivě zrekonstruovali a krásné prvorepublikové prvky zachovali – repasované dveře, původní parkety, dřevěná obložení. Moderní, komfortní ubytování je ideální pro letní i zimní dovolenou: na dosah máte termální lázně, lázeňský park i čistou přírodu CHKO Jeseníky.",
   "intro_foto": "vilaRepublikaFoto/LL406618-min_n3ne6i",
   "previo_hotel_id": "758539",
+  "previo_theme": "dark",
   "reservio_url": "https://vila-republika.reservio.com/booking/business/service?businessId=89b43bc7-3262-4446-89fc-eda62a80fa7c",
   "check_in": "od 15:00",
   "check_out": "do 10:00",
@@ -112,4 +113,4 @@
       "popis": "Zahrada s trampolínou"
     }
   ]
-}
+}

@@ -125,6 +125,7 @@ export const zrusPlatbu = payId => putOp('reverse', payId);
 export const vratPlatbu = (payId, castka) => putOp('refund', payId, castka ? { amount: Math.round(castka * 100) } : {});
 
 // stavy platby (paymentStatus)
+export const NAZEV_BRANY = 'ČSOB'; // do poznámky v Previo a upozornění recepci (při přechodu na jinou bránu se mění jen tento soubor)
 export const ZAPLACENO = [4, 7, 8];  // potvrzena / čeká na zúčtování / zúčtována
 export const NEZDARENO = [3, 5, 6];  // zrušena hostem / odvolána / zamítnuta nebo vypršela
 export const VRACENO = [9, 10];

@@ -12,6 +12,8 @@
    volitelně balicky.json. Ceny a volné apartmány počítá server: /.netlify/functions/rezervace?resort=…
    Barvy a písma bere komponenta z CSS proměnných webu (--navy, --red, --paper, --line, --disp…) a tlačítka z .btn. */
 window.NMRBooking = (() => {
+  // kořen webu (o dvě úrovně výš než /assets/booking/) – kvůli společnému nastavení sítě data/nmr/nastaveni.json
+  const ROOT = document.currentScript ? new URL('../..', document.currentScript.src).href : '/';
   const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
   const img = (src, w, h) => !src ? '' : /^(https?:|\/|images\/)/.test(src) ? src
     : `https://res.cloudinary.com/morireality/image/upload/f_auto,q_auto,c_fill,g_auto,w_${w}${h ? ',h_' + h : ''}/${src}`;
@@ -106,21 +108,70 @@ window.NMRBooking = (() => {
     <aside class="bk-sum" data-el="sum"><h3>Váš pobyt</h3><div data-el="sumbody"><p class="bk-note">Vyberte termín a počet hostů.</p></div><div class="bk-help">Potřebujete poradit? <a data-el="tel"></a></div></aside>
   </div></section>`;
 
+  // ---------- původní formulář Previo (iframe) – výchozí, dokud nespustíme vlastní formulář s platbou ----------
+  function previo(root, {resort, N, B, q, opts}) {
+    // Parametry podle dokumentace Previo „Základní nastavení R+“ (help.previo.app/cs/doc/novy-reservation/)
+    const b = B.find(x => x.id === q.get('balicek') && x.aktivni) || null;
+    const cz = d => /^\d{4}-\d{2}-\d{2}$/.test(d || '') ? d.split('-').reverse().join('.') : ''; // Previo chce DD.MM.RRRR
+    const p = new URLSearchParams({hotId: N.previo_hotel_id, lang: 'cs', currency: 'CZK', hideCurrencies: 'EUR', guestFilter: '1', hideTabs: 'review-map'});
+    // barva formuláře: šablona Previo z nastavení webu (CMS → Nastavení → Barva formuláře Previo)
+    const theme = N.previo_theme || {'cerveny-dvur': 'bordo', 'vila-republika': 'dark'}[resort] || '';
+    if (theme) p.set('theme', theme);
+    const dosp = +q.get('dospeli') || +q.get('hoste') || 0;
+    if (dosp) p.set('numberOfAdults', Math.min(dosp, 12));
+    const od = q.get('od'), dod = q.get('do');
+    if (cz(od) && cz(dod) && dod > od) { p.set('arrival', cz(od)); p.set('departure', cz(dod)); } // termín z vyhledávání → rovnou výběr apartmánů
+    if (b && b.previo_stay_id) p.set('stayId', b.previo_stay_id); // balíček z webu → rovnou ten balíček v Previo
+    const src = `https://booking.previo.app/${b ? 'stay/' : ''}?${p}`;
+    const K = N.kontakt || {}, tel = (K.telefon || '').replace(/\s/g, '');
+    root.innerHTML = `<section class="bk-head"><div class="wrap">
+        <h1 class="title">${b ? `Balíček <em>${esc(b.nazev)}</em>` : (opts.nadpis || 'Rezervace <em>napřímo</em>')}</h1>
+        <p class="bk-perks">${esc(opts.perks || 'Levněji než na portálech · okamžité potvrzení · bez poplatků')}</p>
+        ${b ? `<div class="bk-pkg"><img src="${img(b.foto, 300, 220)}" alt=""><div><small>Vybraný balíček</small><b>${esc(b.nazev)}</b><span>${b.previo_stay_id ? 'Vyberte termín a apartmán níže.' : `V rezervaci níže otevřete záložku Balíčky a vyberte „${esc(b.nazev)}“.`}</span></div><a href="${location.pathname.split('/').pop() || 'rezervace.html'}">Jen ubytování</a></div>` : ''}
+      </div></section>
+      <section class="bk-body bk-previo-wrap"><div class="wrap"><div class="previo-reservation-form">
+        <iframe src="${esc(src)}" scrolling="no" name="previo-booking-iframe" id="previo-booking-iframe" class="bk-previo" width="100%" height="1150" frameborder="0" allowtransparency="true" title="Rezervace ${esc(N.nazev || '')}"></iframe>
+        </div><p class="bk-note">Potřebujete poradit? ${tel ? `<a href="tel:${esc(tel)}">${esc(K.telefon)}</a>` : ''}${tel && K.email ? ' · ' : ''}${K.email ? `<a href="mailto:${esc(K.email)}">${esc(K.email)}</a>` : ''}</p>
+      </div></section>`;
+    // automatická výška iframe – skript Previo (hledá iframe s id previo-booking-iframe)
+    if (!document.getElementById('previo-iframe-js')) { const s = document.createElement('script'); s.id = 'previo-iframe-js'; s.src = 'https://booking.previo.app/iframe/'; document.body.appendChild(s); }
+    // měření: Previo volá na stránce reservationPlusStepEvent při každém kroku (krok 5 = rezervace vytvořena)
+    const push = (event, extra = {}) => (window.dataLayer = window.dataLayer || []).push({event, resort, formular: 'previo', ...extra});
+    window.reservationPlusStepEvent = data => {
+      let d = data; try { if (typeof d === 'string') d = JSON.parse(d); } catch (e) { d = {}; }
+      const krok = +(d && d.step) || 0;
+      push('previo_krok', {krok});
+      if (krok === 5) {
+        const cena = +(d.price || d.totalPrice || (d.data && d.data.price) || 0) || undefined;
+        push('rezervace_odeslana', {value: cena, currency: 'CZK', rezim: 'previo', balicek: b ? b.id : ''});
+        if (window.fbq) fbq('track', 'Purchase', cena ? {value: cena, currency: 'CZK'} : {currency: 'CZK'});
+      }
+    };
+    push('zobrazeni_rezervace', {balicek: b ? b.id : ''});
+  }
+
   // ---------- komponenta ----------
   async function mount(root, opts = {}) {
     const resort = opts.resort || root.dataset.resort || 'cerveny-dvur';
     const data = opts.data || root.dataset.data || 'data/';
     const stranka = location.pathname.split('/').pop() || 'rezervace.html';
     const load = n => fetch(data + n + '.json', {cache: 'no-cache'}).then(r => r.ok ? r.json() : null).catch(() => null);
-    const [N, R, B0] = await Promise.all([load('nastaveni'), load('rezervace'), load('balicky')]);
+    const [N, R, B0, NMR] = await Promise.all([load('nastaveni'), load('rezervace'), load('balicky'),
+      fetch(ROOT + 'data/nmr/nastaveni.json', {cache: 'no-cache'}).then(r => r.ok ? r.json() : null).catch(() => null)]);
     const B = B0 && B0.balicky ? B0.balicky : [];
+    // Přepínač v CMS (Nord Moravia Resorts → Nastavení → Rezervace): dokud není vlastní formulář zapnutý,
+    // ukáže se původní rezervační formulář Previo. ?formular=vlastni / ?formular=previo přepne jen pro vyzkoušení.
+    const q0 = new URLSearchParams(location.search);
+    const vlastni = q0.get('obj') && q0.get('t') ? true // návrat z platební brány
+      : q0.get('formular') ? q0.get('formular') === 'vlastni' : !!(NMR && NMR.rezervace && NMR.rezervace.vlastni_formular);
+    if (!vlastni && N && N.previo_hotel_id) return previo(root, {resort, N, B, q: q0, opts});
     const K = N.kontakt || {}, telefon = K.telefon || '', tel = telefon.replace(/\s/g, '');
     const push = (event, extra = {}) => { (window.dataLayer = window.dataLayer || []).push({event, resort, ...extra}); };
     const api = (fn, q = '') => `/.netlify/functions/${fn}?resort=${resort}${q ? '&' + q : ''}`;
 
     root.innerHTML = markup(resort, opts.nadpis || 'Rezervace <em>napřímo</em>');
     const $ = k => root.querySelector(`[data-el="${k}"]`);
-    $('perks').textContent = opts.perks || R.perks || `O ${R.sleva_primo || 5} % levněji než na portálech · zvýhodněné wellness · bez poplatků`;
+    $('perks').textContent = opts.perks || R.perks || 'Levněji než na portálech · zvýhodněné wellness · bez poplatků';
     $('tel').href = 'tel:' + tel; $('tel').textContent = telefon || K.email || '';
     if (!telefon && K.email) $('tel').href = 'mailto:' + K.email;
     const kontakt = telefon || K.email || 'recepci';
@@ -255,7 +306,7 @@ window.NMRBooking = (() => {
         return `${nadpis}<article class="bk-room${t.kombinace ? ' komb' : ''}" data-i="${i}">
           <div class="bk-room-img"><img src="${img(t.foto, 560, 420)}" alt="${esc(t.nazev)}" loading="lazy">${t.kombinace && t.foto2 ? `<img class="bk-img2" src="${img(t.foto2, 280, 210)}" alt="" loading="lazy">` : ''}${t.kombinace ? '<span class="bk-2apt">2 apartmány</span>' : ''}${t.volno != null && t.volno <= 2 ? `<span>${t.volno === 1 ? 'Poslední volný' : 'Zbývají 2'}</span>` : ''}</div>
           <div class="bk-room-body">
-            <h3>${esc(t.nazev)}${primo ? ` <em class="bk-chip" title="Oproti cenám na portálech">−${primo} % napřímo</em>` : ''}</h3>
+            <h3>${esc(t.nazev)}${primo ? ` <em class="bk-chip" title="Oproti cenám na portálech">Levněji napřímo</em>` : ''}</h3>
             <p class="bk-room-meta">${t.osoby ? esc(t.osoby) + ' osob' + (/^\d$/.test(t.osoby) && +t.osoby < 5 ? 'y' : '') : ''}${t.plocha ? ' · ' + esc(t.plocha) : ''}</p>
             <p class="bk-room-txt">${esc(t.popis || '')}</p>
           </div>
@@ -396,7 +447,7 @@ window.NMRBooking = (() => {
         Object.values(S.extra).forEach(x => { const t = (S.wcas[x.id] || []).filter(Boolean); rows.push(`<div class="bk-s-row"><span>${esc(x.nazev)}${ks(x) > 1 ? ' ×' + ks(x) : ''}${t.length ? `<small>${t.map(casL).join(', ')}</small>` : ''}</span><b>${kc(exPrice(x))}</b></div>`); });
         const portal = S.rate.portal || S.rate.cena;
         rows.push(`<div class="bk-s-total"><span>Celkem</span><b>${kc(total())}</b></div>`);
-        if (portal > S.rate.cena + 1) rows.push(`<p class="bk-s-save">Ušetříte ${kc(portal - S.rate.cena)} oproti portálům</p>`);
+        if (portal > S.rate.cena + 1) rows.push('<p class="bk-s-save">Napřímo levněji než na portálech</p>');
         rows.push(`<p class="bk-note">${esc(R.souhrn_poznamka || '')} ${esc(R.podminky || '')}</p>`);
       }
       $('sumbody').innerHTML = rows.join('');

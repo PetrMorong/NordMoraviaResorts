@@ -12,7 +12,7 @@ const merchant = gen(), gateway = gen();
 const gsign = s => crypto.sign('RSA-SHA256', Buffer.from(s), gateway.privateKey).toString('base64');
 const mverify = (s, sig) => crypto.verify('RSA-SHA256', Buffer.from(s), merchant.publicKey, Buffer.from(sig, 'base64'));
 
-const pay = {}, forms = [], reservio = [];
+const pay = {}, forms = [], reservio = [], previoVolani = [];
 const WCENA = 1850; // cena wellness v (simulovaném) Reservio – v CMS je jiná
 let n = 0;
 const server = http.createServer(async (req, res) => {
@@ -59,13 +59,20 @@ const server = http.createServer(async (req, res) => {
     const b = JSON.parse(raw); b._biz = biz; reservio.push(b);
     return out({ data: { type: 'booking', id: 'bk' + reservio.length, attributes: { state: 'confirmed' } } });
   }
+  // --- simulované Previo (jen zápisy platby a stavu rezervace) ---
+  if (req.url.startsWith('/x1/') || req.url.startsWith('/rest/')) {
+    previoVolani.push({ url: req.url, body: raw });
+    if (req.url.startsWith('/rest/invoice/addPayment')) return out({ invId: 991 });
+    res.writeHead(200, { 'Content-Type': 'application/xml' });
+    return res.end('<reservations><reservation><resId>R1</resId><voucher>V1</voucher></reservation></reservations>');
+  }
   res.writeHead(404).end();
 });
 await new Promise(r => server.listen(0, r));
 const ORIGIN = `http://127.0.0.1:${server.address().port}`;
 
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'nmr-platba-'));
-Object.assign(process.env, { CSOB_ENV: 'test', CSOB_MERCHANT_ID: 'M1MIPSTEST', CSOB_PRIVATE_KEY: merchant.privateKey, CSOB_PUBLIC_KEY: gateway.publicKey, CSOB_URL: ORIGIN + '/api', OBJEDNAVKY_DIR: tmp, PREVIO_LIVE: '0', RESERVIO_TOKEN: 'RTOKEN', RESERVIO_BUSINESS_ID: 'B1', RESERVIO_TOKEN_VR: 'RTOKEN_VR', RESERVIO_BUSINESS_ID_VR: 'B2', RESERVIO_URL: ORIGIN + '/v2' });
+Object.assign(process.env, { CSOB_ENV: 'test', CSOB_MERCHANT_ID: 'M1MIPSTEST', CSOB_PRIVATE_KEY: merchant.privateKey, CSOB_PUBLIC_KEY: gateway.publicKey, CSOB_URL: ORIGIN + '/api', OBJEDNAVKY_DIR: tmp, PREVIO_LIVE: '0', PREVIO_URL: ORIGIN + '/', RESERVIO_TOKEN: 'RTOKEN', RESERVIO_BUSINESS_ID: 'B1', RESERVIO_TOKEN_VR: 'RTOKEN_VR', RESERVIO_BUSINESS_ID_VR: 'B2', RESERVIO_URL: ORIGIN + '/v2' });
 delete process.env.RESERVIO_JEN_CIST; delete process.env.RESERVIO_DEMO;
 // wellness 90 min napojíme na simulovanou službu Reservio (jen v paměti, soubor se nemění)
 const RJ = (await import('../cerveny-dvur/data/rezervace.json', { with: { type: 'json' } })).default;
@@ -269,6 +276,44 @@ r = await call(platba, 'POST', '', vr({ zpusob: 'prevod', doplnky: { 'alt:cerven
 assert.equal(r.json.zaloha, vrUbyt);
 ok('host Vily si přidá wellness v Rapotíně – rezervace v Reservio Rapotína, cizí doplňky bez alternativy server nepustí');
 vrW.doplnky.find(x => x.id === 'wellness').mimo_provoz = false;
+
+console.log('Zápis platby do Previo (záloha vs. celá cena)');
+{
+  const { vyrid } = await import('../netlify/lib/vyrizeni.mjs');
+  Object.assign(process.env, { PREVIO_LIVE: '1', PREVIO_API_KEY: 'PKEY', PREVIO_URL: ORIGIN + '/' });
+  const objednavka = (zaloha, cena) => ({ obj: 'T' + zaloha, t: 'x', resort: 'cerveny-dvur', stav: 'ceka_na_platbu', zpusob: 'karta', web: ORIGIN, zaloha,
+    pobyt: { cena, od: plus(30), do: plus(32), noci: 2, apartman: 'Apartmán Komfort', sazbaNazev: 'Se snídaní', dospeli: 2, deti: 0, doplnky: [] },
+    host, previo: { resId: 'R1', voucher: 'V1' }, platby: [{ payId: 'x' }], chyby: [] });
+  // záloha 30 %: invoice/addPayment se NESMÍ zavolat (zaplatil by celou rezervaci) → poznámka + upozornění recepci
+  previoVolani.length = 0;
+  const o30 = await vyrid(objednavka(1500, 5000), 7);
+  assert.deepEqual(o30.chyby, []);
+  assert.equal(o30.previo.platba, 'poznamka');
+  assert.ok(!previoVolani.some(v => v.url.startsWith('/rest/invoice/addPayment')), 'záloha nesmí volat invoice/addPayment');
+  const gnote = previoVolani.find(v => v.body.includes('<gNote>'));
+  assert.ok(gnote && /ZÁLOHA ZAPLACENA 1\u00a0500 Kč kartou online \(ČSOB\)/.test(gnote.body) && /Doplatek 3\u00a0500 Kč na místě/.test(gnote.body), gnote && gnote.body);
+  assert.ok(previoVolani.some(v => v.url === '/x1/hotel/reservation' && v.body.includes('<gCosId>2</gCosId>')));
+  assert.match(forms.at(-1).previo, /ZAÚČTOVAT ZÁLOHU 1\u00a0500 Kč/);
+  ok('záloha 30 %: rezervace potvrzená, v Previo poznámka o záloze (ne platba celé ceny), recepce ví, co zaúčtovat');
+  // celá cena: doklad přes invoice/addPayment s platbou online
+  previoVolani.length = 0;
+  const o100 = await vyrid(objednavka(5000, 5000), 7);
+  assert.equal(o100.previo.platba, 'doklad'); assert.equal(o100.previo.invId, 991);
+  const ap = previoVolani.find(v => v.url.startsWith('/rest/invoice/addPayment'));
+  assert.ok(ap); assert.equal(JSON.parse(ap.body).payId, 10);
+  assert.match(forms.at(-1).previo, /zaplaceno celé, doklad vystaven/);
+  ok('celá cena: invoice/addPayment (online platba) vystaví doklad');
+  // balíček: styId u pokoje (commission), ne u celé rezervace
+  const { vytvorRezervaci } = await import('../netlify/lib/previo.mjs');
+  previoVolani.length = 0;
+  await vytvorRezervaci(resort('cerveny-dvur'), { od: plus(30), do: plus(32), dospeli: 2, deti: 0, typ: komfort.previo_id || '123', stayId: 108653, cena: 9000, host, obj: 'T1', zpusob: 'karta', brana: 'ČSOB' });
+  const nr = previoVolani.find(v => v.url === '/x1/hotel/reservation').body.replace(/\s+/g, '');
+  assert.match(nr, /<commission>.*<styId>108653<\/styId>.*<\/commission>/);
+  assert.equal((nr.match(/<styId>/g) || []).length, 1);
+  assert.match(nr, /Platbakartouonline\(ČSOB\)/);
+  ok('balíček (styId) se zapíše k pokoji, poznámka uvádí bránu');
+  Object.assign(process.env, { PREVIO_LIVE: '0' });
+}
 
 server.close();
 fs.rmSync(tmp, { recursive: true, force: true });

@@ -30,6 +30,7 @@
   },
   "mereni": {
     "gtm_id": "",
+    "google_tag_id": "",
     "meta_pixel_id": ""
   },
   "booking": {
@@ -43,5 +44,8 @@
       "popis": "Skvělé",
       "pocet": 327
     }
+  },
+  "rezervace": {
+    "vlastni_formular": false
   }
 }

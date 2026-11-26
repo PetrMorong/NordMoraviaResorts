@@ -33,7 +33,8 @@ collections:
             fields:
               - { label: "Červený dvůr", name: "cerveny-dvur", widget: "object", fields: [{ label: "Skóre (např. 8,7)", name: "skore", widget: "string" }, { label: "Slovně", name: "popis", widget: "string" }, { label: "Počet hodnocení", name: "pocet", widget: "number" }] }
               - { label: "Vila Republika", name: "vila-republika", widget: "object", fields: [{ label: "Skóre", name: "skore", widget: "string" }, { label: "Slovně", name: "popis", widget: "string" }, { label: "Počet hodnocení", name: "pocet", widget: "number" }] }
-          - { label: "Měření (všechny weby sítě)", name: "mereni", widget: "object", hint: "Jeden kontejner a jeden pixel pro NMR, Červený dvůr, Vilu Republiku i Kouty. Prázdné = nic se nenačte a lišta cookies se nezobrazí.", fields: [{ label: "Google Tag Manager ID", name: "gtm_id", widget: "string", required: false, hint: "např. GTM-ABC1234" }, { label: "Meta Pixel ID", name: "meta_pixel_id", widget: "string", required: false }] }
+          - { label: "Měření (všechny weby sítě)", name: "mereni", widget: "object", hint: "Jeden kontejner a jeden pixel pro NMR, Červený dvůr, Vilu Republiku i Kouty. Přednost mají proměnné GOOGLE_TAG_ID a META_PIXEL_ID na Netlify (doplní se při nasazení). Prázdné = nic se nenačte a lišta cookies se nezobrazí.", fields: [{ label: "Google Tag Manager ID", name: "gtm_id", widget: "string", required: false, hint: "např. GTM-ABC1234" }, { label: "Google tag (GA4 / Ads)", name: "google_tag_id", widget: "string", required: false, hint: "např. G-ABC123XYZ – jen když nepoužíváte GTM" }, { label: "Meta Pixel ID", name: "meta_pixel_id", widget: "string", required: false }] }
+          - { label: "Rezervace", name: "rezervace", widget: "object", fields: [{ label: "Vlastní rezervační formulář s platbou", name: "vlastni_formular", widget: "boolean", required: false, default: false, hint: "Vypnuto = na stránkách Rezervace je původní formulář Previo. Zapněte, až bude podepsaná platební brána (Comgate) a nastavená na Netlify. Vyzkoušet předem jde přes adresu rezervace.html?formular=vlastni" }] }
       - name: "resorty"
         label: "Resorty"
         file: "data/nmr/resorty.json"
@@ -258,6 +259,7 @@ collections:
           - { label: "Úvod – text", name: "intro_text", widget: "text" }
           - { label: "Úvod – fotka", name: "intro_foto", widget: "image" }
           - { label: "Previo hotel ID", name: "previo_hotel_id", widget: "string" }
+          - { label: "Barva formuláře Previo", name: "previo_theme", widget: "select", required: false, options: ["dark", "bordo", "wine", "red", "darkbrown", "brown", "darkblue", "black", "gray", "gold", "naturegreen", "darkgreen", "orange", "darkmode-gold", "darkmode-gray", "darkmode-blue"], hint: "Barevná šablona tlačítek rezervačního formuláře Previo (Previo jiné barvy než tyto šablony nepovoluje). Prázdné = výchozí pro resort." }
           - { label: "Odkaz na rezervaci wellness (Reservio)", name: "reservio_url", widget: "string" }
           - { label: "Check-in", name: "check_in", widget: "string" }
           - { label: "Check-out", name: "check_out", widget: "string" }
@@ -284,6 +286,19 @@ collections:
         label: "Wellness, společenská místnost, vybavení"
         file: "vila-republika/data/sluzby.json"
         fields:
+          - label: "Polopenze a masáže v Červeném dvoře (úvodní stránka)"
+            name: "rapotin"
+            widget: "object"
+            required: false
+            fields:
+              - { label: "Zobrazit", name: "aktivni", widget: "boolean", default: true }
+              - { label: "Nadtitulek", name: "kicker", widget: "string", required: false }
+              - { label: "Nadpis", name: "nadpis", widget: "string", hint: "*text* = zvýraznění" }
+              - { label: "Text", name: "text", widget: "text" }
+              - { label: "Body", name: "polozky", widget: "list", field: { label: "Bod", name: "bod", widget: "string" } }
+              - { label: "Fotka", name: "foto", widget: "image" }
+              - { label: "Odkaz – restaurace", name: "odkaz_restaurace", widget: "string", required: false }
+              - { label: "Odkaz – masáže", name: "odkaz_masaze", widget: "string", required: false }
           - label: "Wellness"
             name: "wellness"
             widget: "object"
@@ -347,7 +362,7 @@ collections:
         label: "Rezervace – ceník, doplňky a podmínky"
         file: "vila-republika/data/rezervace.json"
         fields:
-          - { label: "Text pod nadpisem", name: "perks", widget: "string", required: false, hint: "Např. O 5 % levněji než na portálech · privátní wellness · bez poplatků" }
+          - { label: "Text pod nadpisem", name: "perks", widget: "string", required: false, hint: "Např. Levněji než na portálech · privátní wellness · bez poplatků" }
           - { label: "Jak to funguje", name: "rezim_poznamka", widget: "text" }
           - { label: "Sleva za přímou rezervaci (%)", name: "sleva_primo", widget: "number" }
           - { label: "Snídaně (Kč za osobu a noc)", name: "snidane_osoba_noc", widget: "number", required: false }
@@ -442,6 +457,7 @@ collections:
           - { label: "Úvod – text", name: "intro_text", widget: "text" }
           - { label: "Úvod – fotka", name: "intro_foto", widget: "image" }
           - { label: "Previo hotel ID", name: "previo_hotel_id", widget: "string" }
+          - { label: "Barva formuláře Previo", name: "previo_theme", widget: "select", required: false, options: ["dark", "bordo", "wine", "red", "darkbrown", "brown", "darkblue", "black", "gray", "gold", "naturegreen", "darkgreen", "orange", "darkmode-gold", "darkmode-gray", "darkmode-blue"], hint: "Barevná šablona tlačítek rezervačního formuláře Previo (Previo jiné barvy než tyto šablony nepovoluje). Prázdné = výchozí pro resort." }
           - { label: "Reservio (wellness a masáže)", name: "reservio_url", widget: "string" }
           - { label: "Google hodnocení", name: "google_hodnoceni", widget: "object", fields: [{ label: "Známka", name: "znamka", widget: "string" }, { label: "Počet recenzí", name: "pocet", widget: "string" }, { label: "Odkaz", name: "odkaz", widget: "string" }] }
           - label: "Kontakt"
@@ -497,6 +513,11 @@ collections:
             summary: "{{fields.nazev}} ({{fields.aktivni}})"
             fields:
               - { label: "Zobrazit na webu", name: "aktivni", widget: "boolean", default: true }
+              - { label: "Hlavní balíček (zvýraznit na úvodu)", name: "hlavni", widget: "boolean", default: false, required: false }
+              - { label: "Sezónní (řadí se na konec)", name: "sezonni", widget: "boolean", default: false, required: false }
+              - { label: "Strava v balíčku", name: "strava", widget: "select", options: [{ label: "Polopenze", value: "polopenze" }, { label: "Snídaně", value: "snidane" }, { label: "Bez stravy", value: "bez" }], default: "snidane" }
+              - { label: "Prodej pro příjezd od", name: "platnost_od", widget: "datetime", format: "YYYY-MM-DD", date_format: "D. M. YYYY", time_format: false, required: false }
+              - { label: "Prodej pro příjezd do", name: "platnost_do", widget: "datetime", format: "YYYY-MM-DD", date_format: "D. M. YYYY", time_format: false, required: false, hint: "Balíčky prodáváme rok dopředu. Po tomto datu se balíček na webu sám skryje." }
               - { label: "ID do adresy (bez diakritiky)", name: "id", widget: "string" }
               - { label: "Previo ID balíčku (stayId)", name: "previo_stay_id", widget: "string", required: false, hint: "Najdete v Previo u balíčku. Podle něj si rezervace bere živou cenu." }
               - { label: "Název", name: "nazev", widget: "string" }
@@ -508,7 +529,7 @@ collections:
               - { label: "Nocí do", name: "noci_max", widget: "number" }
               - { label: "Osob", name: "osoby", widget: "number", default: 2 }
               - { label: "Pevný termín (RRRR-MM-DD/RRRR-MM-DD) nebo sezóna", name: "termin", widget: "string", required: false, hint: "Např. 2026-12-23/2026-12-26 – rezervace pak termín sama vyplní" }
-              - { label: "Příplatek za balíček oproti ubytování (Kč za pobyt)", name: "priplatek", widget: "number", hint: "Používá se pro cenu „od“ a v rezervaci, dokud není zapnuté živé Previo" }
+              - { label: "Příplatek za služby balíčku (Kč za pobyt, bez ubytování a stravy)", name: "priplatek", widget: "number", hint: "Masáže, wellness apod. Přičte se k ceně ubytování a stravy z Previo." }
               - { label: "Co obsahuje", name: "obsahuje", widget: "list", field: { label: "Položka", name: "polozka", widget: "string" } }
       - name: "rezervace"
         label: "Rezervace – ceník, doplňky a podmínky"

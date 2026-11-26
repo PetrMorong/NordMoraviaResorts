@@ -5,7 +5,8 @@
   "scripts": {
     "build": "node scripts/prerender.mjs",
     "dev": "node scripts/dev.mjs",
-    "test:platba": "node scripts/test-platba.mjs"
+    "test:platba": "node scripts/test-platba.mjs",
+    "ceny:balicky": "node scripts/balicky-ceny.mjs"
   },
   "dependencies": {
     "@netlify/blobs": "^8.2.0",

@@ -3,6 +3,7 @@
    2) měření konverzí do dataLayer (rezervace, telefon, e-mail, wellness, restaurace, formuláře)
    3) blok „výhody přímé rezervace“ – prvky s atributem data-nmr-vyhody
    4) lepicí rezervační lišta na mobilu – podle <body data-nmr-resort data-nmr-cta>
+   5) odkazy mezi doménami sítě – Červený dvůr a Vila běží na vlastních doménách (viz netlify.toml a scripts/domeny.mjs)
    Nastavení: data/nmr/nastaveni.json (mereni) a data/nmr/vyhody.json, oboje v CMS. */
 (() => {
   const ROOT = new URL('..', document.currentScript.src).href;          // kořen webu (o úroveň výš než /assets/)
@@ -22,6 +23,42 @@
 
   const track = (event, data = {}) => dataLayer.push({event, resort, ...data});
   window.NMR = {track};
+
+  // ---------- 5) domény sítě ----------
+  // Zdrojové stránky odkazují relativně (../vila-republika/, ../soutok-kouty/, /), jako by vše leželo na nordmoraviaresorts.cz.
+  // Na doméně resortu (resortcervenydvur.cz, vila-republika.cz) i na NMR po přepnutí domén (<meta name="nmr-domeny">)
+  // se odkazy převedou na správnou doménu. Na náhledech Netlify a lokálně zůstávají relativní.
+  const NMR_HOST = 'nordmoraviaresorts.cz';
+  const DOMENY = {'cerveny-dvur': 'resortcervenydvur.cz', 'vila-republika': 'vila-republika.cz'};
+  const host = location.hostname.replace(/^www\./, '');
+  const slozka = Object.keys(DOMENY).find(k => DOMENY[k] === host);
+  const domenyOn = !!slozka || (host === NMR_HOST && !!document.querySelector('meta[name="nmr-domeny"]'));
+  // adresa na produkci → „logická“ adresa, jako by vše leželo na nordmoraviaresorts.cz (/cerveny-dvur/…)
+  const logicka = u => {
+    const k = Object.keys(DOMENY).find(x => DOMENY[x] === u.hostname.replace(/^www\./, ''));
+    return k ? new URL('/' + k + u.pathname + u.search + u.hash, 'https://' + NMR_HOST) : u;
+  };
+  // logická adresa → skutečná adresa na produkční doméně (vždy absolutní, ať je to jednoznačné)
+  const produkcni = u => {
+    if (u.hostname.replace(/^www\./, '') !== NMR_HOST) return u.href;
+    const m = u.pathname.match(/^\/(cerveny-dvur|vila-republika)(\/.*|$)/);
+    return (m ? new URL((m[2] || '/') + u.search + u.hash, 'https://' + DOMENY[m[1]]) : new URL(u.pathname + u.search + u.hash, 'https://' + NMR_HOST)).href;
+  };
+  const stranka = logicka(new URL(location.href)); // tato stránka na „logické“ adrese
+  const prevod = a => {
+    const raw = a.getAttribute('href');
+    if (!raw || /^(#|mailto:|tel:|javascript:|data:)/i.test(raw)) return;
+    let u; try { u = /^[a-z][a-z0-9+.-]*:/i.test(raw) ? logicka(new URL(raw)) : new URL(raw, stranka); } catch (e) { return; }
+    if (!/^https?:$/.test(u.protocol) || u.hostname.replace(/^www\./, '') !== NMR_HOST) return;
+    const nove = produkcni(u);
+    if (nove !== raw) a.setAttribute('href', nove);
+  };
+  if (domenyOn) {
+    const vse = () => document.querySelectorAll('a[href]').forEach(prevod);
+    vse(); document.addEventListener('DOMContentLoaded', vse); addEventListener('load', vse);
+    // odkazy vykreslené skripty později – převést těsně před kliknutím
+    ['click', 'auxclick', 'pointerdown'].forEach(t => document.addEventListener(t, e => { const a = e.target.closest && e.target.closest('a[href]'); if (a) prevod(a); }, true));
+  }
 
   let metaId = '';
   const startMeta = () => {
@@ -54,7 +91,7 @@
     if (/reservio\.com/.test(h)) return ['klik_wellness_rezervace', 'Schedule'];
     if (/restaurace\.resortcervenydvur\.cz\/booking/.test(h)) return ['klik_rezervace_stolu', 'Schedule'];
     if (/restaurace\.resortcervenydvur\.cz/.test(h)) return ['klik_menu_restaurace', null];
-    if (/booking\.previo\.cz|\/rezervace\.html/.test(h)) return ['zacatek_rezervace', 'InitiateCheckout'];
+    if (/booking\.previo\.(cz|app)|\/rezervace\.html/.test(h)) return ['zacatek_rezervace', 'InitiateCheckout'];
     if (/booking\.com|airbnb\./.test(h)) return ['klik_portal', null];
     return null;
   };
@@ -71,19 +108,30 @@
     if (window.fbq) fbq('track', 'Lead', {content_name: name});
   }, true);
   // rezervační stránka s Previo: zobrazení rezervačního okna = začátek rezervace
-  if (document.querySelector('iframe[src*="previo"], iframe#previo, .page-book iframe')) track('zobrazeni_rezervace');
+  if (!document.getElementById('nmr-booking') && document.querySelector('iframe[src*="previo"], iframe#previo, .page-book iframe')) track('zobrazeni_rezervace'); // rezervační komponenta měří sama
 
   // ---------- 3) + 4) výhody a lepicí lišta ----------
   Promise.all([load('nastaveni'), load('vyhody'), load('resorty')]).then(([N, V, R]) => {
     const m = (N && N.mereni) || {};
     metaId = m.meta_pixel_id || '';
+    // Google tag (GA4 / Ads) přímo, bez GTM – události z dataLayer se posílají i do Google tagu
+    if (m.google_tag_id && !m.gtm_id && !window.__nmrGtag) {
+      window.__nmrGtag = true;
+      const s = document.createElement('script'); s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(m.google_tag_id);
+      document.head.appendChild(s);
+      gtag('js', new Date()); gtag('config', m.google_tag_id);
+      const fwd = o => { if (o && typeof o === 'object' && !('length' in o) && o.event && !/^gtm\./.test(o.event) && o.event !== 'nmr_init') { const {event, ...rest} = o; gtag('event', event, rest); } };
+      dataLayer.filter(o => o && o.event && o.event !== 'nmr_init').forEach(fwd);
+      const push0 = dataLayer.push.bind(dataLayer);
+      dataLayer.push = (...a) => { const r = push0(...a); a.forEach(fwd); return r; };
+    }
     if (m.gtm_id && !window.google_tag_manager) {
       dataLayer.push({'gtm.start': Date.now(), event: 'gtm.js'});
       const s = document.createElement('script'); s.async = true; s.src = 'https://www.googletagmanager.com/gtm.js?id=' + encodeURIComponent(m.gtm_id);
       document.head.appendChild(s);
     }
     if (saved === 'vse') startMeta();
-    if (m.gtm_id || m.meta_pixel_id) banner();
+    if (m.gtm_id || m.google_tag_id || m.meta_pixel_id) banner();
 
     const res = R && R.resorty ? R.resorty.find(r => r.id === resort) : null;
     const vyhodyOn = V && V.aktivni && (!res || res.stav !== 'pripravujeme');
@@ -97,6 +145,18 @@
           <ul>${V.body.map(b => `<li><b>${esc(b.nadpis)}</b><span>${esc(b.text)}</span></li>`).join('')}</ul></div></div>`;
       }
       el.hidden = false;
+    });
+
+    // blok „součást sítě“ – prvky s atributem data-nmr-sit (ostatní resorty sítě, odkazy přes domény sítě)
+    if (R && R.resorty) document.querySelectorAll('[data-nmr-sit]').forEach(el => {
+      const jine = R.resorty.filter(r => r.id !== resort);
+      el.innerHTML = `<div class="wrap"><div class="nmr-sit"><div class="nmr-sit-h"><small>Nord Moravia Resorts</small>
+        <h2>${esc(el.dataset.nmrSitNadpis || 'Patříme do rodiny resortů v Jeseníkách')}</h2>
+        <p>${esc(el.dataset.nmrSitText || 'Tři místa, jedna recepce a stejná péče o hosty. Vyberte si další pobyt v okolí.')}</p>
+        <a class="nmr-sit-all" href="/">Celá síť Nord Moravia Resorts →</a></div>
+        <ul>${jine.map(r => `<li><a href="/${esc(r.web)}"><i style="background:${esc(r.barva)}"></i><span><b>${esc(r.nazev)}</b><small>${esc(r.typ)} · ${esc(r.misto)}${r.stav === 'pripravujeme' ? ' · ' + esc(r.cena_od) : ''}</small></span><em>→</em></a></li>`).join('')}</ul></div></div>`;
+      el.hidden = false;
+      if (domenyOn) el.querySelectorAll('a[href]').forEach(prevod);
     });
 
     const cta = body.dataset.nmrCta;

@@ -28,6 +28,7 @@
   "intro_text": "Proměnili jsme historický areál Červeného dvora v místo pro klidný pobyt v podhůří Jeseníků. Prostorné apartmány s plně vybavenou kuchyní, privátní wellness, restaurace, poker room, ping-pong, šipky a dětský koutek – a kolem příroda Jeseníků.",
   "intro_foto": "Rapotin/nadvori_qmoqtm",
   "previo_hotel_id": "769376",
+  "previo_theme": "bordo",
   "reservio_url": "https://resort-cerveny-dvur.reservio.com",
   "google_hodnoceni": {
     "znamka": "4,6",
@@ -150,4 +151,4 @@
       "images/fotbalek.webp"
     ]
   }
-}
+}

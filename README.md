@@ -92,7 +92,7 @@ Rezervační formulář `cerveny-dvur/rezervace.html` nabízí v kroku 4 stejné
 
 | Způsob | Co se stane |
 |---|---|
-| **Online platba kartou** | Okamžitá rezervace. Host zaplatí na platební stránce ČSOB, vrátí se na `rezervace.html?obj=…` a vidí potvrzení. V Previo se rezervace založí jako opce a po zaplacení se potvrdí a zapíše se platba. |
+| **Online platba kartou** | Okamžitá rezervace. Host zaplatí na platební stránce ČSOB, vrátí se na `rezervace.html?obj=…` a vidí potvrzení. V Previo se rezervace založí jako opce a po zaplacení se potvrdí. Zaplatil-li host celou cenu, zapíše se platba a Previo vystaví doklad (`invoice/addPayment`). Při **záloze** (u ČD 30 %) se do rezervace zapíše jen poznámka „ZÁLOHA ZAPLACENA … Kč“ a recepce zálohu zaúčtuje ručně – `invoice/addPayment` nebere částku a označil by zaplacenou celou rezervaci. |
 | **Bankovní převod** | Předběžná rezervace (opce v Previo). Host vidí zálohu, splatnost a variabilní symbol (= číslo objednávky). Zálohový list posílá Previo / recepce, nebo ho vystaví API (`PREVIO_ZALOHOVY_LIST=1`). |
 
 - Cenu vždy počítá server (`netlify/lib/cena.mjs`), cena z prohlížeče se ignoruje.
@@ -109,8 +109,11 @@ Rezervační formulář `cerveny-dvur/rezervace.html` nabízí v kroku 4 stejné
 | `CSOB_PRIVATE_KEY` | celý obsah souboru s privátním klíčem (`-----BEGIN … KEY-----` …) |
 | `CSOB_ENV` | `test` (integrační iBrána, žádné skutečné peníze), na ostrém provozu `prod` |
 | `PREVIO_LIVE`, `PREVIO_API_KEY`, `PREVIO_HOTEL_ID` | napojení na Previo, viz `netlify/lib/previo.mjs` |
-| `PREVIO_ZALOHOVY_LIST` | `1` = zálohový list k převodu vystaví API (nejdřív ověřit na testovacím hotelu Previo) |
+| `PREVIO_ZALOHOVY_LIST` | `1` = zálohový list k převodu vystaví API – jen když se platí celá cena, částečnou zálohu posílá recepce (nejdřív ověřit na testovacím hotelu Previo) |
 | `PREVIO_JEN_CIST` | `1` = živé ceny a obsazenost z Previo, ale rezervace a platby se do Previo nezapisují (jen do logu). Na testování proti ostrému hotelu |
+| `DOMENY_RESORTU` | `1` = Červený dvůr a Vila běží na vlastních doménách (odkazy, canonical, sitemapy, přesměrování z NMR) – viz *Tři domény* níže |
+| `GOOGLE_TAG_ID` | `GTM-…` (Tag Manager) nebo `G-…` (GA4) – při nasazení se zapíše do měření pro všechny weby sítě |
+| `META_PIXEL_ID` | ID Meta Pixelu – stejně jako Google tag (načte se až po souhlasu s cookies) |
 
 **Živé ceny z Previo** (`PREVIO_LIVE=1`, ověřeno na Červeném dvoře 11/2026)
 - Z Previo se bere cena ubytování podle obsazenosti (`Hotel.getRates`, základní sazba), příplatky za stravu (snídaně je v ceně, bez snídaně −100 Kč, polopenze +350 Kč za osobu a noc), minimální délka pobytu a zákazy příjezdu/odjezdu, volné apartmány (`calendar/availability`).
@@ -193,3 +196,24 @@ Rezervace s platbou a wellness je jedna sdílená komponenta: `assets/booking/bo
 - **Křížový prodej pobytu:** když v resortu nic nevyjde (ani dva apartmány), ukáže se nabídka ostatních resortů na stejný termín s odkazem na jejich rezervaci. Opravdové „plno“ pozná web až s napojeným Previem. Do té doby se křížový prodej ukáže hlavně u velkých skupin.
 - **Křížový prodej wellness:** doplněk wellness má v CMS pole *Alternativa v jiném resortu* a *Mimo provoz*. Když je wellness v době pobytu plné nebo mimo provoz (např. nejde vířivka), nabídne se wellness ve druhém resortu. Host si ho přidá k pobytu (cena podle Reservia toho resortu) a čas se zarezervuje v Reserviu druhého resortu s poznámkou, kde host bydlí.
 - Měření v dataLayer: `cross_sell_zobrazeno`, `cross_sell_klik`, `cross_sell_wellness_zobrazeno`, `cross_sell_wellness_klik`.
+
+## Rezervace: formulář Previo, nebo vlastní
+
+Dokud v CMS (*Nord Moravia Resorts → Nastavení → Rezervace*) není zapnutý **Vlastní rezervační formulář s platbou**, ukazují stránky `rezervace.html` původní formulář Previo (iframe `booking.previo.app`, parametry podle https://help.previo.app/cs/doc/novy-reservation/):
+- barva = šablona Previo z nastavení resortu (*Barva formuláře Previo*, např. `bordo`, `dark`) – vlastní HEX barvu Previo nepovoluje;
+- termín z vyhledávání na webu (`?od=&do=`) se předá jako `arrival`/`departure`, počet dospělých jako `numberOfAdults`;
+- balíček z webu (`?balicek=`) otevře přímo balíček v Previo podle pole „Previo ID balíčku (stayId)“;
+- měření: Previo volá `reservationPlusStepEvent` → do dataLayer jdou `previo_krok` a po vytvoření rezervace `rezervace_odeslana`.
+
+Vlastní formulář jde vyzkoušet i při vypnutém přepínači: `rezervace.html?formular=vlastni`.
+
+## Tři domény
+
+Jeden web na Netlify, tři domény: `nordmoraviaresorts.cz` (NMR + Kouty), `resortcervenydvur.cz` (složka `cerveny-dvur/`), `vila-republika.cz` (složka `vila-republika/`).
+1. V Netlify přidat `resortcervenydvur.cz`, `www.resortcervenydvur.cz`, `vila-republika.cz`, `www.vila-republika.cz` jako domain aliases.
+2. Nastavit `DOMENY_RESORTU=1` a znovu nasadit.
+3. Přepnout DNS domén resortů na Netlify.
+
+Přepisy domén a staré adresy (301) jsou v `netlify.toml`. `scripts/domeny.mjs` při nasazení převede odkazy mezi weby, canonical, JSON-LD a sitemapy a vygeneruje `_redirects` (stránky resortů na NMR → 301 na doménu resortu). `assets/nmr-common.js` totéž dělá v prohlížeči pro odkazy vykreslené skripty. Na náhledech (deploy preview) a lokálně zůstává vše relativní.
+
+**Soft release (bez `DOMENY_RESORTU`):** stránky `/cerveny-dvur/` a `/vila-republika/` na nordmoraviaresorts.cz dostanou při nasazení hlavičku `X-Robots-Tag: noindex` (soubor `_headers`) a vypadnou ze sitemapy, aby Google nebral kopie jako duplicitu starých webů. Po zapnutí domén se to samo zruší.

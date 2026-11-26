@@ -197,8 +197,10 @@ export async function nabidka(r, { od, doo, dospeli, deti, bal, sazby: sazbyCms,
       ubyt += c + (strava(s, MEA.bez) ?? 0);
     }
     const stravaZa = typ => { let k = 0; for (const s of noci) { const p = strava(s, MEA[typ]), b = strava(s, MEA.bez); if (p == null) return null; k += p - (b ?? 0); } return k; };
+    // balíček: ubytování + strava balíčku (polopenze / snídaně, výchozí snídaně) z Previo + příplatek za služby z CMS
+    const balStrava = bal ? (bal.strava || 'snidane') : null, balK = bal ? (balStrava === 'bez' ? 0 : stravaZa(balStrava)) : null;
     const rates = bal
-      ? [{ id: 'balicek', nazev: bal.nazev, popis: (bal.obsahuje || []).slice(1, 4).join(' · '), cena: ubyt + (bal.priplatek || 0), strava: 'balicek', nevratna: false }]
+      ? (balK == null ? [] : [{ id: 'balicek', nazev: bal.nazev, popis: (bal.obsahuje || []).slice(1, 4).join(' · '), cena: ubyt + balK + (bal.priplatek || 0), strava: 'balicek', nevratna: false, meaId: MEA[balStrava] }])
       : sazbyCms.map(s => {
         const typ = stravaCms(s), k = typ === 'bez' ? 0 : stravaZa(typ);
         if (k == null) return null;                         // strava v termínu není (např. polopenze až od 1. 12.)
@@ -238,17 +240,16 @@ export async function vytvorRezervaci(r, d, { stav = OPCE, opceDo } = {}) {
   // typ apartmánu = název z CMS (nebo rovnou obkId) → obkId z Previo
   const obk = v => (r.R.typy.find(t => t.nazev === v || String(t.previo_id) === String(v)) || {}).previo_id || v;
   const note = [`Web – rezervace napřímo (−${r.R.sleva_primo || 0} %), objednávka ${d.obj || ''}`,
-    d.zpusob === 'karta' ? 'Platba kartou online (ČSOB)' : d.zpusob === 'prevod' ? 'Platba převodem – zálohový list' : '',
+    d.zpusob === 'karta' ? `Platba kartou online${d.brana ? ` (${d.brana})` : ''}` : d.zpusob === 'prevod' ? 'Platba převodem – zálohový list' : '',
     (d.doplnky || []).length ? 'Doplňky: ' + d.doplnky.join(', ') : '', h.poznamka].filter(Boolean).join(' | ');
   const inner = `<newReservation>
     <commissions>${(d.pokoje && d.pokoje.length ? d.pokoje : [{ typ: d.typ, dospeli: d.dospeli, deti: d.deti }]).map((p, i) => `<commission>
       <guests><numGuest>${(+p.dospeli || 1) + (+p.deti || 0)}</numGuest>
         ${i === 0 ? `<guest><firstName>${x(h.jmeno)}</firstName><lastName>${x(h.prijmeni)}</lastName><email>${x(h.email)}</email><phone>${x(h.telefon)}</phone></guest>` : ''}
       </guests>
-      <obkId>${x(obk(p.typ))}</obkId>${d.sazba && /^\d+$/.test(d.sazba) ? `<prlId>${x(d.sazba)}</prlId>` : ''}${d.meaId ? `<meaId>${x(d.meaId)}</meaId>` : ''}<cmsId>3</cmsId>
+      <obkId>${x(obk(p.typ))}</obkId>${d.sazba && /^\d+$/.test(d.sazba) ? `<prlId>${x(d.sazba)}</prlId>` : ''}${d.meaId ? `<meaId>${x(d.meaId)}</meaId>` : ''}${d.stayId ? `<styId>${x(d.stayId)}</styId>` : ''}<cmsId>3</cmsId>
       <note>${x(d.pokoje && d.pokoje.length > 1 ? `Skupina – apartmán ${i + 1}/${d.pokoje.length}. ${note}` : note)}</note>
     </commission>`).join('')}</commissions>
-    ${d.stayId ? `<styId>${x(d.stayId)}</styId>` : ''}
     <gCosId>${stav}</gCosId>${stav === OPCE && opceDo ? `<optionExpiration>${pragueTime(opceDo)}</optionExpiration>` : ''}
     <lanId>1</lanId>
     <term><from>${d.od} ${checkin}:00</from><to>${d.do} ${checkout}:00</to></term>
@@ -264,11 +265,36 @@ export const zmenStav = (r, resId, stav) => previo(r, M.rezervace, `<newReservat
 
 // způsoby platby a typy dokladů v REST invoice/addPayment
 const PAY = { prevod: 2, online: 10 }, DOKLAD = { faktura: 1, uctenka: 2, proforma: 3, zalohovy: 4 };
-/** Zapíše do účtu rezervace přijatou online platbu (vystaví doklad o přijaté platbě). */
-export const zapisPlatbu = (r, resId) => previoRest(r, 'invoice/addPayment?pdf=false', {
-  method: 'POST', body: { intId: +(process.env.PREVIO_DOKLAD_KARTA || DOKLAD.zalohovy), resId: +resId, comId: null, gueId: null, payId: PAY.online },
-});
-/** Vystaví zálohový list (proformu) pro platbu převodem. Vrací { invId, pdf (base64) }. */
+const kc = n => Math.round(n).toLocaleString('cs-CZ') + ' Kč';
+/**
+ * Zápis přijaté online platby (kartou přes platební bránu) do Previo.
+ *
+ * REST invoice/addPayment nepřijímá částku – zaplatí VŠECHNY neuhrazené položky rezervace a vystaví k nim doklad.
+ * Proto ho voláme jen tehdy, když host zaplatil celou cenu (záloha 100 %, nevratná sazba).
+ * Při záloze (např. 30 %) by Previo ukázalo zaplacenou celou rezervaci a doklad na celou cenu. Místo toho se do rezervace
+ * zapíše poznámka o přijaté záloze (gNote) a recepce zálohu zaúčtuje v Previo (dostane upozornění s částkou).
+ *
+ * p = { resId, castka (zaplaceno, Kč), cena (celkem, Kč), obj (číslo objednávky webu), brana (název brány) }
+ * → { zpusob: 'doklad', invId } | { zpusob: 'poznamka' }
+ */
+export async function zapisPlatbu(r, { resId, castka, cena, obj, brana }) {
+  if (+castka >= +cena - 1) {
+    const j = await previoRest(r, 'invoice/addPayment?pdf=false', {
+      method: 'POST', body: { intId: +(process.env.PREVIO_DOKLAD_KARTA || DOKLAD.zalohovy), resId: +resId, comId: null, gueId: null, payId: PAY.online },
+    });
+    return { zpusob: 'doklad', invId: (j && j.invId) || null };
+  }
+  const kdy = new Date().toLocaleString('cs-CZ', { timeZone: 'Europe/Prague', day: 'numeric', month: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+  const text = `ZÁLOHA ZAPLACENA ${kc(castka)} kartou online${brana ? ` (${brana})` : ''} ${kdy}, objednávka web ${obj || ''}. ` +
+    `Doplatek ${kc(cena - castka)} na místě. Zálohu zaúčtovat v účtu rezervace.`;
+  await previo(r, M.rezervace, `<newReservation><resId>${x(resId)}</resId><gNote>${x(text)}</gNote></newReservation>`);
+  return { zpusob: 'poznamka' };
+}
+/**
+ * Vystaví zálohový list (proformu) pro platbu převodem. Vrací { invId, pdf (base64) }.
+ * Stejná funkce jako u karty (invoice/addPayment) – bere všechny neuhrazené položky, takže jen pro platbu celé ceny.
+ * Volá se jen s PREVIO_ZALOHOVY_LIST=1. OVĚŘIT na testovacím hotelu, že proforma rezervaci neoznačí jako zaplacenou.
+ */
 export const zalohovyList = (r, resId) => previoRest(r, 'invoice/addPayment?pdf=true', {
   method: 'POST', body: { intId: DOKLAD.proforma, resId: +resId, comId: null, gueId: null, payId: PAY.prevod },
 });

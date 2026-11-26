@@ -1,7 +1,7 @@
 [build]
   publish = "."
   # předgenerování obsahu do HTML (viz scripts/prerender.mjs) – kvůli vyhledávačům s AI a náhledům na sítích
-  command = "node scripts/reservio.mjs && node scripts/prerender.mjs"
+  command = "node scripts/reservio.mjs && node scripts/balicky-ceny.mjs && node scripts/prerender.mjs && node scripts/domeny.mjs"
   functions = "netlify/functions"
 
 [[headers]]
@@ -19,340 +19,337 @@
   [headers.values]
     Cache-Control = "no-cache"
 
-# === 301 ze starých domén (doména musí být v Netlify přidaná jako alias tohoto webu) ===
-[[redirects]]
-  from = "https://www.resortcervenydvur.cz/cs/kavarna/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/restaurace.html"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://www.resortcervenydvur.cz/cs/snidane/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/restaurace.html"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://www.resortcervenydvur.cz/cs/svatby/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/akce.html"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://www.resortcervenydvur.cz/cs/pro-firmy/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/firmy.html"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://www.resortcervenydvur.cz/cs/wellness/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/wellness.html"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://www.resortcervenydvur.cz/cs/masaze/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/wellness.html#masaze"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://www.resortcervenydvur.cz/cs/apartmany/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/#apartmany"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://www.resortcervenydvur.cz/cs/cenik/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/#apartmany"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://www.resortcervenydvur.cz/cs/rezervace/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/rezervace.html"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://www.resortcervenydvur.cz/cs/rezervace-pobytu/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/rezervace.html"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://www.resortcervenydvur.cz/cs/pobyty/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/rezervace.html"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://www.resortcervenydvur.cz/cs/pobytove-balicky/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/balicky.html"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://www.resortcervenydvur.cz/cs/galerie/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/#galerie"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://www.resortcervenydvur.cz/cs/historie/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/#historie"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://www.resortcervenydvur.cz/cs/recenze/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://www.resortcervenydvur.cz/cs/darkove-poukazy/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/restaurace.html"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://www.resortcervenydvur.cz/cs/kontakt/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/#kontakt"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://www.resortcervenydvur.cz/cs/novinky/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/akce.html"
-  status = 301
-  force = true
-
+# =====================================================================================================
+# TŘI DOMÉNY JEDNOHO WEBU
+#   nordmoraviaresorts.cz  → celý web (NMR, /soutok-kouty/, /admin/, náhledy)
+#   resortcervenydvur.cz   → obsah složky /cerveny-dvur/
+#   vila-republika.cz      → obsah složky /vila-republika/
+# Obě domény resortů musí být v Netlify přidané jako „domain alias“ tohoto projektu (i s www).
+# Pořadí pravidel je důležité – platí první, které sedí. Odkazy, canonical a sitemapy pro domény
+# a přesměrování /cerveny-dvur/… z NMR řeší scripts/domeny.mjs při nasazení (proměnná DOMENY_RESORTU=1).
+# =====================================================================================================
+# www → bez www
 [[redirects]]
   from = "https://www.resortcervenydvur.cz/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/"
+  to = "https://resortcervenydvur.cz/:splat"
   status = 301
   force = true
 
+# www → bez www
 [[redirects]]
-  from = "https://resortcervenydvur.cz/cs/kavarna/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/restaurace.html"
+  from = "https://www.vila-republika.cz/*"
+  to = "https://vila-republika.cz/:splat"
   status = 301
   force = true
 
-[[redirects]]
-  from = "https://resortcervenydvur.cz/cs/snidane/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/restaurace.html"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://resortcervenydvur.cz/cs/svatby/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/akce.html"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://resortcervenydvur.cz/cs/pro-firmy/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/firmy.html"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://resortcervenydvur.cz/cs/wellness/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/wellness.html"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://resortcervenydvur.cz/cs/masaze/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/wellness.html#masaze"
-  status = 301
-  force = true
-
+# staré adresy webu Červeného dvora (Previo stránky) → nový web na stejné doméně
 [[redirects]]
   from = "https://resortcervenydvur.cz/cs/apartmany/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/#apartmany"
+  to = "https://resortcervenydvur.cz/#apartmany"
   status = 301
   force = true
 
 [[redirects]]
   from = "https://resortcervenydvur.cz/cs/cenik/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/#apartmany"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://resortcervenydvur.cz/cs/rezervace/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/rezervace.html"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://resortcervenydvur.cz/cs/rezervace-pobytu/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/rezervace.html"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://resortcervenydvur.cz/cs/pobyty/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/rezervace.html"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://resortcervenydvur.cz/cs/pobytove-balicky/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/balicky.html"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://resortcervenydvur.cz/cs/galerie/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/#galerie"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://resortcervenydvur.cz/cs/historie/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/#historie"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://resortcervenydvur.cz/cs/recenze/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/"
+  to = "https://resortcervenydvur.cz/#apartmany"
   status = 301
   force = true
 
 [[redirects]]
   from = "https://resortcervenydvur.cz/cs/darkove-poukazy/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/restaurace.html"
+  to = "https://resortcervenydvur.cz/restaurace.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://resortcervenydvur.cz/cs/galerie/*"
+  to = "https://resortcervenydvur.cz/#galerie"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://resortcervenydvur.cz/cs/historie/*"
+  to = "https://resortcervenydvur.cz/#historie"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://resortcervenydvur.cz/cs/kavarna/*"
+  to = "https://resortcervenydvur.cz/restaurace.html"
   status = 301
   force = true
 
 [[redirects]]
   from = "https://resortcervenydvur.cz/cs/kontakt/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/#kontakt"
+  to = "https://resortcervenydvur.cz/#kontakt"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://resortcervenydvur.cz/cs/masaze/*"
+  to = "https://resortcervenydvur.cz/wellness.html#masaze"
   status = 301
   force = true
 
 [[redirects]]
   from = "https://resortcervenydvur.cz/cs/novinky/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/akce.html"
+  to = "https://resortcervenydvur.cz/akce.html"
   status = 301
   force = true
 
 [[redirects]]
-  from = "https://resortcervenydvur.cz/*"
-  to = "https://nordmoraviaresorts.cz/cerveny-dvur/"
+  from = "https://resortcervenydvur.cz/cs/pobytove-balicky/*"
+  to = "https://resortcervenydvur.cz/balicky.html"
   status = 301
   force = true
 
 [[redirects]]
-  from = "https://www.vila-republika.cz/apartmany/*"
-  to = "https://nordmoraviaresorts.cz/vila-republika/#apartmany"
+  from = "https://resortcervenydvur.cz/cs/pobyty/*"
+  to = "https://resortcervenydvur.cz/rezervace.html"
   status = 301
   force = true
 
 [[redirects]]
-  from = "https://www.vila-republika.cz/wellness/*"
-  to = "https://nordmoraviaresorts.cz/vila-republika/wellness.html"
+  from = "https://resortcervenydvur.cz/cs/pro-firmy/*"
+  to = "https://resortcervenydvur.cz/firmy.html"
   status = 301
   force = true
 
 [[redirects]]
-  from = "https://www.vila-republika.cz/fotogalerie/*"
-  to = "https://nordmoraviaresorts.cz/vila-republika/#galerie"
+  from = "https://resortcervenydvur.cz/cs/recenze/*"
+  to = "https://resortcervenydvur.cz/"
   status = 301
   force = true
 
 [[redirects]]
-  from = "https://www.vila-republika.cz/okoli/*"
-  to = "https://nordmoraviaresorts.cz/vila-republika/#okoli"
+  from = "https://resortcervenydvur.cz/cs/rezervace-pobytu/*"
+  to = "https://resortcervenydvur.cz/rezervace.html"
   status = 301
   force = true
 
 [[redirects]]
-  from = "https://www.vila-republika.cz/recenze/*"
-  to = "https://nordmoraviaresorts.cz/vila-republika/#recenze"
+  from = "https://resortcervenydvur.cz/cs/rezervace/*"
+  to = "https://resortcervenydvur.cz/rezervace.html"
   status = 301
   force = true
 
 [[redirects]]
-  from = "https://www.vila-republika.cz/rezervace/*"
-  to = "https://nordmoraviaresorts.cz/vila-republika/rezervace.html"
+  from = "https://resortcervenydvur.cz/cs/snidane/*"
+  to = "https://resortcervenydvur.cz/restaurace.html"
   status = 301
   force = true
 
 [[redirects]]
-  from = "https://www.vila-republika.cz/darkove-poukazy/*"
-  to = "https://nordmoraviaresorts.cz/vila-republika/#poukazy"
+  from = "https://resortcervenydvur.cz/cs/svatby/*"
+  to = "https://resortcervenydvur.cz/akce.html"
   status = 301
   force = true
 
 [[redirects]]
-  from = "https://www.vila-republika.cz/balicky/*"
-  to = "https://nordmoraviaresorts.cz/vila-republika/rezervace.html"
+  from = "https://resortcervenydvur.cz/cs/wellness/*"
+  to = "https://resortcervenydvur.cz/wellness.html"
   status = 301
   force = true
 
 [[redirects]]
-  from = "https://www.vila-republika.cz/*"
-  to = "https://nordmoraviaresorts.cz/vila-republika/"
+  from = "https://resortcervenydvur.cz/cs/*"
+  to = "https://resortcervenydvur.cz/"
   status = 301
   force = true
 
+[[redirects]]
+  from = "https://resortcervenydvur.cz/en/*"
+  to = "https://resortcervenydvur.cz/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://resortcervenydvur.cz/de/*"
+  to = "https://resortcervenydvur.cz/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://resortcervenydvur.cz/pl/*"
+  to = "https://resortcervenydvur.cz/"
+  status = 301
+  force = true
+
+# staré adresy webu Vily Republika → nový web na stejné doméně
 [[redirects]]
   from = "https://vila-republika.cz/apartmany/*"
-  to = "https://nordmoraviaresorts.cz/vila-republika/#apartmany"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://vila-republika.cz/wellness/*"
-  to = "https://nordmoraviaresorts.cz/vila-republika/wellness.html"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://vila-republika.cz/fotogalerie/*"
-  to = "https://nordmoraviaresorts.cz/vila-republika/#galerie"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://vila-republika.cz/okoli/*"
-  to = "https://nordmoraviaresorts.cz/vila-republika/#okoli"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://vila-republika.cz/recenze/*"
-  to = "https://nordmoraviaresorts.cz/vila-republika/#recenze"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://vila-republika.cz/rezervace/*"
-  to = "https://nordmoraviaresorts.cz/vila-republika/rezervace.html"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://vila-republika.cz/darkove-poukazy/*"
-  to = "https://nordmoraviaresorts.cz/vila-republika/#poukazy"
+  to = "https://vila-republika.cz/#apartmany"
   status = 301
   force = true
 
 [[redirects]]
   from = "https://vila-republika.cz/balicky/*"
-  to = "https://nordmoraviaresorts.cz/vila-republika/rezervace.html"
+  to = "https://vila-republika.cz/rezervace.html"
   status = 301
   force = true
 
 [[redirects]]
-  from = "https://vila-republika.cz/*"
-  to = "https://nordmoraviaresorts.cz/vila-republika/"
+  from = "https://vila-republika.cz/darkove-poukazy/*"
+  to = "https://vila-republika.cz/#poukazy"
   status = 301
   force = true
 
+[[redirects]]
+  from = "https://vila-republika.cz/fotogalerie/*"
+  to = "https://vila-republika.cz/#galerie"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://vila-republika.cz/okoli/*"
+  to = "https://vila-republika.cz/#okoli"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://vila-republika.cz/recenze/*"
+  to = "https://vila-republika.cz/#recenze"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://vila-republika.cz/rezervace/*"
+  to = "https://vila-republika.cz/rezervace.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://vila-republika.cz/wellness/*"
+  to = "https://vila-republika.cz/wellness.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://vila-republika.cz/en/*"
+  to = "https://vila-republika.cz/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://vila-republika.cz/de/*"
+  to = "https://vila-republika.cz/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://vila-republika.cz/pl/*"
+  to = "https://vila-republika.cz/"
+  status = 301
+  force = true
+
+# resortcervenydvur.cz: společné soubory sítě se čtou z kořene webu
+[[redirects]]
+  from = "https://resortcervenydvur.cz/assets/nmr-common.js"
+  to = "/assets/nmr-common.js"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://resortcervenydvur.cz/assets/nmr-common.css"
+  to = "/assets/nmr-common.css"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://resortcervenydvur.cz/assets/datepicker.js"
+  to = "/assets/datepicker.js"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://resortcervenydvur.cz/assets/datepicker.css"
+  to = "/assets/datepicker.css"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://resortcervenydvur.cz/assets/booking/*"
+  to = "/assets/booking/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://resortcervenydvur.cz/data/nmr/*"
+  to = "/data/nmr/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://resortcervenydvur.cz/admin/*"
+  to = "/admin/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://resortcervenydvur.cz/.netlify/*"
+  to = "/.netlify/:splat"
+  status = 200
+  force = true
+
+# resortcervenydvur.cz: vše ostatní ze složky /cerveny-dvur/
+[[redirects]]
+  from = "https://resortcervenydvur.cz/*"
+  to = "/cerveny-dvur/:splat"
+  status = 200
+  force = true
+
+# vila-republika.cz: společné soubory sítě se čtou z kořene webu
+[[redirects]]
+  from = "https://vila-republika.cz/assets/nmr-common.js"
+  to = "/assets/nmr-common.js"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://vila-republika.cz/assets/nmr-common.css"
+  to = "/assets/nmr-common.css"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://vila-republika.cz/assets/datepicker.js"
+  to = "/assets/datepicker.js"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://vila-republika.cz/assets/datepicker.css"
+  to = "/assets/datepicker.css"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://vila-republika.cz/assets/booking/*"
+  to = "/assets/booking/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://vila-republika.cz/data/nmr/*"
+  to = "/data/nmr/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://vila-republika.cz/admin/*"
+  to = "/admin/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://vila-republika.cz/.netlify/*"
+  to = "/.netlify/:splat"
+  status = 200
+  force = true
+
+# vila-republika.cz: vše ostatní ze složky /vila-republika/
+[[redirects]]
+  from = "https://vila-republika.cz/*"
+  to = "/vila-republika/:splat"
+  status = 200
+  force = true

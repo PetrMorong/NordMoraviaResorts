@@ -12,7 +12,7 @@
 // Objednávka si pamatuje resort (o.resort) – podle něj se volá jeho Previo, Reservio a vrací se na jeho stránku.
 import { resort } from '../lib/resorty.mjs';
 import { spocitejCenu, Chyba } from '../lib/cena.mjs';
-import { csobZapnuto, csobEnv, zalozPlatbu, platebniStranka, stavPlatby } from '../lib/csob.mjs';
+import { csobZapnuto, csobEnv, zalozPlatbu, platebniStranka, stavPlatby, NAZEV_BRANY } from '../lib/csob.mjs';
 import { previoLive, vytvorRezervaci, zalohovyList, previoRest, platebniPodminky, OPCE } from '../lib/previo.mjs';
 import { nactiObjednavku, ulozObjednavku, noveCislo, cisloPlatby, token } from '../lib/objednavky.mjs';
 import { vyrid, upozorni, overCasy, rezervujWellness, kolikZbyva, wellnessText } from '../lib/vyrizeni.mjs';
@@ -114,7 +114,7 @@ async function nova(req, d) {
   }
   // zápis do Previo jako opce – potvrdí se po zaplacení (karta) / po přijetí zálohy (převod, ručně nebo automaticky v Previo)
   if (previoLive(r)) {
-    o.previo = await vytvorRezervaci(r, { ...pobyt, doplnky: pobyt.doplnky.map(x => x.nazev + (x.ks > 1 ? ` ×${x.ks}` : '')).concat(o.wellness ? ['Wellness: ' + wellnessText(o)] : []), host, obj: o.obj, zpusob },
+    o.previo = await vytvorRezervaci(r, { ...pobyt, doplnky: pobyt.doplnky.map(x => x.nazev + (x.ks > 1 ? ` ×${x.ks}` : '')).concat(o.wellness ? ['Wellness: ' + wellnessText(o)] : []), host, obj: o.obj, zpusob, brana: zpusob === 'karta' ? NAZEV_BRANY : undefined },
       { stav: OPCE, opceDo: zpusob === 'karta' ? plus(1) : new Date(o.splatnost + 'T23:59:00') });
   }
   await ulozObjednavku(o);
@@ -122,7 +122,8 @@ async function nova(req, d) {
   if (zpusob === 'karta') return json({ ok: true, obj: o.obj, t: o.t, presmerovani: await zaplatKartou(o) });
 
   o.stav = 'ceka_na_prevod';
-  if (o.previo && process.env.PREVIO_ZALOHOVY_LIST === '1') {
+  // zálohový list přes API jen na celou cenu (invoice/addPayment bere všechny položky); částečnou zálohu pošle recepce
+  if (o.previo && process.env.PREVIO_ZALOHOVY_LIST === '1' && o.zaloha >= o.pobyt.cena - 1) {
     try { const z = await zalohovyList(r, o.previo.resId); o.previo.invId = z.invId; } catch (e) { o.chyby.push('Zálohový list: ' + e.message); }
   }
   await ulozObjednavku(o);

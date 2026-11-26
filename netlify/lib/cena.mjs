@@ -43,6 +43,7 @@ export function cenaNoc(t, osob) {
 }
 const osobyText = a => String(a.osoby || '');
 
+const cz = d => new Date(String(d).slice(0, 10) + 'T12:00Z').toLocaleDateString('cs-CZ', { day: 'numeric', month: 'numeric', year: 'numeric' });
 /** Kontrola termínu a balíčku. */
 function termin(r, d) {
   const od = date(d.od), doo = date(d.do);
@@ -53,6 +54,8 @@ function termin(r, d) {
   const bal = d.balicek ? (r.B || []).find(b => b.id === d.balicek && b.aktivni) : null;
   if (d.balicek && !bal) throw new Chyba('Balíček není dostupný');
   if (bal && (n < bal.noci_min || n > bal.noci_max)) throw new Chyba('Délka pobytu neodpovídá balíčku');
+  if (bal && ((bal.platnost_od && od < String(bal.platnost_od).slice(0, 10)) || (bal.platnost_do && od > String(bal.platnost_do).slice(0, 10))))
+    throw new Chyba(`Balíček platí pro příjezd ${bal.platnost_od ? 'od ' + cz(bal.platnost_od) + ' ' : ''}${bal.platnost_do ? 'do ' + cz(bal.platnost_do) : ''}`.trim());
   if (!bal && r.R.min_noci && n < r.R.min_noci) throw new Chyba(`Minimální délka pobytu je ${r.R.min_noci} ${r.R.min_noci < 5 ? 'noci' : 'nocí'}`);
   return { od, doo, dospeli, deti, n, bal };
 }
@@ -64,7 +67,10 @@ export function nabidkaCenik(r, { od, doo, dospeli, deti, n, bal }) {
     const a = r.A.find(x => x.nazev === t.nazev);
     if (!a) return null;
     const base = cenaNoc(t, osob) * n;
-    const rates = bal ? [{ id: 'balicek', nazev: bal.nazev, popis: (bal.obsahuje || []).slice(1, 4).join(' · '), cena: base + (bal.priplatek || 0), strava: 'balicek', nevratna: false }]
+    // balíček: ubytování + strava balíčku (sazba se stejnou stravou z CMS, např. polopenze od 1. 12.) + příplatek za služby
+    const bs = bal ? sazbyResortu(r, od).find(s => !jeNevratna(s) && typStravy(s, stravaSazby(r, s)) === (bal.strava || 'snidane')) : null;
+    if (bal && !bs && (bal.strava || 'snidane') !== 'bez') return null;      // strava balíčku v termínu není
+    const rates = bal ? [{ id: 'balicek', nazev: bal.nazev, popis: (bal.obsahuje || []).slice(1, 4).join(' · '), cena: base + (bs ? stravaSazby(r, bs) * dospeli * n : 0) + (bal.priplatek || 0), strava: 'balicek', nevratna: false }]
       : sazbyResortu(r, od).map(s => ({ id: s.id, nazev: s.nazev, popis: s.popis || '', cena: base * (1 - (+s.sleva || 0) / 100) + stravaSazby(r, s) * dospeli * n,
         strava: typStravy(s, stravaSazby(r, s)), nevratna: jeNevratna(s), sleva: +s.sleva || 0 }));
     return { id: t.nazev, nazev: t.nazev, foto: a.foto || (a.fotky || [])[0], osoby: osobyText(a), plocha: a.plocha, popis: a.popis, volno: null,

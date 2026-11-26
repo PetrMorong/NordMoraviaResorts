@@ -61,5 +61,20 @@
       "nazev": "Chytrá domácnost",
       "text": "Self check-in kódem."
     }
-  ]
+  ],
+  "rapotin": {
+    "aktivni": true,
+    "kicker": "Nord Moravia Resorts · Rapotín",
+    "nadpis": "Večeře a masáže *v Červeném dvoře*",
+    "text": "Vila Republika patří do rodiny Nord Moravia Resorts. Deset minut autem, v sousedním Rapotíně, je náš Resort Červený dvůr s restaurací a masážemi. Jako host vily si tam můžete dopřát polopenzi i masáž – stačí říct při rezervaci nebo zavolat.",
+    "polozky": [
+      "Polopenze – večeře v Restauraci Červený dvůr",
+      "Masáže v Červeném dvoře",
+      "Domluvíte při rezervaci nebo telefonicky",
+      "10 minut autem z Velkých Losin"
+    ],
+    "foto": "Rapotin/web/vecere-losos",
+    "odkaz_restaurace": "../cerveny-dvur/restaurace.html",
+    "odkaz_masaze": "../cerveny-dvur/wellness.html#masaze"
+  }
 }
